@@ -1,1 +1,19 @@
-spring.application.name=animealth-backend
+spring:
+  application:
+    name: animealth-backend
+---
+spring:
+  application:
+    name: imyeomsu-lck
+---
+spring:
+  profiles:
+    active: prod
+---
+spring:
+  profiles:
+    active: dev
+---
+spring:
+  profiles:
+    active: local
