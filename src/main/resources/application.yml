@@ -3,10 +3,6 @@ spring:
     name: animealth-backend
 ---
 spring:
-  application:
-    name: imyeomsu-lck
----
-spring:
   profiles:
     active: prod
 ---
