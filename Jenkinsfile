@@ -34,8 +34,6 @@ pipeline{
                             ARG BUILD_PATH=/var/jenkins_home/workspace/Animealth_animealth-backend_main/build/libs/*.jar
                             COPY $BUILD_PATH ./animealth-backend.jar
                             EXPOSE 8080
-                            ENTRYPOINT ["java", "-jar", "/animealth-backend.jar"]
-
                             '''
 
                             sh"""
