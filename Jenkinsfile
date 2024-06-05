@@ -24,8 +24,7 @@ pipeline{
             steps {
                 script {
                     echo "Docker Build 단계 실행 중"
-                    withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB_YEOMYALOO', usernameVariable: 'USER_VARIABLE', passwordVariable: 'USER_PASSWORD')]) {{
-                        
+                    credentials('DOCKER_HUB_YEOMYALOO'){
                         try {
                             sh '''docker login -u yeom456@github.com -p ${USER_PASSWORD}'''
                             
