@@ -6,9 +6,9 @@ pipeline{
             steps {
                 echo "여기 준비"
                 sh 'cd /var/jenkins_home/workspace/Animealth_animealth-backend_main'
+                sh 'ls'
                 sh 'chmod +x ./gradlew'
                 sh 'gradle clean'
-                sh 'ls'
                 sh 'pwd'
             }
         }
