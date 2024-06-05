@@ -29,7 +29,15 @@ pipeline{
                             sh '''docker login -u yeom456@gmail.com -p ${DOCKER_HUB_PASSWORD}'''
                             echo '${DOCKER_HUB_USERNAME}'
                             sh 'cd /var/jenkins_home/workspace/Animealth_animealth-backend_main/build/libs'
-
+                            def dockerfilePath = "/var/jenkins_home/workspace/Animealth_animealth-backend_main/Dockerfile"
+                            
+                            // Check if Dockerfile already exists
+                            if (fileExists(dockerfilePath)) {
+                                // If Dockerfile exists, delete it
+                                sh "rm ${dockerfilePath}"
+                                echo "Deleted existing Dockerfile."
+                            }
+                            
                             sh '''
                             cat > Dockerfile <<'EOF'
                             FROM openjdk:17
