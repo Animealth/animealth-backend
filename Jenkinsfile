@@ -33,7 +33,9 @@ pipeline{
                             sh '''
                             cat > Dockerfile <<'EOF'
                             FROM openjdk:17
-                            EXPOSE 8080
+                            COPY build/libs/*.jar animealth.jar
+                            EXPOSE 8818
+                            CMD ["java", "-jar", "animealth.jar"]
                             '''
                             env.dockerBuildResult = true
                         } catch(error) {
