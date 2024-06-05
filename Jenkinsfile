@@ -14,7 +14,7 @@ pipeline{
         stage('Build') {
             steps {
                 echo "여기 빌드"
-                sh 'gradlew build -x test'
+                sh './gradlew build -x test'
                 sh 'pwd'
 
             }
@@ -22,7 +22,7 @@ pipeline{
         stage('Test') {
             steps {
                 echo "여기 테스트"
-                sh 'gradlew test'
+                sh './gradlew test'
                 sh 'pwd'
             }
         }
