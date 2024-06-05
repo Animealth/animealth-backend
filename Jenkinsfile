@@ -62,5 +62,55 @@ pipeline{
                 }
             }
         }
+
+        stage('docker compose build') {
+            steps {
+                script {
+                    echo "docker compose build 단계 실행 중"
+                    def dockerComposefilePath = "/var/jenkins_home/workspace/Animealth_animealth-backend_main/docker-compose.yml"
+                        if (fileExists(dockerComposefilePath)) {
+                            // If Dockerfile exists, delete it
+                            sh "rm ${dockerComposefilePath}"
+                            echo "Deleted existing docker compose."
+                        }
+                            sh '''
+                            cat > docker-compose.yml <<'EOF'
+                            version: "3"
+                            services:
+                              database:
+                                image: mysql:latest
+                                container_name: animealth-mysql
+                                environment:
+                                  - MYSQL_DATABASE= animealth-database
+                                  - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+                                ports:
+                                  - 3306:3306
+                                networks:
+                                  - animealth_network01
+                                restart: always
+                            
+                              application:
+                                build:
+                                  context: /var/jenkins_home/workspace/Animealth_animealth-backend_main/Dockerfile
+                                  dockerfile: Dockerfile
+                                ports:
+                                  - 8080:8080
+                                networks:
+                                  - animealth_network01
+                                depends_on:
+                                  - database
+                                container_name: animealth
+                                restart: always
+                                environment:
+                                  - SPRING_DATASOURCE_URL=jdbc:mysql://animealth-mysql:3306/animealth-databae?useSSL=false&allowPublicKeyRetrieval=true
+                                  - SPRING_DATASOURCE_USERNAME=root
+                                  - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+                                labels:
+                                  - "com.centurylinklabs.watchtower.enable=true"
+                            '''
+                    sh 'docker-compose up'
+                }
+            }
+        }
     }
 }
