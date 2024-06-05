@@ -45,6 +45,9 @@ pipeline{
                             EXPOSE 8080
                             CMD ["java", "-jar", "animealth.jar"]
                             '''
+
+                            sh 'docker build --tag yeomhwiju/animealth:latest --push .'
+
                             env.dockerBuildResult = true
                         } catch(error) {
                             echo "Docker Build 단계에서 오류 발생: ${error}"
