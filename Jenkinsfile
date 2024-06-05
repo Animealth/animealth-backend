@@ -115,7 +115,7 @@ pipeline{
                             networks:
                               animealth_network01:
                             '''
-                    sh 'docker-compose up'
+                    sh 'docker-compose up --build'
                 }
             }
         }
