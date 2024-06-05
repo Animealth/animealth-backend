@@ -88,7 +88,7 @@ pipeline{
                                 image: mysql:latest
                                 container_name: animealth-mysql
                                 environment:
-                                  - MYSQL_DATABASE= animealth-database
+                                  - MYSQL_DATABASE=animealth-database
                                   - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
                                 ports:
                                   - 3306:3306
@@ -98,22 +98,22 @@ pipeline{
                             
                               application:
                                 build:
-                                  context: /var/jenkins_home/workspace/Animealth_animealth-backend_main/Dockerfile
+                                  context: .
                                   dockerfile: Dockerfile
                                 ports:
                                   - 8080:8080
-                                networks:
-                                  - animealth_network01
                                 depends_on:
                                   - database
                                 container_name: animealth
                                 restart: always
                                 environment:
-                                  - SPRING_DATASOURCE_URL=jdbc:mysql://animealth-mysql:3306/animealth-databae?useSSL=false&allowPublicKeyRetrieval=true
+                                  - SPRING_DATASOURCE_URL=jdbc:mysql://animealth-mysql:3306/animealth-database?useSSL=false&allowPublicKeyRetrieval=true
                                   - SPRING_DATASOURCE_USERNAME=root
                                   - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
                                 labels:
                                   - "com.centurylinklabs.watchtower.enable=true"
+                            networks:
+                              animealth_network01:
                             '''
                     sh 'docker-compose up'
                 }
