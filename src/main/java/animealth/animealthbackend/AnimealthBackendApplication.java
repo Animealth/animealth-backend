@@ -10,4 +10,5 @@ public class AnimealthBackendApplication {
 		SpringApplication.run(AnimealthBackendApplication.class, args);
 	}
 
+	
 }
