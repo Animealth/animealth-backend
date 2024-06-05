@@ -39,7 +39,9 @@ pipeline{
                             '''
 
                             sh"""
-                            docker build --tag yeomhwiju/animealth-backend:latest --push .
+                            sh "docker build -t ${ACCOUNT}/${REPOSITORY_NAME}:${BUILD_NUMBER} ."
+                            docker build --tag yeomhwiju/animealth-backend:latest .
+                            docker image push yeomhwiju/animealth-backend:latest
                             """
                             
                             env.dockerBuildResult = true
