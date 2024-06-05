@@ -13,6 +13,16 @@ pipeline{
                 }
             }
         }
+        stage('Replace YML') {
+            steps {
+                script {
+                    echo "Replace YML 단계 실행 중"
+                    withCredentials([file(credentialsId:'PROD_YML', variable:'prod_yml')]) {
+                        sh "cp ${prod_yml} /var/jenkins_home/workspace/Animealth_animealth-backend_main/src/main/resources/application.yml"
+                    }
+                }
+            }
+        }
         stage('Creating a Docker image and pushing it to Docker Hub') {
             steps {
                 script {
