@@ -46,7 +46,8 @@ pipeline{
                             CMD ["java", "-jar", "animealth.jar"]
                             '''
 
-                            sh 'docker build --tag yeomhwiju/animealth:latest --push .'
+                            sh 'docker build --tag yeomhwiju/animealth:latest .'
+                            sh 'docker push yeomhwiju/animealth:latest'
 
                             env.dockerBuildResult = true
                         } catch(error) {
