@@ -2,28 +2,21 @@ def PROJECT_NAME = 'animealth-backend'
 pipeline{
     agent any
     stages{
-        stage('Prepare'){
-            steps {
-                echo "여기 준비"
-                sh 'cd /var/jenkins_home/workspace/Animealth_animealth-backend_main'
-                sh 'chmod +x ./gradlew'
-                sh './gradlew clean'
-                sh 'pwd'
-            }
-        }
-        stage('build') {
+        stage('project build') {
             steps{
                 script{
+                    sh 'cd /var/jenkins_home/workspace/Animealth_animealth-backend_main'
                     echo "gradle build 단계"
                     sh 'chmod +x ./gradlew'
+                    sh './gradlew clean'
                     sh './gradlew bootJar'
                 }
             }
         }
-        stage('making docker container image && push on docker hub') {
+        stage('Creating a Docker image and pushing it to Docker Hub') {
             steps {
                 script {
-                    echo "Docker Build 단계 실행 중"
+                    echo "도커 이미지 만든 후 도커 허브에 올리기"
                     withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB_YEOMYALOO', usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
                         try {
                             sh '''docker login -u yeom456@gmail.com -p ${DOCKER_HUB_PASSWORD}'''
@@ -59,6 +52,5 @@ pipeline{
                 }
             }
         }
-        
     }
 }
