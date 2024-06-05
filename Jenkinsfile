@@ -30,14 +30,6 @@ pipeline{
                             echo '${DOCKER_HUB_USERNAME}'
                             sh 'cd /var/jenkins_home/workspace/Animealth_animealth-backend_main/build/libs'
 
-                            sh '''
-                            cat > Dockerfile <<'EOF'
-                            FROM openjdk:17
-                            ARG BUILD_PATH=/var/jenkins_home/workspace/Animealth_animealth-backend_main/build/libs/*.jar
-                            COPY $BUILD_PATH ./animealth-backend.jar
-                            EXPOSE 8080
-                            '''
-
                             sh"""
                             docker build --tag yeomhwiju/animealth-backend:latest .
                             docker image push yeomhwiju/animealth-backend:latest
