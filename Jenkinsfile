@@ -112,6 +112,8 @@ pipeline{
                                   - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
                                 labels:
                                   - "com.centurylinklabs.watchtower.enable=true"
+                                networks:
+                                  - animealth_network01
                             networks:
                               animealth_network01:
                             '''
