@@ -39,6 +39,7 @@ pipeline{
                             '''
 
                             sh"""
+                            sudo apt install docker-buildx
                             docker buildx use multiarch-builder
                             docker buildx build --platform linux/arm64,linux/amd64 --tag yeomhwiju/animealth-backend:latest --push .
                             """
