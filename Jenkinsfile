@@ -28,13 +28,13 @@ pipeline{
                         try {
                             sh '''docker login -u yeom456@gmail.com -p ${DOCKER_HUB_PASSWORD}'''
                             echo '${DOCKER_HUB_USERNAME}'
-                            sh 'cd /var/jenkins_home/workspace/Animealth_animealth-backend_main'
+                            sh 'cd /var/jenkins_home/workspace/Animealth_animealth-backend_main/build/libs'
 
-                            sh"""
-                            docker build --tag yeomhwiju/animealth-backend:latest .
-                            docker image push yeomhwiju/animealth-backend:latest
-                            """
-                            
+                            sh '''
+                            cat > Dockerfile <<'EOF'
+                            FROM openjdk:17
+                            EXPOSE 8080
+                            '''
                             env.dockerBuildResult = true
                         } catch(error) {
                             echo "Docker Build 단계에서 오류 발생: ${error}"
