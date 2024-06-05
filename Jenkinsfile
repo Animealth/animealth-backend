@@ -26,7 +26,7 @@ pipeline{
                     echo "Docker Build 단계 실행 중"
                     withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB_YEOMYALOO', usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
                         try {
-                            sh '''docker login -u yeom456@github.com -p ${DOCKER_HUB_PASSWORD}'''
+                            sh '''docker login -u yeom456@gmail.com -p ${DOCKER_HUB_PASSWORD}'''
                             echo '${DOCKER_HUB_USERNAME}'
                             sh '''
                             cat > Dockerfile <<'EOF'
