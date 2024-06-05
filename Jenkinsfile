@@ -1,6 +1,12 @@
 def PROJECT_NAME = 'animealth-backend'
 pipeline{
     agent any
+    environment {
+        IMAGE_TAG = "yeomhwiju/animealth:latest"
+        MYSQL_ROOT_PASSWORD = root
+        SPRING_DATASOURCE_PASSWORD = root
+    }
+    
     stages{
         stage('project build') {
             steps{
@@ -48,7 +54,8 @@ pipeline{
                             EXPOSE 8080
                             CMD ["java", "-jar", "animealth.jar"]
                             '''
-
+                            
+                            sh 'docker rmi ${IMAGE_TAG} || true' //있으면 지워잉 ~
                             sh 'docker build --tag yeomhwiju/animealth:latest .'
                             sh 'docker push yeomhwiju/animealth:latest'
 
