@@ -29,7 +29,7 @@ pipeline{
                             sh '''docker login -u yeom456@gmail.com -p ${DOCKER_HUB_PASSWORD}'''
                             echo '${DOCKER_HUB_USERNAME}'
                             sh 'cd /var/jenkins_home/workspace/Animealth_animealth-backend_main/build/libs'
-' 
+
                             sh '''
                             cat > Dockerfile <<'EOF'
                             FROM openjdk:17
