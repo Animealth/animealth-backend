@@ -3,8 +3,8 @@ pipeline{
     agent any
     environment {
         IMAGE_TAG = "yeomhwiju/animealth:latest"
-        MYSQL_ROOT_PASSWORD = root
-        SPRING_DATASOURCE_PASSWORD = root
+        MYSQL_ROOT_PASSWORD = "root"
+        SPRING_DATASOURCE_PASSWORD = "root"
     }
     
     stages{
