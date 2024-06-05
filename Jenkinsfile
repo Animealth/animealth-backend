@@ -101,7 +101,7 @@ pipeline{
                                   context: .
                                   dockerfile: Dockerfile
                                 ports:
-                                  - 8080:8080
+                                  - 9191:8080
                                 depends_on:
                                   - database
                                 container_name: animealth
