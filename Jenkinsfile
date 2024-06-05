@@ -16,6 +16,7 @@ pipeline{
                     sh 'chmod +x ./gradlew'
                     sh './gradlew clean'
                     sh './gradlew bootJar'
+                    sh 'docker-compose down'
                 }
             }
         }
