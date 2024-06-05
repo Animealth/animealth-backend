@@ -8,6 +8,7 @@ pipeline{
                 sh 'cd /var/jenkins_home/workspace/Animealth_animealth-backend_main'
                 sh 'chmod +x ./gradlew'
                 sh 'gradle clean'
+                sh 'ls'
                 sh 'pwd'
             }
         }
