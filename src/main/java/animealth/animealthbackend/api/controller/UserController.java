@@ -32,4 +32,9 @@ public class UserController {
     public UserDTO update(@PathVariable Long id, @RequestBody UserDTO userDTO) {
         return userService.update(id, userDTO);
     }
+
+    @PutMapping(value = "/delete/{id}", produces = "application/json; charset=UTF-8")
+    public void delete(@PathVariable Long id) {
+        userService.delete(id);
+    }
 }

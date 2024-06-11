@@ -65,4 +65,16 @@ public class UserService {
             throw new IllegalArgumentException("해당 아이디를 가진 user가 없습니다: "+userId);
         }
     }
+
+    @Transactional
+    public void delete(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setIsDeleted(true);
+            userRepository.save(user);
+        }else{
+            throw new IllegalArgumentException("해당 아이디를 가진 user가 없습니다: "+id);
+        }
+    }
 }
