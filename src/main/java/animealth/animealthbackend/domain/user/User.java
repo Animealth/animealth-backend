@@ -16,7 +16,6 @@ import java.math.BigInteger;
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicUpdate
-@Builder
 public class User extends BaseEntity {
 
     @Id
@@ -36,16 +35,13 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    //DTO를 Entity로 변환
-    public static User toEntity(UserDTO userDTO) {
-        User user = new User();
-        user.userId = userDTO.getUserId();
-        user.name = userDTO.getName();
-        user.email = userDTO.getEmail();
-        user.phone = userDTO.getPhone();
-        user.nickname = userDTO.getNickname();
-        user.role = userDTO.getRole();
-        return user;
+    @Builder
+    public User(String name, String email, String phone, String nickname, Role role) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.nickname = nickname;
+        this.role = role;
     }
 
     public User update(String name, String phone, String nickname) {

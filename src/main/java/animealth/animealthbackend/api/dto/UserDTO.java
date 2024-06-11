@@ -10,13 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Getter
 public class UserDTO {
-
-    private Long userId;
-
     private String name;
 
     private String email;
@@ -27,14 +22,12 @@ public class UserDTO {
 
     private Role role;
 
-    public static UserDTO fromEntity(User user) {
-        UserDTO userDTO = new UserDTO();
-        userDTO.userId = user.getUserId();
-        userDTO.name = user.getName();
-        userDTO.email = user.getEmail();
-        userDTO.phone = user.getPhone();
-        userDTO.nickname = user.getNickname();
-        userDTO.role = user.getRole();
-        return userDTO;
+    @Builder
+    public UserDTO(String name, String email, String phone, String nickname, Role role) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.nickname = nickname;
+        this.role = role;
     }
 }
