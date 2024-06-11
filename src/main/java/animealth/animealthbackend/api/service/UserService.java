@@ -3,6 +3,7 @@ package animealth.animealthbackend.api.service;
 import animealth.animealthbackend.api.dto.UserDTO;
 import animealth.animealthbackend.domain.user.User;
 import animealth.animealthbackend.domain.user.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,5 +47,22 @@ public class UserService {
         return userDTO;
     }
 
-
+    @Transactional
+    public UserDTO update(Long userId, UserDTO userDTO) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user = user.update(userDTO.getName(), userDTO.getPhone(), userDTO.getNickname());
+            userRepository.save(user);
+            return UserDTO.builder()
+                    .name(user.getName())
+                    .email(user.getEmail())
+                    .phone(user.getPhone())
+                    .nickname(user.getNickname())
+                    .role(user.getRole())
+                    .build();
+        }else{
+            throw new IllegalArgumentException("해당 아이디를 가진 user가 없습니다: "+userId);
+        }
+    }
 }
