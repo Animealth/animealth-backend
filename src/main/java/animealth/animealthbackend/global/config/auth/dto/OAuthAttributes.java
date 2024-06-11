@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Getter
 public class OAuthAttributes {
-
+    //OAuth2 인증 과정에서 반환된 사용자 정보를 다루기 위한 클래스
     private Map<String, Object> attributes;
     private String nameAttributeKey;
     private String name;
