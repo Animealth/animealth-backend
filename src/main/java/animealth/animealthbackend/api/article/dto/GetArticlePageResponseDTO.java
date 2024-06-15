@@ -1,8 +1,6 @@
 package animealth.animealthbackend.api.article.dto;
 
-import animealth.animealthbackend.api.dto.UserDTO;
 import animealth.animealthbackend.domain.article.Article;
-import animealth.animealthbackend.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 

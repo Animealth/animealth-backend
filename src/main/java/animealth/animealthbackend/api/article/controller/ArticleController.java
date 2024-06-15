@@ -9,12 +9,10 @@ import animealth.animealthbackend.api.article.dto.UpdateArticleDTO.UpdateArticle
 import animealth.animealthbackend.api.article.service.ArticleService;
 import animealth.animealthbackend.api.common.controller.BaseController;
 import animealth.animealthbackend.api.common.dto.ResponseDTO;
-import animealth.animealthbackend.domain.user.User;
 import animealth.animealthbackend.global.config.auth.dto.SessionUser;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
