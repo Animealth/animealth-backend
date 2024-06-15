@@ -35,7 +35,7 @@ public class ArticleController extends BaseController {
     @PostMapping(value = "/save")
     public ResponseDTO<CreateArticleResponseDTO> saveArticle(HttpSession session, @RequestBody CreateArticleRequestDTO dto) {
         SessionUser principal = (SessionUser) session.getAttribute("user");
-        return ResponseDTO.ok(CreateArticleResponseDTO.from(articleService.saveArticle(1L, dto)));
+        return ResponseDTO.ok(CreateArticleResponseDTO.from(articleService.saveArticle(principal.getId(), dto)));
     }
 
     @GetMapping(value = "/read")
