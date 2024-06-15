@@ -5,11 +5,14 @@ import animealth.animealthbackend.api.article.dto.GetArticlePageResponseDTO;
 import animealth.animealthbackend.api.article.dto.GetArticleResponseDTO;
 import animealth.animealthbackend.api.article.dto.UpdateArticleDTO.UpdateArticleRequestDTO;
 import animealth.animealthbackend.api.article.dto.UpdateArticleDTO.UpdateArticleResponseDTO;
+import animealth.animealthbackend.api.comment.dto.GetCommentResponseDTO;
 import animealth.animealthbackend.domain.article.Article;
 import animealth.animealthbackend.domain.article.ArticleRepository;
+import animealth.animealthbackend.domain.comment.CommentRepository;
 import animealth.animealthbackend.domain.user.User;
 import animealth.animealthbackend.domain.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -20,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
+@Transactional
 @RequiredArgsConstructor
 @Service
 public class ArticleService {
@@ -27,9 +31,9 @@ public class ArticleService {
     private static final int PAGE_SIZE = 10;
 
     private final ArticleRepository articleRepository;
+    private final CommentRepository commentRepository;
     private final UserRepository userRepository;
 
-    @Transactional
     public Article saveArticle(Long userId, CreateArticleRequestDTO request) {
         User writer = userRepository.findById(userId).orElseThrow(
                 () -> new EntityNotFoundException("User Not Found!")
@@ -49,7 +53,17 @@ public class ArticleService {
         Article article = articleRepository.findById(articleId).orElseThrow(
                 () -> new EntityNotFoundException("Article Not Found")
         );
-        return GetArticleResponseDTO.from(article);
+
+        GetArticleResponseDTO response = GetArticleResponseDTO.from(article);
+        setCommentsOnArticle(articleId, response);
+        return response;
+    }
+
+    private void setCommentsOnArticle(Long articleId, GetArticleResponseDTO response) {
+        response.setCommentsOnArticle(
+                commentRepository.findByArticleId(articleId)
+                        .stream().map(GetCommentResponseDTO::from).collect(Collectors.toList())
+        );
     }
 
     @Transactional(readOnly = true)
@@ -58,7 +72,6 @@ public class ArticleService {
         return articleRepository.findAll(pageable).map(GetArticlePageResponseDTO::of);
     }
 
-    @Transactional
     public UpdateArticleResponseDTO updateArticle(UpdateArticleRequestDTO request) {
         Article article = articleRepository.findById(request.getArticleId()).orElseThrow(
                 () -> new EntityNotFoundException("Article Not Found!")
@@ -74,7 +87,6 @@ public class ArticleService {
         return UpdateArticleResponseDTO.from(article);
     }
 
-    @Transactional
     public void deleteArticleById(Long articleId) {
         articleRepository.deleteById(articleId);
     }

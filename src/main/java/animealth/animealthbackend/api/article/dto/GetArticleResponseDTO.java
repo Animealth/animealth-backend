@@ -1,7 +1,9 @@
 package animealth.animealthbackend.api.article.dto;
 
+import animealth.animealthbackend.api.comment.dto.GetCommentResponseDTO;
 import animealth.animealthbackend.domain.article.Article;
 import java.io.Serializable;
+import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -12,6 +14,7 @@ public class GetArticleResponseDTO implements Serializable {
     private final String writer;
     private final String title;
     private final String content;
+    private List<GetCommentResponseDTO> comments;
 
     @Builder
     public GetArticleResponseDTO(Long articleId, String writer, String title, String content) {
@@ -28,6 +31,10 @@ public class GetArticleResponseDTO implements Serializable {
                 .title(article.getTitle())
                 .content(article.getContent())
                 .build();
+    }
+
+    public void setCommentsOnArticle(List<GetCommentResponseDTO> comments) {
+        this.comments = comments;
     }
 
 }
