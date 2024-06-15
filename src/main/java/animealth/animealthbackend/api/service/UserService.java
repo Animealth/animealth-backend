@@ -28,6 +28,7 @@ public class UserService {
                         .phone(user.getPhone())
                         .nickname(user.getNickname())
                         .role(user.getRole())
+                        .isDeleted(user.getIsDeleted())
                         .build())
                 .collect(Collectors.toList());
         return userDTOS;
@@ -43,10 +44,10 @@ public class UserService {
                 .phone(user.getPhone())
                 .nickname(user.getNickname())
                 .role(user.getRole())
+                .isDeleted(user.getIsDeleted())
                 .build();
         return userDTO;
     }
-
     @Transactional
     public UserDTO update(Long userId, UserDTO userDTO) {
         Optional<User> optionalUser = userRepository.findById(userId);
@@ -60,6 +61,7 @@ public class UserService {
                     .phone(user.getPhone())
                     .nickname(user.getNickname())
                     .role(user.getRole())
+                    .isDeleted(user.getIsDeleted())
                     .build();
         }else{
             throw new IllegalArgumentException("해당 아이디를 가진 user가 없습니다: "+userId);
@@ -67,14 +69,23 @@ public class UserService {
     }
 
     @Transactional
-    public void delete(Long id) {
+    public UserDTO delete(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             user.setIsDeleted(true);
             userRepository.save(user);
-        }else{
-            throw new IllegalArgumentException("해당 아이디를 가진 user가 없습니다: "+id);
+            return UserDTO.builder()
+                    .name(user.getName())
+                    .email(user.getEmail())
+                    .phone(user.getPhone())
+                    .nickname(user.getNickname())
+                    .role(user.getRole())
+                    .isDeleted(true)
+                    .build();
+        } else {
+            throw new IllegalArgumentException("해당 아이디를 가진 user가 없습니다: " + id);
         }
     }
+
 }

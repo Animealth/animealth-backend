@@ -1,10 +1,6 @@
 package animealth.animealthbackend.api.dto;
 
 import animealth.animealthbackend.domain.user.Role;
-import animealth.animealthbackend.domain.user.User;
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,12 +18,15 @@ public class UserDTO {
 
     private Role role;
 
+    private Boolean isDeleted;
+
     @Builder
-    public UserDTO(String name, String email, String phone, String nickname, Role role) {
+    public UserDTO(String name, String email, String phone, String nickname, Role role, Boolean isDeleted) {
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.nickname = nickname;
         this.role = role;
+        this.isDeleted = isDeleted;
     }
 }
