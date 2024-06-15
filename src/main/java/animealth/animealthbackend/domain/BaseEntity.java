@@ -27,7 +27,7 @@ public abstract class BaseEntity {
     @Column(columnDefinition = "bit default false NOT NULL COMMENT '이용가능여부'")
     private Boolean isDeleted;
 
-    public void setIsDeleted(boolean isDeleted) {
+    public void setIsDeleted(Boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
 

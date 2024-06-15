@@ -35,6 +35,10 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(columnDefinition = "bit default false NOT NULL COMMENT '이용가능여부'")
+    private Boolean isDeleted;
+
+
     @Builder
     public User(String name, String email, String phone, String nickname, Role role) {
         this.name = name;
@@ -42,6 +46,7 @@ public class User extends BaseEntity {
         this.phone = phone;
         this.nickname = nickname;
         this.role = role;
+        this.isDeleted = false;
     }
 
     public User update(String name, String phone, String nickname) {

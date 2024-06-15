@@ -33,8 +33,8 @@ public class UserController {
         return userService.update(id, userDTO);
     }
 
-    @PutMapping(value = "/delete/{id}", produces = "application/json; charset=UTF-8")
-    public void delete(@PathVariable Long id) {
-        userService.delete(id);
+    @DeleteMapping(value = "/delete/{id}", produces = "application/json; charset=UTF-8")
+    public UserDTO delete(@PathVariable Long id) {
+        return userService.delete(id);
     }
 }
