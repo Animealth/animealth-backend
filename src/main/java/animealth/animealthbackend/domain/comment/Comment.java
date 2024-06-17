@@ -19,6 +19,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Where;
 
@@ -43,6 +44,7 @@ public class Comment extends BaseEntity {
 
     private int depth;
 
+    @Setter
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "PARENT_COMMENT_ID")
     private Comment parentComment;
@@ -61,7 +63,7 @@ public class Comment extends BaseEntity {
         this.articleId = articleId;
     }
 
-    public static Comment of(User writer, String content, Comment parentComment, Long articleId) {
+    public static Comment of(final User writer, final String content, final Comment parentComment, final Long articleId) {
         return Comment.builder()
                 .writer(writer)
                 .content(content)
@@ -87,6 +89,11 @@ public class Comment extends BaseEntity {
 
     public void updateContent(String content) {
         this.content = content;
+    }
+
+    public void addChildComment(Comment childComment) {
+        childComment.setParentComment(this);
+        this.getChildComments().add(childComment);
     }
 
 }
