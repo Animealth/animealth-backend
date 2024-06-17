@@ -8,5 +8,10 @@ public class UpdateCommentRequestDTO {
     private Long commentId;
     private String content;
 
+    public UpdateCommentRequestDTO(Long commentId, String content) {
+        this.commentId = commentId;
+        this.content = content;
+    }
+
 }
 
