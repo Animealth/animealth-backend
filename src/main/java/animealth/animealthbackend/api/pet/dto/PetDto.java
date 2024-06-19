@@ -6,10 +6,10 @@ import animealth.animealthbackend.domain.pet.PetGender;
 import lombok.Builder;
 import lombok.Getter;
 
-public class CreatePetDto {
+public class PetDto {
 
     @Getter
-    public static class CreatePetRequestDTO {
+    public static class PetRequestDTO {
         private String name;
         private int age;
         private PetCategory category;
@@ -20,7 +20,7 @@ public class CreatePetDto {
     }
 
     @Getter
-    public static class CreatePetResponseDTO {
+    public static class PetResponseDTO {
         private Long petId;
         private String name;
         private int age;
@@ -31,7 +31,7 @@ public class CreatePetDto {
         private String imageUrl;
 
         @Builder
-        public CreatePetResponseDTO(Long petId, String name, int age, PetCategory category, int weight, boolean neutered, PetGender gender, String imageUrl) {
+        public PetResponseDTO(Long petId, String name, int age, PetCategory category, int weight, boolean neutered, PetGender gender, String imageUrl) {
             this.petId = petId;
             this.name = name;
             this.age = age;
@@ -42,8 +42,8 @@ public class CreatePetDto {
             this.imageUrl = imageUrl;
         }
 
-        public static CreatePetResponseDTO from(Pet petEntity) {
-            return CreatePetResponseDTO.builder()
+        public static PetResponseDTO from(Pet petEntity) {
+            return PetResponseDTO.builder()
                     .petId(petEntity.getId())
                     .name(petEntity.getName())
                     .age(petEntity.getAge())

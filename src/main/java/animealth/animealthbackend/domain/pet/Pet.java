@@ -1,5 +1,7 @@
 package animealth.animealthbackend.domain.pet;
 
+import animealth.animealthbackend.api.pet.dto.PetDto.*;
+import animealth.animealthbackend.api.pet.dto.UpdatePetResponseDTO;
 import animealth.animealthbackend.domain.BaseEntity;
 import animealth.animealthbackend.domain.user.User;
 import jakarta.persistence.*;
@@ -89,5 +91,15 @@ public class Pet extends BaseEntity {
                 .gender(gender)
                 .imageUrl(imageUrl)
                 .build();
+    }
+
+    public void updatePetInfo(UpdatePetResponseDTO request) {
+        this.name = request.getName();
+        this.age = request.getAge();
+        this.category = request.getCategory();
+        this.weight = request.getWeight();
+        this.neutered = request.isNeutered();
+        this.gender = request.getGender();
+        this.imageUrl = request.getImageUrl();
     }
 }
