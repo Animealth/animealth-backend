@@ -17,6 +17,7 @@ import org.hibernate.annotations.Where;
 @DynamicUpdate
 @Where(clause = "IS_DELETED = false")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table
 public class Pet extends BaseEntity {
     @Id
     @Column(name = "PET_ID")

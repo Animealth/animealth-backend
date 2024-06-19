@@ -32,7 +32,7 @@ class MedicalHistoryTest {
 
     @Test
     void getMedicalType() {
-        assertEquals("Test medical type", medicalHistory.getMedicalType());
+        assertEquals("Test medical type", medicalHistory.getVaccineType());
     }
 
     @Test

@@ -2,6 +2,8 @@ package animealth.animealthbackend.domain.medical_history;
 
 import animealth.animealthbackend.domain.pet.Pet;
 import animealth.animealthbackend.domain.user.User;
+import animealth.animealthbackend.domain.vaccine.VaccineType;
+import animealth.animealthbackend.domain.vaccine.VaccineTypeConverter;
 import animealth.animealthbackend.domain.veterinary.Veterinary;
 import jakarta.persistence.*;
 import lombok.*;
@@ -25,8 +27,8 @@ public class MedicalHistory {
 
     private LocalDateTime medicalDate;
 
-    @Column(columnDefinition = "varchar(250)")
-    private String medicalType;
+    @Convert(converter = VaccineTypeConverter.class)
+    private VaccineType vaccineType;
 
     @ManyToOne
     @JoinColumn(name = "pet_id")
