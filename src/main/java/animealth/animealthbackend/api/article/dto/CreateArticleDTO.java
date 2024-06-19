@@ -11,6 +11,11 @@ public class CreateArticleDTO {
     public static class CreateArticleRequestDTO {
         private String title;
         private String content;
+
+        public CreateArticleRequestDTO(String title, String content) {
+            this.title = title;
+            this.content = content;
+        }
     }
 
     @Getter
