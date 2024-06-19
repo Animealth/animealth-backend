@@ -89,8 +89,10 @@ public class PetService {
         return PetResponseDTO.from(petToUpdate);
     }
 
-
-
+    @Transactional
+    public void deletePetById(Long petId) {
+        petRepository.deleteById(petId);
+    }
 
 
 }

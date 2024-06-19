@@ -48,9 +48,19 @@ public class PetController extends BaseController {
     /**
      * 애완동물 업데이트
      */
-    @PostMapping(value = "/update")
+    @PatchMapping(value = "/update")
     public ResponseDTO<PetResponseDTO> updatePet(@RequestBody UpdatePetResponseDTO dto) {
         return ResponseDTO.ok(petService.update(dto));
     }
+
+    /**
+     * 애완동물 삭제
+     */
+    @DeleteMapping(value = "/delete/{petId}")
+    public ResponseDTO<Void> deletePet(@PathVariable(value = "petId") Long petId) {
+        petService.deletePetById(petId);
+        return ResponseDTO.ok();
+    }
+
 
 }
