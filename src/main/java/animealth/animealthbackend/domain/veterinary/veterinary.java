@@ -1,10 +1,7 @@
 package animealth.animealthbackend.domain.veterinary;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  *
@@ -14,9 +11,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "veterinaries")
+@Table(name = "Veterinaries")
 @Entity
-public class veterinary {
+@Builder
+public class Veterinary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long veterinaryId;
