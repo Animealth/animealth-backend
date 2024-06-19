@@ -11,6 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
@@ -18,7 +21,6 @@ public class PetService {
 
     private final UserRepository userRepository;
     private final PetRepository petRepository;
-
 
     /**
      * 키우고 있는 애완동물 등록
@@ -42,6 +44,23 @@ public class PetService {
                 )
         );
 
+    }
+
+    /**
+     * 애완동물 리스트 조회
+     */
+    public List<PetResponseDTO> findPets(Long userId) {
+        User owner = userRepository.findById(userId).orElseThrow(
+                () -> new EntityNotFoundException("User Not Found!")
+        );
+
+        List<Pet> petList = petRepository.findByOwner(owner);
+
+        List<PetResponseDTO> petDTOList = petList.stream()
+                .map(PetResponseDTO::from)
+                .toList();
+
+        return petDTOList;
     }
 
     /**

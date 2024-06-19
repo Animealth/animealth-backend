@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/pet")
@@ -24,6 +26,15 @@ public class PetController extends BaseController {
     public ResponseDTO<PetResponseDTO> registerPet(HttpSession session, @RequestBody PetRequestDTO dto) {
         SessionUser principal = (SessionUser) session.getAttribute("user");
         return ResponseDTO.ok(PetResponseDTO.from(petService.registerPet(principal.getId(), dto)));
+    }
+
+    /**
+     * 내 애완동물 리스트 조회
+     */
+    @GetMapping()
+    public ResponseDTO<List<PetResponseDTO>> findPets(HttpSession session) {
+        SessionUser principal = (SessionUser) session.getAttribute("user");
+        return ResponseDTO.ok(petService.findPets(principal.getId()));
     }
 
     /**
