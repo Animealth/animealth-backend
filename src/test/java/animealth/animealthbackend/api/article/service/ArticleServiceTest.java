@@ -5,6 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 import animealth.animealthbackend.api.article.dto.CreateArticleDTO.CreateArticleRequestDTO;
+import animealth.animealthbackend.api.article.dto.CreateArticleDTO.CreateArticleResponseDTO;
 import animealth.animealthbackend.api.article.dto.GetArticleResponseDTO;
 import animealth.animealthbackend.api.article.dto.UpdateArticleDTO.UpdateArticleRequestDTO;
 import animealth.animealthbackend.domain.article.Article;
@@ -52,7 +53,7 @@ class ArticleServiceTest {
         CreateArticleRequestDTO request = new CreateArticleRequestDTO("테스트 게시글", "게시글 내용");
 
         // when
-        Article response = articleService.saveArticle(writer.getUserId(), request);
+        CreateArticleResponseDTO response = articleService.saveArticle(writer.getUserId(), request);
 
         //then
         assertThat(response).extracting("writer", "title", "content")
@@ -64,15 +65,15 @@ class ArticleServiceTest {
     void findArticle_By_ArticleId_WithoutComment_Test() {
         // given
         CreateArticleRequestDTO savedRequest = new CreateArticleRequestDTO("테스트 게시글", "게시글 내용");
-        Article savedResponse = articleService.saveArticle(writer.getUserId(), savedRequest);
+        CreateArticleResponseDTO savedResponse = articleService.saveArticle(writer.getUserId(), savedRequest);
 
         // when
-        GetArticleResponseDTO response = articleService.getArticleById(savedResponse.getId());
+        GetArticleResponseDTO response = articleService.getArticleById(savedResponse.getArticleId());
 
         // then
         assertThat(response)
                 .extracting("articleId", "writer", "title", "content")
-                .containsExactlyInAnyOrder(savedResponse.getId(), writer.getNickname(), savedRequest.getTitle(), savedRequest.getContent());
+                .containsExactlyInAnyOrder(savedResponse.getArticleId(), writer.getNickname(), savedRequest.getTitle(), savedRequest.getContent());
 
         assertThat(response.getComments()).isEmpty();
     }
@@ -82,21 +83,21 @@ class ArticleServiceTest {
     void findArticle_By_ArticleId_WithComment_Test() {
         // given
         CreateArticleRequestDTO savedRequest = new CreateArticleRequestDTO("테스트 게시글", "게시글 내용");
-        Article savedResponse = articleService.saveArticle(writer.getUserId(), savedRequest);
+        CreateArticleResponseDTO savedResponse = articleService.saveArticle(writer.getUserId(), savedRequest);
 
         List<Comment> commentsOnArticle = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            commentsOnArticle.add(createComment(writer, "댓글입니다 " + i, null, savedResponse.getId()));
+            commentsOnArticle.add(createComment(writer, "댓글입니다 " + i, null, savedResponse.getArticleId()));
         }
         commentRepository.saveAll(commentsOnArticle);
 
         // when
-        GetArticleResponseDTO response = articleService.getArticleById(savedResponse.getId());
+        GetArticleResponseDTO response = articleService.getArticleById(savedResponse.getArticleId());
 
         // then
         assertThat(response)
                 .extracting("articleId", "writer", "title", "content")
-                .containsExactlyInAnyOrder(savedResponse.getId(), writer.getNickname(), savedRequest.getTitle(), savedRequest.getContent());
+                .containsExactlyInAnyOrder(savedResponse.getArticleId(), writer.getNickname(), savedRequest.getTitle(), savedRequest.getContent());
 
         assertThat(response.getComments()).hasSize(5);
         assertThat(response.getComments().get(0).getContent()).isEqualTo("댓글입니다 0");
@@ -121,10 +122,10 @@ class ArticleServiceTest {
     void updateArticle_Test() {
         // given
         CreateArticleRequestDTO savedRequest = new CreateArticleRequestDTO("테스트 게시글", "게시글 내용");
-        Article savedResponse = articleService.saveArticle(writer.getUserId(), savedRequest);
+        CreateArticleResponseDTO savedResponse = articleService.saveArticle(writer.getUserId(), savedRequest);
 
         // when
-        UpdateArticleRequestDTO request = new UpdateArticleRequestDTO(savedResponse.getId(), "수정된 게시글 제목", "수정된 게시글 내용");
+        UpdateArticleRequestDTO request = new UpdateArticleRequestDTO(savedResponse.getArticleId(), "수정된 게시글 제목", "수정된 게시글 내용");
 
         // then
         assertThat(articleService.updateArticle(request))
@@ -137,13 +138,13 @@ class ArticleServiceTest {
     void deleteArticle_Test() {
         // given
         CreateArticleRequestDTO savedRequest = new CreateArticleRequestDTO("테스트 게시글", "게시글 내용");
-        Article savedResponse = articleService.saveArticle(writer.getUserId(), savedRequest);
+        CreateArticleResponseDTO savedResponse = articleService.saveArticle(writer.getUserId(), savedRequest);
 
         // when
-        articleService.deleteArticleById(savedResponse.getId());
+        articleService.deleteArticleById(savedResponse.getArticleId());
 
         // then
-        assertThatThrownBy(() -> articleService.getArticleById(savedResponse.getId()))
+        assertThatThrownBy(() -> articleService.getArticleById(savedResponse.getArticleId()))
                 .isInstanceOf(EntityNotFoundException.class)
                 .hasMessage("Article Not Found");
     }
