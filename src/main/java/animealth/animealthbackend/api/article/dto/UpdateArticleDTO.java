@@ -11,6 +11,12 @@ public class UpdateArticleDTO {
         private Long articleId;
         private String title;
         private String content;
+
+        public UpdateArticleRequestDTO(Long articleId, String title, String content) {
+            this.articleId = articleId;
+            this.title = title;
+            this.content = content;
+        }
     }
 
     @Getter

@@ -34,18 +34,20 @@ public class ArticleService {
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
 
-    public Article saveArticle(Long userId, CreateArticleRequestDTO request) {
+    public CreateArticleResponseDTO saveArticle(Long userId, CreateArticleRequestDTO request) {
         User writer = userRepository.findById(userId).orElseThrow(
                 () -> new EntityNotFoundException("User Not Found!")
         );
 
-        return articleRepository.save(
-            Article.of(
-                writer,
-                request.getTitle(),
-                request.getContent()
-            )
+        Article article = articleRepository.save(
+                Article.of(
+                        writer,
+                        request.getTitle(),
+                        request.getContent()
+                )
         );
+
+        return CreateArticleResponseDTO.from(article);
     }
 
     @Transactional(readOnly = true)

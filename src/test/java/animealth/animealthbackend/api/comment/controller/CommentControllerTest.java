@@ -51,12 +51,11 @@ class CommentControllerTest {
 
     @BeforeEach
     void setup() {
-        writer = new User(
-                1L, "user1", "user1@example.com",
+        writer = new User(1L, "user1", "user1@example.com",
                 "01012341234", "뽀미엄마", USER, false);
     }
 
-    @DisplayName("댓글을 생성한다.")
+    @DisplayName("댓글 생성")
     @Test
     void createComment_Test() throws Exception {
         // given
@@ -126,7 +125,7 @@ class CommentControllerTest {
         ;
     }
 
-    @DisplayName("단일 댓글 조회")
+    @DisplayName("댓글 수정")
     @Test
     void updateComment_Test() throws Exception {
         // given
