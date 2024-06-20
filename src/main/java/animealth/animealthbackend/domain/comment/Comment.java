@@ -2,7 +2,7 @@ package animealth.animealthbackend.domain.comment;
 
 import static jakarta.persistence.FetchType.LAZY;
 
-import animealth.animealthbackend.domain.BaseEntity;
+import animealth.animealthbackend.domain.common.BaseEntity;
 import animealth.animealthbackend.domain.user.User;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

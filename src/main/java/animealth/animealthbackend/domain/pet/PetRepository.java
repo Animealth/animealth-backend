@@ -1,4 +1,4 @@
-package animealth.animealthbackend.api.pet.repository;
+package animealth.animealthbackend.domain.pet;
 
 import animealth.animealthbackend.domain.pet.Pet;
 import animealth.animealthbackend.domain.user.User;

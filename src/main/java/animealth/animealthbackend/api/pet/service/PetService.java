@@ -2,7 +2,7 @@ package animealth.animealthbackend.api.pet.service;
 
 import animealth.animealthbackend.api.pet.dto.PetDto.*;
 import animealth.animealthbackend.api.pet.dto.UpdatePetResponseDTO;
-import animealth.animealthbackend.api.pet.repository.PetRepository;
+import animealth.animealthbackend.domain.pet.PetRepository;
 import animealth.animealthbackend.domain.pet.Pet;
 import animealth.animealthbackend.domain.user.User;
 import animealth.animealthbackend.domain.user.UserRepository;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
