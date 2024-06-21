@@ -49,6 +49,7 @@ build/
 application-dev*.yml
 application-prod*.yml
 application-local*.yml
+application-oauth.yml
 src/test/resources/application.yml
 
 # q type이 들어있는 generated는 무시
