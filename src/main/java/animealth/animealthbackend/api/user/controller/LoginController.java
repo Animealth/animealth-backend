@@ -1,4 +1,4 @@
-package animealth.animealthbackend.api.controller;
+package animealth.animealthbackend.api.user.controller;
 
 import animealth.animealthbackend.global.config.auth.dto.SessionUser;
 import jakarta.servlet.http.HttpSession;

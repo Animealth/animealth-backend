@@ -1,8 +1,7 @@
 package animealth.animealthbackend.domain.pet;
 
-import animealth.animealthbackend.api.pet.dto.PetDto.*;
 import animealth.animealthbackend.api.pet.dto.UpdatePetResponseDTO;
-import animealth.animealthbackend.domain.BaseEntity;
+import animealth.animealthbackend.domain.common.BaseEntity;
 import animealth.animealthbackend.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;

@@ -1,6 +1,5 @@
 package animealth.animealthbackend.global.config.auth.dto;
 
-import animealth.animealthbackend.api.dto.UserDTO;
 import animealth.animealthbackend.domain.user.Role;
 import animealth.animealthbackend.domain.user.User;
 import lombok.Builder;

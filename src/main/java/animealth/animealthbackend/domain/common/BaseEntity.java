@@ -1,4 +1,4 @@
-package animealth.animealthbackend.domain;
+package animealth.animealthbackend.domain.common;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.Column;

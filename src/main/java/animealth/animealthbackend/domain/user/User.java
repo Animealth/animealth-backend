@@ -1,15 +1,12 @@
 package animealth.animealthbackend.domain.user;
 
-import animealth.animealthbackend.api.dto.UserDTO;
-import animealth.animealthbackend.domain.BaseEntity;
+import animealth.animealthbackend.domain.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
-
-import java.math.BigInteger;
 
 @Entity
 @Getter

@@ -1,7 +1,7 @@
-package animealth.animealthbackend.api.controller;
+package animealth.animealthbackend.api.user.controller;
 
-import animealth.animealthbackend.api.dto.UserDTO;
-import animealth.animealthbackend.api.service.UserService;
+import animealth.animealthbackend.api.user.dto.UserDTO;
+import animealth.animealthbackend.api.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
