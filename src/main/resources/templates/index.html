@@ -25,6 +25,7 @@
         <br>
         <button type="submit">생성하기</button>
         <button type="button" id="updateSpendingHistory">수정하기</button>
+        <button type="button" id="deleteSpendingHistory">삭제하기</button>
     </form>
     <button id="viewSpendingHistory">내가 쓴 가계부 보기</button>
     <div id="spendingHistoryList"></div>
@@ -124,6 +125,24 @@
                 }
             });
         });
+        $('#deleteSpendingHistory').click(function (){
+            const spendingId = $('#spendingId').val();
+            $.ajax({
+                type: 'DELETE',
+                url: 'api/spending_history/delete/'+spendingId,
+                contentType: 'application/json',
+                success: function(response) {
+                    alert('Spending history deleted successfully!');
+                    // 성공 시 추가 작업
+                    $('#viewSpendingHistory').click();
+                },
+                error: function(error) {
+                    alert('Error deleting spending history');
+                    console.log(error);
+                }
+            });
+            }
+        )
     });
 </script>
 </body>

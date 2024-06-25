@@ -37,4 +37,11 @@ public class SpendingHistoryController {
         SessionUser sessionUser = (SessionUser) session.getAttribute("user");
         return spendingHistoryService.update(sessionUser.getId(), spendingHistoryDTO);
     }
+
+    //내 가계부 삭제
+    @DeleteMapping(value = "/delete/{spendingHistoryId}")
+    public boolean delete(HttpSession session, @PathVariable Long spendingHistoryId) {
+        SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+        return spendingHistoryService.delete(sessionUser.getId(), spendingHistoryId);
+    }
 }

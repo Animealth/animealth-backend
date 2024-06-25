@@ -74,4 +74,20 @@ public class SpendingHistoryService {
             throw new EntityNotFoundException("Spending history not found");
         }
     }
+
+    //가계부 삭제
+    @Transactional
+    public boolean delete(Long id, Long spendingHistoryId) {
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("User not found")
+        );
+        Optional<SpendingHistory> optionalSpendingHistory = spendingHistoryRepository.findById(spendingHistoryId);
+        if(optionalSpendingHistory.isPresent() && optionalSpendingHistory.get().getUser().getUserId().equals(id)){
+            SpendingHistory sh = optionalSpendingHistory.get();
+            spendingHistoryRepository.delete(sh);
+            return true;
+        }else{
+            throw new EntityNotFoundException("Spending history not found");
+        }
+    }
 }
