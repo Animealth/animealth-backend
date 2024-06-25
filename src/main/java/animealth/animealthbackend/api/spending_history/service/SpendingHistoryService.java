@@ -11,6 +11,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RequiredArgsConstructor
 @Service
 public class SpendingHistoryService {
@@ -19,7 +22,7 @@ public class SpendingHistoryService {
 
     //가계부 등록
     @Transactional
-    public SpendingHistory save(Long userId, SpendingHistoryDTO spendingHistoryDTO) {
+    public SpendingHistoryDTO save(Long userId, SpendingHistoryDTO spendingHistoryDTO) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new EntityNotFoundException("User not found")
         );
@@ -31,8 +34,19 @@ public class SpendingHistoryService {
                 .spendingDate(spendingHistoryDTO.getSpendingDate())
                 .spendingType(spendingHistoryDTO.getSpendingType())
                 .build();
-        return spendingHistoryRepository.save(
+        return spendingHistoryDTO.from(spendingHistoryRepository.save(
                 spendingHistory
+        ));
+    }
+
+    //가계부 읽기
+    public List<SpendingHistoryDTO> findById(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new EntityNotFoundException("User not found")
         );
+        List<SpendingHistory> spendingHistories = spendingHistoryRepository.findByUserId(userId);
+        return spendingHistories.stream()
+                .map(SpendingHistoryDTO::from)
+                .collect(Collectors.toList());
     }
 }
