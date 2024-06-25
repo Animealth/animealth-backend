@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -48,5 +49,29 @@ public class SpendingHistoryService {
         return spendingHistories.stream()
                 .map(SpendingHistoryDTO::from)
                 .collect(Collectors.toList());
+    }
+
+    //가계부 수정
+    @Transactional
+    public SpendingHistoryDTO update(Long userId, SpendingHistoryDTO spendingHistoryDTO) {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new EntityNotFoundException("User not found")
+        );
+        Optional<SpendingHistory> optionalSpendingHistory = spendingHistoryRepository.findById(spendingHistoryDTO.getSpendingId());
+        if(optionalSpendingHistory.isPresent()){
+            SpendingHistory sh = optionalSpendingHistory.get();
+            sh = sh.update(spendingHistoryDTO.getSpendingContent(), spendingHistoryDTO.getSpendingDate(), spendingHistoryDTO.getSpendingType(), spendingHistoryDTO.getSpendingAmount());
+            spendingHistoryRepository.save(sh);
+            return SpendingHistoryDTO.builder()
+                    .spendingId(spendingHistoryDTO.getSpendingId())
+                    .spendingAmount(sh.getSpendingAmount())
+                    .spendingContent(sh.getSpendingContent())
+                    .spendingDate(sh.getSpendingDate())
+                    .spendingType(sh.getSpendingType())
+                    .user(user)
+                    .build();
+        }else {
+            throw new EntityNotFoundException("Spending history not found");
+        }
     }
 }

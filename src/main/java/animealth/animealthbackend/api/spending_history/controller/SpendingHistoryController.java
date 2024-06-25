@@ -30,4 +30,11 @@ public class SpendingHistoryController {
         SessionUser sessionUser = (SessionUser) session.getAttribute("user");
         return spendingHistoryService.findById(sessionUser.getId());
     }
+
+    //내 가계부 수정
+    @PutMapping(value = "/update")
+    public SpendingHistoryDTO update(HttpSession session, @RequestBody SpendingHistoryDTO spendingHistoryDTO) {
+        SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+        return spendingHistoryService.update(sessionUser.getId(), spendingHistoryDTO);
+    }
 }
