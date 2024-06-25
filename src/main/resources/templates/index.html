@@ -10,6 +10,7 @@
     <p th:text="'Hello, ' + ${userName} + '!'"></p>
     <p><a href="/logout">Logout</a></p>
     <form id="spendingForm">
+        <input type="hidden" id="spendingId" name="spendingId">
         <label for="spendingAmount">금액 :</label>
         <input type="number" id="spendingAmount" name="spendingAmount" required>
         <br>
@@ -23,6 +24,7 @@
         <input type="text" id="spendingType" name="spendingType" required>
         <br>
         <button type="submit">생성하기</button>
+        <button type="button" id="updateSpendingHistory">수정하기</button>
     </form>
     <button id="viewSpendingHistory">내가 쓴 가계부 보기</button>
     <div id="spendingHistoryList"></div>
@@ -65,7 +67,7 @@
                 success: function(response) {
                     let spendingHistoryList = '<ul>';
                     response.forEach(function(item) {
-                        spendingHistoryList += '<li>' +
+                        spendingHistoryList += '<li data-id="' + item.spendingId + '">' +
                             '금액 : ' + item.spendingAmount + ', ' +
                             '내용 : ' + item.spendingContent + ', ' +
                             '날짜 : ' + item.spendingDate + ', ' +
@@ -74,9 +76,50 @@
                     });
                     spendingHistoryList += '</ul>';
                     $('#spendingHistoryList').html(spendingHistoryList);
+
+                    // Add click event to list items
+                    $('#spendingHistoryList li').click(function() {
+                        const id = $(this).data('id');
+                        const selectedItem = response.find(item => item.spendingId === id);
+
+                        if (selectedItem) {
+                            $('#spendingId').val(selectedItem.spendingId);
+                            $('#spendingAmount').val(selectedItem.spendingAmount);
+                            $('#spendingContent').val(selectedItem.spendingContent);
+                            $('#spendingDate').val(selectedItem.spendingDate);
+                            $('#spendingType').val(selectedItem.spendingType);
+                        } else {
+                            alert('Selected item not found');
+                        }
+                    });
                 },
                 error: function(error) {
                     alert('Error fetching spending history');
+                    console.log(error);
+                }
+            });
+        });
+
+        $('#updateSpendingHistory').click(function() {
+            const spendingData = {
+                spendingId: $('#spendingId').val(),
+                spendingAmount: $('#spendingAmount').val(),
+                spendingContent: $('#spendingContent').val(),
+                spendingDate: $('#spendingDate').val(),
+                spendingType: $('#spendingType').val()
+            };
+
+            $.ajax({
+                type: 'PUT',
+                url: '/api/spending_history/update',
+                data: JSON.stringify(spendingData),
+                contentType: 'application/json',
+                success: function(response) {
+                    alert('Spending history updated successfully!');
+                    // 성공 시 추가 작업
+                },
+                error: function(error) {
+                    alert('Error updating spending history');
                     console.log(error);
                 }
             });

@@ -47,6 +47,14 @@ public class SpendingHistory extends BaseEntity {
     @JoinColumn
     private User user;
 
+    public SpendingHistory update(String spendingContent, LocalDate spendingDate, String spendingType, BigDecimal spendingAmount) {
+        this.spendingContent = spendingContent;
+        this.spendingDate = spendingDate;
+        this.spendingType = spendingType;
+        this.spendingAmount = spendingAmount;
+        return this;
+    }
+
     public static SpendingHistory createSpendingHistory(SpendingHistoryDTO spendingHistoryDTO) {
         return SpendingHistory.builder()
                 .spendingContent(spendingHistoryDTO.getSpendingContent())
