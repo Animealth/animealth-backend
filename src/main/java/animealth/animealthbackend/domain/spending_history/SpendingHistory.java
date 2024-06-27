@@ -27,7 +27,6 @@ import java.time.LocalDate;
 @Where(clause = "IS_DELETED = false")
 public class SpendingHistory extends BaseEntity {
     @Id
-    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long spendingId;
 
