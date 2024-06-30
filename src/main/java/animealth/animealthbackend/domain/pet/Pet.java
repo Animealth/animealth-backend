@@ -1,8 +1,7 @@
 package animealth.animealthbackend.domain.pet;
 
-import animealth.animealthbackend.api.pet.dto.PetDto.*;
 import animealth.animealthbackend.api.pet.dto.UpdatePetResponseDTO;
-import animealth.animealthbackend.domain.BaseEntity;
+import animealth.animealthbackend.domain.common.BaseEntity;
 import animealth.animealthbackend.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -17,6 +16,7 @@ import org.hibernate.annotations.Where;
 @DynamicUpdate
 @Where(clause = "IS_DELETED = false")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table
 public class Pet extends BaseEntity {
     @Id
     @Column(name = "PET_ID")

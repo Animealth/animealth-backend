@@ -1,6 +1,6 @@
 package animealth.animealthbackend.domain.article;
 
-import animealth.animealthbackend.domain.BaseEntity;
+import animealth.animealthbackend.domain.common.BaseEntity;
 import animealth.animealthbackend.domain.user.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

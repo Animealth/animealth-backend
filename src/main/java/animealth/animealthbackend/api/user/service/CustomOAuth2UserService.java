@@ -1,4 +1,4 @@
-package animealth.animealthbackend.api.service;
+package animealth.animealthbackend.api.user.service;
 
 import animealth.animealthbackend.global.config.auth.dto.SessionUser;
 import animealth.animealthbackend.domain.user.User;

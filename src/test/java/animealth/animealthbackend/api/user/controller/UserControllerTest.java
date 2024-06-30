@@ -1,18 +1,13 @@
-package animealth.animealthbackend.api.controller;
+package animealth.animealthbackend.api.user.controller;
 
-import animealth.animealthbackend.api.dto.UserDTO;
-import animealth.animealthbackend.api.service.CustomOAuth2UserService;
-import animealth.animealthbackend.api.service.UserService;
+import animealth.animealthbackend.api.user.controller.UserController;
+import animealth.animealthbackend.api.user.dto.UserDTO;
+import animealth.animealthbackend.api.user.service.CustomOAuth2UserService;
+import animealth.animealthbackend.api.user.service.UserService;
 import animealth.animealthbackend.domain.user.Role;
-import animealth.animealthbackend.domain.user.User;
 import animealth.animealthbackend.domain.user.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.InjectMocks;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -23,10 +18,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.Optional;
 
-
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
