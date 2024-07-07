@@ -1,11 +1,15 @@
 package animealth.animealthbackend.domain.review;
 
 import animealth.animealthbackend.domain.common.BaseEntity;
+import animealth.animealthbackend.domain.user.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,25 +35,26 @@ public class Review extends BaseEntity {
     @Column(name = "RATING")
     private int rating;
 
-    @Column(name = "WRITER_ID")
-    private Long writerId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "WRITER_ID")
+    private User writer;
 
     @Column(name = "VET_ID")
     private Long vetId;
 
     @Builder
-    public Review(String content, int rating, Long writerId, Long vetId) {
+    public Review(String content, int rating, User writer, Long vetId) {
         this.content = content;
         this.rating = rating;
-        this.writerId = writerId;
+        this.writer = writer;
         this.vetId = vetId;
     }
 
-    public static final Review of(String content, int rating, Long writerId, Long vetId) {
+    public static final Review of(String content, int rating, User writer, Long vetId) {
         return Review.builder()
                 .content(content)
                 .rating(rating)
-                .writerId(writerId)
+                .writer(writer)
                 .vetId(vetId)
                 .build();
     }

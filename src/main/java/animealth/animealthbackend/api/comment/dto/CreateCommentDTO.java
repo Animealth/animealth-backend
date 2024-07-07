@@ -40,11 +40,11 @@ public class CreateCommentDTO {
             this.articleId = articleId;
             this.content = content;
             this.depth = depth;
-            this.parentComment = GetCommentResponseDTO.from(parentComment);
+            this.parentComment = GetCommentResponseDTO.fromEntity(parentComment);
             this.childComments = childComments;
         }
 
-        public static final CreateCommentResponseDTO from(Comment comment) {
+        public static final CreateCommentResponseDTO fromEntity(Comment comment) {
             return CreateCommentResponseDTO.builder()
                     .commentId(comment.getId())
                     .writer(comment.getWriter().getNickname())
