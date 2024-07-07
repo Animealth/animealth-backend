@@ -33,12 +33,12 @@ public class CommentService {
             if (parentComment.isPresent()) {
                 Comment childComment = Comment.of(writer, request.getContent(), parentComment.get(), request.getArticleId());
                 parentComment.get().addChildComment(childComment);
-                return CreateCommentResponseDTO.from(commentRepository.save(childComment));
+                return CreateCommentResponseDTO.fromEntity(commentRepository.save(childComment));
             }
         }
 
         Comment rootComment = Comment.of(writer, request.getContent(), null, request.getArticleId());
-        return CreateCommentResponseDTO.from(commentRepository.save(rootComment));
+        return CreateCommentResponseDTO.fromEntity(commentRepository.save(rootComment));
     }
 
     private User findWriter(Long userId) {
@@ -53,7 +53,7 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     public GetCommentResponseDTO findCommentById(Long commentId) {
-        return GetCommentResponseDTO.from(commentRepository.findById(commentId).orElseThrow(
+        return GetCommentResponseDTO.fromEntity(commentRepository.findById(commentId).orElseThrow(
                 () -> new EntityNotFoundException("Comment Not Found")
         ));
     }
@@ -64,7 +64,7 @@ public class CommentService {
         );
 
         comment.updateContent(request.getContent());
-        return GetCommentResponseDTO.from(commentRepository.save(comment));
+        return GetCommentResponseDTO.fromEntity(commentRepository.save(comment));
     }
 
     public void deleteCommentById(Long commentId) {

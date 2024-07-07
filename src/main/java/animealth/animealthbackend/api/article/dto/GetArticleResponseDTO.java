@@ -24,7 +24,7 @@ public class GetArticleResponseDTO implements Serializable {
         this.content = content;
     }
 
-    public static GetArticleResponseDTO from(Article article) {
+    public static GetArticleResponseDTO fromEntity(Article article) {
         return GetArticleResponseDTO.builder()
                 .articleId(article.getId())
                 .writer(article.getWriter().getNickname())

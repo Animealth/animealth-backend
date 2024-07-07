@@ -30,7 +30,7 @@ public class UpdateArticleDTO {
             this.content = content;
         }
 
-        public static UpdateArticleResponseDTO from(Article article) {
+        public static UpdateArticleResponseDTO fromEntity(Article article) {
             return UpdateArticleResponseDTO.builder()
                     .title(article.getTitle())
                     .content(article.getContent())
