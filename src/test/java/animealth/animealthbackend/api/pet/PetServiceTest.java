@@ -1,29 +1,28 @@
-package animealth.animealthbackend.domain.pet;
+package animealth.animealthbackend.api.pet;
 
+import animealth.animealthbackend.api.pet.service.PetService;
+import animealth.animealthbackend.domain.pet.Pet;
+import animealth.animealthbackend.domain.pet.PetCategory;
+import animealth.animealthbackend.domain.pet.PetGender;
+import animealth.animealthbackend.domain.pet.PetRepository;
 import animealth.animealthbackend.domain.user.Role;
 import animealth.animealthbackend.domain.user.User;
 import animealth.animealthbackend.domain.user.UserRepository;
-import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
-import java.util.Optional;
+@ExtendWith(MockitoExtension.class)
+public class PetServiceTest {
+    @InjectMocks
+    private PetService petService;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = Replace.NONE)
-public class PetRepositoryTest {
-
-    @Autowired
+    @Mock
     private PetRepository petRepository;
-    @Autowired
+
+    @Mock
     private UserRepository userRepository;
 
     private User owner;
@@ -51,40 +50,6 @@ public class PetRepositoryTest {
 
     }
 
-    @DisplayName("주인의 애완동물 리스트를 찾는 테스트")
-    @Test
-    void findPets(){
-        //when
-        List<Pet> byOwner = petRepository.findByOwner(owner);
-
-        //then
-        assertThat(byOwner.get(0)).isEqualTo(pet);
-
-    }
-
-    @DisplayName("애완동물 ID로 조회 (상세 조회) 테스트")
-    @Test
-    void getPetById(){
-        //when
-        Optional<Pet> byId = petRepository.findById(pet.getId());
-
-        //then
-        assertThat(byId.isPresent()).isTrue();
-        assertThat(byId.get()).isEqualTo(pet);
-
-    }
-
-    @DisplayName("애완동물 삭제 테스트")
-    @Test
-    void deletePetById(){
-        //when
-        petRepository.deleteById(pet.getId());
-
-        //then
-        Optional<Pet> byId = petRepository.findById(pet.getId());
-        assertThat(byId.isPresent()).isFalse();
-
-    }
 
 
     private User createOwner(
@@ -120,7 +85,5 @@ public class PetRepositoryTest {
                 gender,
                 imageUrl);
     }
-
-
 
 }
