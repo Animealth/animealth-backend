@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,8 +25,6 @@ public class PetRepositoryTest {
     private PetRepository petRepository;
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    EntityManager em;
 
     private User owner;
     private Pet pet;
@@ -63,9 +62,29 @@ public class PetRepositoryTest {
 
     }
 
+    @DisplayName("애완동물 ID로 조회 (상세 조회) 테스트")
+    @Test
+    void getPetById(){
+        //when
+        Optional<Pet> byId = petRepository.findById(pet.getId());
 
+        //then
+        assertThat(byId.isPresent()).isTrue();
+        assertThat(byId.get()).isEqualTo(pet);
 
+    }
 
+    @DisplayName("애완동물 삭제 테스트")
+    @Test
+    void deletePetById(){
+        //when
+        petRepository.deleteById(pet.getId());
+
+        //then
+        Optional<Pet> byId = petRepository.findById(pet.getId());
+        assertThat(byId.isPresent()).isFalse();
+
+    }
 
 
     private User createOwner(
