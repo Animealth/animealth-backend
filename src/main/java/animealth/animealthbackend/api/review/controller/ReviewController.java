@@ -31,14 +31,14 @@ public class ReviewController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/read/{reviewId}}")
+    @GetMapping(value = "/read/{reviewId}")
     public ModelAndView getReviewsById(@PathVariable Long reviewId) {
         ModelAndView modelAndView = new ModelAndView("dummyPage");
         modelAndView.addObject("response", reviewService.getReviewByReviewId(reviewId));
         return modelAndView;
     }
 
-    @GetMapping(value = "/read/{vetId}}")
+    @GetMapping(value = "/read/{vetId}")
     public ModelAndView getReviewsByVetId(
             @PathVariable Long vetId,
             @RequestParam(required = false, defaultValue = "0", value = "page") int pageNo,
@@ -49,7 +49,7 @@ public class ReviewController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/read}")
+    @GetMapping(value = "/read")
     public ModelAndView getReviewsByWriterId(
             HttpSession session,
             @RequestParam(required = false, defaultValue = "0", value = "page") int pageNo,

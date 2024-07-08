@@ -20,9 +20,9 @@ spring:
 ---
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/fisa
+    url: jdbc:mysql://localhost:3306/Animealth
     username: root
-    password: mysql
+    password: tmdtjq3940
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
