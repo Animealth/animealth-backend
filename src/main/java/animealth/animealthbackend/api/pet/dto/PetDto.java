@@ -3,12 +3,14 @@ package animealth.animealthbackend.api.pet.dto;
 import animealth.animealthbackend.domain.pet.Pet;
 import animealth.animealthbackend.domain.pet.PetCategory;
 import animealth.animealthbackend.domain.pet.PetGender;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
 public class PetDto {
 
     @Getter
+    @AllArgsConstructor // test 작성을 위함
     public static class PetRequestDTO {
         private String name;
         private int age;

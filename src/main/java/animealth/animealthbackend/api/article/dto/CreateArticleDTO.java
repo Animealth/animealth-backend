@@ -33,7 +33,7 @@ public class CreateArticleDTO {
             this.content = content;
         }
 
-        public static CreateArticleResponseDTO from(Article articleEntity) {
+        public static CreateArticleResponseDTO fromEntity(Article articleEntity) {
             return CreateArticleResponseDTO.builder()
                     .articleId(articleEntity.getId())
                     .writer(articleEntity.getWriter())

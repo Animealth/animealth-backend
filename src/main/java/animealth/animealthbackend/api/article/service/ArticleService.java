@@ -47,7 +47,7 @@ public class ArticleService {
                 )
         );
 
-        return CreateArticleResponseDTO.from(article);
+        return CreateArticleResponseDTO.fromEntity(article);
     }
 
     @Transactional(readOnly = true)
@@ -56,7 +56,7 @@ public class ArticleService {
                 () -> new EntityNotFoundException("Article Not Found")
         );
 
-        GetArticleResponseDTO response = GetArticleResponseDTO.from(article);
+        GetArticleResponseDTO response = GetArticleResponseDTO.fromEntity(article);
         setCommentsOnArticle(articleId, response);
         return response;
     }
@@ -64,14 +64,14 @@ public class ArticleService {
     private void setCommentsOnArticle(Long articleId, GetArticleResponseDTO response) {
         response.setCommentsOnArticle(
                 commentRepository.findByArticleId(articleId)
-                        .stream().map(GetCommentResponseDTO::from).collect(Collectors.toList())
+                        .stream().map(GetCommentResponseDTO::fromEntity).collect(Collectors.toList())
         );
     }
 
     @Transactional(readOnly = true)
     public Page<GetArticlePageResponseDTO> getArticlesByPage(int pageNo, String criteria) {
         Pageable pageable = PageRequest.of(pageNo, PAGE_SIZE, Sort.by(Sort.Direction.DESC, criteria));
-        return articleRepository.findAll(pageable).map(GetArticlePageResponseDTO::of);
+        return articleRepository.findAll(pageable).map(GetArticlePageResponseDTO::fromEntity);
     }
 
     public UpdateArticleResponseDTO updateArticle(UpdateArticleRequestDTO request) {
@@ -86,7 +86,7 @@ public class ArticleService {
             article.updateContent(request.getContent());
         }
 
-        return UpdateArticleResponseDTO.from(article);
+        return UpdateArticleResponseDTO.fromEntity(article);
     }
 
     public void deleteArticleById(Long articleId) {

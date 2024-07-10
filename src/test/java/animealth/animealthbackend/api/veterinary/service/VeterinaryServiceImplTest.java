@@ -71,10 +71,10 @@ class VeterinaryServiceImplTest {
     @Test
     void updateVeterinary() {
 
-        // Create a mock or concrete instance of Veterinary
+        // Create a mock or concrete instance fromEntity Veterinary
         Veterinary savedVeterinary = Veterinary.builder().build();
 
-        // Stub the repository method to return Optional of savedVeterinary
+        // Stub the repository method to return Optional fromEntity savedVeterinary
         when(veterinaryRepository.findByVeterinaryId(anyLong()))
                 .thenReturn(Optional.of(savedVeterinary));
 
@@ -89,10 +89,10 @@ class VeterinaryServiceImplTest {
     @DisplayName("병원 삭제 테스트")
     @Test
     void deleteVeterinary() {
-        // Create a mock or concrete instance of Veterinary
+        // Create a mock or concrete instance fromEntity Veterinary
         Veterinary savedVeterinary = Veterinary.builder().build();
 
-        // Stub the repository method to return Optional of savedVeterinary
+        // Stub the repository method to return Optional fromEntity savedVeterinary
         when(veterinaryRepository.findByVeterinaryId(anyLong()))
                 .thenReturn(Optional.of(savedVeterinary));
 
@@ -106,10 +106,10 @@ class VeterinaryServiceImplTest {
     @DisplayName("병원 id로 찾는 테스트")
     @Test
     void findByVeterinaryId() {
-        // Create a mock or concrete instance of Veterinary
+        // Create a mock or concrete instance fromEntity Veterinary
         Veterinary veterinary1 = Veterinary.builder().build();
 
-        // Stub the repository method to return Optional of savedVeterinary
+        // Stub the repository method to return Optional fromEntity savedVeterinary
         when(veterinaryRepository.findByVeterinaryId(anyLong()))
                 .thenReturn(Optional.of(veterinary1));
 
