@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -120,6 +123,35 @@ public class VeterinaryServiceImpl implements VeterinaryService{
         List<Veterinary> veterinaryList = veterinaryRepository.findAll();
         return veterinaryList.isEmpty() ? extractList(veterinaryList) : new ArrayList<>();
     }
+
+    @Override
+    public List<Veterinary> loadVeterinariesFromCSV(String csvFilePath) {
+        List<Veterinary> veterinaries = new ArrayList<>();
+        String line;
+        String cvsSplitBy = ",";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
+            // Skip the header
+            br.readLine();
+
+            while ((line = br.readLine()) != null) {
+                String[] columns = line.split(cvsSplitBy);
+
+                CreateVeterinaryRequestDTO dto = new CreateVeterinaryRequestDTO();
+                dto.setVeterinaryName(columns[20]); // 사업장명
+                dto.setLocation(columns[19]); // 도로명전체주소 or 18 for 소재지전체주소
+                dto.setOpenTime(columns[5]); // 인허가일자
+                dto.setCloseTime(columns[11]); // 폐업일자
+                dto.setClosedDay(columns[12] + " to " + columns[13]); // 휴업시작일자 to 휴업종료일자
+                dto.setContact(columns[16]); // 소재지전화
+
+                Veterinary veterinary = Veterinary.createVeterinary(dto);
+                veterinaries.add(veterinary);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return veterinaries;    }
 
     /**
      * Converts a list fromEntity Veterinary entities to a list fromEntity VeterinaryResponseDTOs.
