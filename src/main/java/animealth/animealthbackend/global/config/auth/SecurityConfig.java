@@ -28,7 +28,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests((authorizeRequest) -> authorizeRequest
                         //.requestMatchers().hasRole(Role.USER.name())
-                        .requestMatchers("/", "/login", "/css/**", "images/**", "/js/**", "/logout/*").permitAll()
+                        .requestMatchers("/", "/login", "/css/**", "images/**", "/js/**", "/logout/*", "/api/spending_history/save").permitAll()
                         .anyRequest().authenticated()
                 )
                 .logout( // 로그아웃 성공 시 / 주소로 이동

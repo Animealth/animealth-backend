@@ -22,7 +22,7 @@ public class GetCommentResponseDTO {
         this.depth = depth;
     }
 
-    public static GetCommentResponseDTO from(Comment comment) {
+    public static GetCommentResponseDTO fromEntity(Comment comment) {
         if (comment != null) {
             return GetCommentResponseDTO.builder()
                     .commentId(comment.getId())

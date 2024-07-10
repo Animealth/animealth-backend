@@ -1,4 +1,4 @@
-package animealth.animealthbackend.api.controller;
+package animealth.animealthbackend.api.user.controller;
 
 import animealth.animealthbackend.api.user.controller.UserController;
 import animealth.animealthbackend.api.user.dto.UserDTO;

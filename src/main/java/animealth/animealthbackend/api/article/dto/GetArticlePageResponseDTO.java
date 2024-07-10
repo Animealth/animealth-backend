@@ -18,7 +18,7 @@ public class GetArticlePageResponseDTO {
         this.writer = writer;
     }
 
-    public static GetArticlePageResponseDTO of(Article article) {
+    public static GetArticlePageResponseDTO fromEntity(Article article) {
         return GetArticlePageResponseDTO.builder()
                 .articleId(article.getId())
                 .title(article.getTitle())

@@ -1,4 +1,4 @@
-package animealth.animealthbackend.api.service;
+package animealth.animealthbackend.api.user.service;
 
 import animealth.animealthbackend.api.user.dto.UserDTO;
 import animealth.animealthbackend.api.user.service.UserService;
