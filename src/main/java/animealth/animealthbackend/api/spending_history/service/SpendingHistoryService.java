@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * 상단에 클래스레벨의 @Transactional을 두면 하나하나 붙여주지 않아도 됩니다.
+ */
 @RequiredArgsConstructor
 @Service
 public class SpendingHistoryService {
@@ -27,6 +30,9 @@ public class SpendingHistoryService {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new EntityNotFoundException("User not found")
         );
+        /**
+         * 따로 메소드 SpendingHistory로 빼죠 ex) Pet.of()
+         */
         SpendingHistory spendingHistory = SpendingHistory.builder()
                 .spendingId(spendingHistoryDTO.getSpendingId())
                 .spendingAmount(spendingHistoryDTO.getSpendingAmount())
@@ -41,6 +47,13 @@ public class SpendingHistoryService {
     }
 
     //가계부 읽기
+
+    /**
+     * 엔티티 리스트조회
+     * 값변환
+     * 리턴
+     * 나누는게 가독성 있을거 같은데 다들 어캐생각하시는지?
+     */
     public List<SpendingHistoryDTO> findById(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new EntityNotFoundException("User not found")
@@ -57,6 +70,9 @@ public class SpendingHistoryService {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new EntityNotFoundException("User not found")
         );
+        /**
+         * SpendingHistory 조회도 User처럼 !
+         */
         Optional<SpendingHistory> optionalSpendingHistory = spendingHistoryRepository.findById(spendingHistoryDTO.getSpendingId());
         if(optionalSpendingHistory.isPresent()){
             SpendingHistory sh = optionalSpendingHistory.get();
@@ -76,6 +92,10 @@ public class SpendingHistoryService {
     }
 
     //가계부 삭제
+
+    /**
+     * 소프트 딜리트! -> 저도 안한듯 ㅋㅋ
+     */
     @Transactional
     public boolean delete(Long id, Long spendingHistoryId) {
         User user = userRepository.findById(id).orElseThrow(

@@ -26,6 +26,9 @@ import java.time.LocalDate;
 @DynamicUpdate
 @Where(clause = "IS_DELETED = false")
 public class SpendingHistory extends BaseEntity {
+    /**
+     * 변수명 두고 @칼럼
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long spendingId;
@@ -42,6 +45,9 @@ public class SpendingHistory extends BaseEntity {
     @Column
     private BigDecimal spendingAmount;
 
+    /**
+     * @JoinColumn 에 명시적인 이름 주는게 좋을것 같아요!
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private User user;

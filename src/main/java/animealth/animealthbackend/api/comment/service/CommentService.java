@@ -41,6 +41,9 @@ public class CommentService {
         return CreateCommentResponseDTO.fromEntity(commentRepository.save(rootComment));
     }
 
+    /**
+     * User 검증로직 따로 뺀거 좋은것 같습니다.
+     */
     private User findWriter(Long userId) {
         return userRepository.findById(userId).orElseThrow(
                 () -> new EntityNotFoundException("User Not Found!")
@@ -50,6 +53,18 @@ public class CommentService {
     private boolean hasParentComment(Long parentCommentId) {
         return parentCommentId != 0;
     }
+
+    /**
+     * 개인적으로 너무 줄여서 오히려 가독성 떨어지는듯 -> 아에 검증 로직을 전부 아래 메소드로 빼는걸로 할까요?
+     */
+//    @Transactional(readOnly = true)
+//    public GetCommentResponseDTO findCommentById2(Long commentId) {
+//        Comment comment = commentRepository.findById(commentId).orElseThrow(
+//                () -> new EntityNotFoundException("Comment Not Found")
+//        );
+//
+//        return GetCommentResponseDTO.fromEntity(comment);
+//    }
 
     @Transactional(readOnly = true)
     public GetCommentResponseDTO findCommentById(Long commentId) {

@@ -22,6 +22,9 @@ public class SpendingHistoryDTO {
     private String spendingContent;
     private LocalDate spendingDate;
     private String spendingType;
+    /**
+     * 금액에 관해 타입 BigDecimal 쓴거 아주 좋은것 같아요!
+     */
     private BigDecimal spendingAmount;
     private User user;
 

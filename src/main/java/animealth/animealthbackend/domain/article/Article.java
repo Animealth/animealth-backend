@@ -48,6 +48,10 @@ public class Article extends BaseEntity {
         this.content = content;
     }
 
+    /**
+     * final은 왜둔거죵??
+     * static만 있어도 되는거 아닌가요?
+     */
     public static final Article of(final User writer, final String title, final String content) {
         return Article.builder()
                 .writer(writer)

@@ -15,7 +15,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = true) // 상위 Transactional -> 하위 read only
 public class PetService {
 
     private final UserRepository userRepository;
@@ -30,6 +30,9 @@ public class PetService {
                 () -> new EntityNotFoundException("User Not Found!")
         );
 
+        /**
+         * of 메소드 파라메타 (owner, PetRequestDTO) 로 넘겨주는것도 깔금 할듯
+         */
         return petRepository.save(
                 Pet.of(
                         owner,

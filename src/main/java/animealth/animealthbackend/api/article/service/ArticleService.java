@@ -24,6 +24,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Transactional
+/**
+ * ready only true로 하고 변경사항있을때 붙이는거 어떰? 저랑은 지금 메커니즘이 반대인데
+ * 헷갈린다면 제가 바꾸겠습니다.
+ */
 @RequiredArgsConstructor
 @Service
 public class ArticleService {

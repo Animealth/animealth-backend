@@ -1,5 +1,8 @@
 package animealth.animealthbackend.api.vaccine;
 
+/**
+ * 인터페이스를 두셨군요 -> 사실 이게 맞긴해
+ */
 public interface VaccinationAlarmService {
 
     // 광견병 주사(1년 주기) 알람을 보내는 로직을 작성합니다.

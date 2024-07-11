@@ -16,7 +16,17 @@ import lombok.*;
 @Table(name = "Veterinaries")
 @Entity
 @Builder
+
+/**
+ * 클래스 레벨의 빌더 보다는 생성자 레벨의 빌더가 좋을것 같습니다!
+ * 관련글은 제가 노션에 정리 해두었습니다!
+ *
+ * BaseEntity 있습니다!
+ */
 public class Veterinary {
+    /**
+     * 명시적으로 @Column(name = "~") 지정해주는게 어떤지??
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long veterinaryId;
@@ -28,6 +38,10 @@ public class Veterinary {
     private String avgRating;
     private String contact;
 
+    /**
+     * DTO -> Entity , Entity -> DTO 메소드 이름을 통일하는게 어떤가요? 변환
+     * of , from
+     */
     public static Veterinary createVeterinary(CreateVeterinaryRequestDTO requestDTO){
         return Veterinary.builder()
                 .veterinaryName(requestDTO.getVeterinaryName())

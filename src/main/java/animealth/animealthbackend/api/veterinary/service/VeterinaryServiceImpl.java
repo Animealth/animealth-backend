@@ -57,6 +57,10 @@ public class VeterinaryServiceImpl implements VeterinaryService{
         Veterinary veterinary = veterinaryRepository.findByVeterinaryId(veterinaryId)
                 .orElseThrow(() -> new NotFoundVeterinaryException("veterinary not found"));
         Veterinary updateVeterinary = veterinary.updateVeterinary(requestDTO);
+        /**
+         * update는 void가 객체 상태를 변경하지만 새로운 객체를 생성하거나 반환하지 않는다는 것을 나타내는것이 좋을것 같습니다
+         * -> 같은 의미로 Setter도 반환이 void! 뭔가 통일성? 의도? 를 주는걳이 좋다고 생각하는데 하밧유 가이즈~?
+         */
         return UpdateVeterinaryDTO.fromEntity(updateVeterinary);
     }
 
@@ -74,6 +78,9 @@ public class VeterinaryServiceImpl implements VeterinaryService{
         Veterinary veterinary = veterinaryRepository.findByVeterinaryId(veterinaryId)
                 .orElseThrow(() -> new NotFoundVeterinaryException("veterinary not found"));
         Veterinary deleteVeterinary = veterinary.deleteVeterinary();
+        /**
+         * BaseEntity 상속받아서 delete 구현이 좋을것 같습니다.
+         */
         return DeleteVeterinaryDTO.fromEntity(deleteVeterinary);
     }
 
@@ -104,7 +111,18 @@ public class VeterinaryServiceImpl implements VeterinaryService{
     @Override
     public List<VeterinaryResponseDTO> findByVeterinaryName(String veterinaryName) {
         List<Veterinary> veterinaryList = veterinaryRepository.findByVeterinaryName(veterinaryName);
+        /**
+         * 순서 반대 아닌가여??
+         */
         return veterinaryList.isEmpty() ? extractList(veterinaryList) : new ArrayList<>();
+
+        /*
+        걍 요래 하시지예
+        List<Veterinary> veterinaryList = veterinaryRepository.findByVeterinaryName(veterinaryName);
+        return veterinaryList.stream()
+            .map(VeterinaryResponseDTO::from)
+            .toList();
+         */
     }
 
     /**
@@ -118,6 +136,7 @@ public class VeterinaryServiceImpl implements VeterinaryService{
     @Override
     public List<VeterinaryResponseDTO> findAll() {
         List<Veterinary> veterinaryList = veterinaryRepository.findAll();
+        // 요것두 반대인듯
         return veterinaryList.isEmpty() ? extractList(veterinaryList) : new ArrayList<>();
     }
 
