@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,7 +39,7 @@ public class ReviewController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/read/{vetId}")
+    @GetMapping(value = "/read/vet/{vetId}")
     public ModelAndView getReviewsByVetId(
             @PathVariable Long vetId,
             @RequestParam(required = false, defaultValue = "0", value = "page") int pageNo,
@@ -49,7 +50,7 @@ public class ReviewController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/read")
+    @GetMapping(value = "/read/my")
     public ModelAndView getReviewsByWriterId(
             HttpSession session,
             @RequestParam(required = false, defaultValue = "0", value = "page") int pageNo,
@@ -61,7 +62,7 @@ public class ReviewController {
         return modelAndView;
     }
 
-    @PatchMapping(value = "/update")
+    @PostMapping(value = "/update")
     public ModelAndView updateReview(@RequestBody UpdateReviewRequestDTO request) {
         ModelAndView modelAndView = new ModelAndView("dummyPage");
         modelAndView.addObject("response", reviewService.updateReview(request));
@@ -69,8 +70,11 @@ public class ReviewController {
     }
 
     @DeleteMapping("/delete/{reviewId}")
-    public void deleteReview(@PathVariable Long reviewId) {
+    public ModelAndView deleteReview(@PathVariable Long reviewId) {
+        ModelAndView modelAndView = new ModelAndView("dummyPage");
         reviewService.deleteReviewById(reviewId);
+        modelAndView.addObject("response", "Data successfully deleted");
+        return modelAndView;
     }
 
 }
