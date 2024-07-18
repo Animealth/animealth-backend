@@ -24,6 +24,7 @@ public class CreateReviewDTO {
 
     }
 
+    @Getter
     public static class CreateReviewResponseDTO {
 
         private Long reviewId;
