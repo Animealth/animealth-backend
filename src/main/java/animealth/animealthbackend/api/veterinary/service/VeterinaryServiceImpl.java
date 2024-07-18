@@ -104,7 +104,7 @@ public class VeterinaryServiceImpl implements VeterinaryService{
     @Override
     public List<VeterinaryResponseDTO> findByVeterinaryName(String veterinaryName) {
         List<Veterinary> veterinaryList = veterinaryRepository.findByVeterinaryName(veterinaryName);
-        return veterinaryList.isEmpty() ? extractList(veterinaryList) : new ArrayList<>();
+        return veterinaryList.isEmpty() ?new ArrayList<>(): extractList(veterinaryList);
     }
 
     /**
@@ -118,7 +118,7 @@ public class VeterinaryServiceImpl implements VeterinaryService{
     @Override
     public List<VeterinaryResponseDTO> findAll() {
         List<Veterinary> veterinaryList = veterinaryRepository.findAll();
-        return veterinaryList.isEmpty() ? extractList(veterinaryList) : new ArrayList<>();
+        return veterinaryList.isEmpty() ? new ArrayList<>(): extractList(veterinaryList);
     }
 
     /**
