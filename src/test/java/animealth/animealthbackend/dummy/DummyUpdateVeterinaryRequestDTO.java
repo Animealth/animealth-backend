@@ -1,11 +1,11 @@
 package animealth.animealthbackend.dummy;
 
-import animealth.animealthbackend.api.veterinary.dto.UpdateVeterinaryRequestDTO;
+import animealth.animealthbackend.api.veterinary.dto.VeterinaryDTO;
 
 public class DummyUpdateVeterinaryRequestDTO {
 
-    public static UpdateVeterinaryRequestDTO dummy() {
-        return UpdateVeterinaryRequestDTO.builder()
+    public static VeterinaryDTO.UpdateVeterinaryRequestDTO dummy() {
+        return VeterinaryDTO.UpdateVeterinaryRequestDTO.builder()
                 .veterinaryName("Updated Animal Care Clinic")
                 .location("456 Main St")
                 .openTime("08:00 AM")

@@ -1,20 +1,26 @@
 package animealth.animealthbackend.api.veterinary.service;
 
 import animealth.animealthbackend.api.veterinary.dto.*;
+import animealth.animealthbackend.domain.veterinary.Veterinary;
 
 import java.util.List;
 
 public interface VeterinaryService {
 
-    CreateVeterinaryDTO createVeterinary(CreateVeterinaryRequestDTO requestDTO);
+    VeterinaryDTO.CreateVeterinaryDTO createVeterinary(VeterinaryDTO.CreateVeterinaryRequestDTO requestDTO);
 
-    UpdateVeterinaryDTO updateVeterinary(Long veterinaryId, UpdateVeterinaryRequestDTO requestDTO);
+    VeterinaryDTO.UpdateVeterinaryDTO updateVeterinary(Long veterinaryId, VeterinaryDTO.UpdateVeterinaryRequestDTO requestDTO);
 
-    DeleteVeterinaryDTO deleteVeterinary(Long veterinaryId);
+    VeterinaryDTO.DeleteVeterinaryDTO deleteVeterinary(Long veterinaryId);
 
-    VeterinaryResponseDTO findByVeterinaryId(Long veterinaryId);
+    VeterinaryDTO.VeterinaryResponseDTO findByVeterinaryId(Long veterinaryId);
+
+    List<VeterinaryDTO.VeterinaryResponseDTO> findByVeterinaryName(String veterinaryName);
+    List<VeterinaryDTO.VeterinaryResponseDTO> findAll();
+
 
     List<VeterinaryResponseDTO> findByVeterinaryName(String veterinaryName);
     List<VeterinaryResponseDTO> findAll();
+    List<Veterinary> loadVeterinariesFromCSV(String csvFilePath);
 
 }
