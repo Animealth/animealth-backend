@@ -148,7 +148,7 @@ public class VeterinaryDTO {
     @NoArgsConstructor
     @Getter
     @Builder
-    public class UpdateVeterinaryRequestDTO {
+    public static class UpdateVeterinaryRequestDTO {
 
         private String veterinaryName;
         private String location;
@@ -157,6 +157,8 @@ public class VeterinaryDTO {
         private String closedDay;
         private String avgRating;
         private String contact;
+
+
 
     }
 }
