@@ -34,12 +34,12 @@ class VeterinaryServiceImplTest {
     private VeterinaryRepository veterinaryRepository;
 
     private Veterinary veterinary;
-    private UpdateVeterinaryRequestDTO updateVeterinaryRequestDTO;
-    private CreateVeterinaryRequestDTO createVeterinaryRequestDTO;
-    private CreateVeterinaryDTO createVeterinaryDTO;
-    private UpdateVeterinaryDTO updateVeterinaryDTO;
-    private DeleteVeterinaryDTO deleteVeterinaryDTO;
-    private VeterinaryResponseDTO veterinaryResponseDTO;
+    private VeterinaryDTO.UpdateVeterinaryRequestDTO updateVeterinaryRequestDTO;
+    private VeterinaryDTO.CreateVeterinaryRequestDTO createVeterinaryRequestDTO;
+    private VeterinaryDTO.CreateVeterinaryDTO createVeterinaryDTO;
+    private VeterinaryDTO.UpdateVeterinaryDTO updateVeterinaryDTO;
+    private VeterinaryDTO.DeleteVeterinaryDTO deleteVeterinaryDTO;
+    private VeterinaryDTO.VeterinaryResponseDTO veterinaryResponseDTO;
 
     private final Long VETERINARY_ID = 1L;
 

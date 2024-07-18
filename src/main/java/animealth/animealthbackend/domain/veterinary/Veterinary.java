@@ -1,7 +1,6 @@
 package animealth.animealthbackend.domain.veterinary;
 
-import animealth.animealthbackend.api.veterinary.dto.CreateVeterinaryRequestDTO;
-import animealth.animealthbackend.api.veterinary.dto.UpdateVeterinaryRequestDTO;
+import animealth.animealthbackend.api.veterinary.dto.VeterinaryDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,7 +27,7 @@ public class Veterinary {
     private String avgRating;
     private String contact;
 
-    public static Veterinary createVeterinary(CreateVeterinaryRequestDTO requestDTO){
+    public static Veterinary createVeterinary(VeterinaryDTO.CreateVeterinaryRequestDTO requestDTO){
         return Veterinary.builder()
                 .veterinaryName(requestDTO.getVeterinaryName())
                 .location(requestDTO.getLocation())
@@ -40,7 +39,7 @@ public class Veterinary {
                 .build();
     }
 
-    public Veterinary updateVeterinary(UpdateVeterinaryRequestDTO requestDTO){
+    public Veterinary updateVeterinary(VeterinaryDTO.UpdateVeterinaryRequestDTO requestDTO){
         this.veterinaryName = veterinaryName;
         this.location = location;
         this.openTime = openTime;
