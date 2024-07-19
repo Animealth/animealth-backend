@@ -5,6 +5,7 @@ import animealth.animealthbackend.api.comment.dto.CreateCommentDTO.CreateComment
 import animealth.animealthbackend.api.comment.dto.GetCommentResponseDTO;
 import animealth.animealthbackend.api.comment.dto.UpdateCommentRequestDTO;
 import animealth.animealthbackend.api.comment.service.CommentService;
+import animealth.animealthbackend.api.comment.service.CommentServiceImpl;
 import animealth.animealthbackend.api.common.controller.BaseController;
 import animealth.animealthbackend.api.common.dto.ResponseDTO;
 import animealth.animealthbackend.global.config.auth.dto.SessionUser;
