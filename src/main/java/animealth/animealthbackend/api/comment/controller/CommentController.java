@@ -11,6 +11,8 @@ import animealth.animealthbackend.api.common.dto.ResponseDTO;
 import animealth.animealthbackend.global.config.auth.dto.SessionUser;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -20,35 +22,36 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/comments")
+@Controller
 public class CommentController extends BaseController {
 
     private final CommentService commentService;
 
     @PostMapping(value = "/save")
-    public ResponseDTO<CreateCommentResponseDTO> saveComment(HttpSession session,
-                                                             @RequestBody CreateCommentRequestDTO dto
-    ) {
+    public String saveComment(HttpSession session, @RequestBody CreateCommentRequestDTO dto, Model model) {
         SessionUser principal = (SessionUser) session.getAttribute("user");
-        return ResponseDTO.ok(commentService.saveComment(principal.getId(), dto));
+        model.addAttribute("response", commentService.saveComment(principal.getId(), dto));
+        return "dummyPage";
     }
 
     @GetMapping(value = "/find/{commentId}")
-    public ResponseDTO<GetCommentResponseDTO> findCommentById(@PathVariable(value = "commentId") Long commentId) {
-        return ResponseDTO.ok(commentService.findCommentById(commentId));
+    public String findCommentById(@PathVariable(value = "commentId") Long commentId, Model model) {
+        model.addAttribute("response", commentService.findCommentById(commentId));
+        return "dummyPage";
     }
 
-    @PatchMapping(value = "/update")
-    public ResponseDTO<GetCommentResponseDTO> updateComment(@RequestBody UpdateCommentRequestDTO request) {
-        return ResponseDTO.ok(commentService.updateComment(request));
+    @PostMapping(value = "/update")
+    public String updateComment(@RequestBody UpdateCommentRequestDTO request, Model model) {
+        model.addAttribute("response", commentService.updateComment(request));
+        return "dummyPage";
     }
 
-    @DeleteMapping(value = "/delete/{commentId}")
-    public ResponseDTO<Void> deleteCommentById(@PathVariable(value = "commentId") Long commentId) {
+    @PostMapping(value = "/delete/{commentId}")
+    public String deleteCommentById(@PathVariable(value = "commentId") Long commentId, Model model) {
         commentService.deleteCommentById(commentId);
-        return ResponseDTO.ok();
+        return "dummyPage";
     }
 
 }

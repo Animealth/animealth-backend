@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@RequestMapping(value = "/api/reviews")
 @RequiredArgsConstructor
+@RequestMapping(value = "/api/reviews")
 @Controller
 public class ReviewController {
 
