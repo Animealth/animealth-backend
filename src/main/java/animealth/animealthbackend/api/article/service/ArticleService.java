@@ -1,96 +1,82 @@
 package animealth.animealthbackend.api.article.service;
 
-import animealth.animealthbackend.api.article.dto.CreateArticleDTO.*;
+import animealth.animealthbackend.api.article.dto.CreateArticleDTO.CreateArticleRequestDTO;
+import animealth.animealthbackend.api.article.dto.CreateArticleDTO.CreateArticleResponseDTO;
 import animealth.animealthbackend.api.article.dto.GetArticlePageResponseDTO;
 import animealth.animealthbackend.api.article.dto.GetArticleResponseDTO;
 import animealth.animealthbackend.api.article.dto.UpdateArticleDTO.UpdateArticleRequestDTO;
 import animealth.animealthbackend.api.article.dto.UpdateArticleDTO.UpdateArticleResponseDTO;
-import animealth.animealthbackend.api.comment.dto.GetCommentResponseDTO;
-import animealth.animealthbackend.domain.article.Article;
-import animealth.animealthbackend.domain.article.ArticleRepository;
-import animealth.animealthbackend.domain.comment.CommentRepository;
-import animealth.animealthbackend.domain.user.User;
-import animealth.animealthbackend.domain.user.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
-import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-@Slf4j
-@Transactional
-@RequiredArgsConstructor
-@Service
-public class ArticleService {
+/**
+ * ArticleService 인터페이스는 게시글(Article)과 관련된 다양한 기능을 제공합니다.
+ * ArticleService interface provides various functionalities related to articles.
+ *
+ * @author: BullChallenger
+ */
+public interface ArticleService {
 
-    private static final int PAGE_SIZE = 10;
+    /**
+     * Creates a new article based on the provided request DTO.
+     *
+     * 주어진 요청 DTO를 기반으로 새로운 게시글을 생성합니다.
+     *
+     * @param userId the ID of the user who is creating the article
+     *               게시글을 작성하는 사용자의 ID
+     * @param request the data transfer object containing the information needed to create an article
+     *                게시글을 생성하기 위해 필요한 정보가 포함된 데이터 전송 객체
+     * @return a response DTO containing the created article's details
+     *         생성된 게시글의 세부 정보를 포함하는 응답 DTO
+     */
+    CreateArticleResponseDTO saveArticle(Long userId, CreateArticleRequestDTO request);
 
-    private final ArticleRepository articleRepository;
-    private final CommentRepository commentRepository;
-    private final UserRepository userRepository;
+    /**
+     * Retrieves an article by its ID.
+     *
+     * 주어진 ID로 게시글을 조회합니다.
+     *
+     * @param articleId the ID of the article to retrieve
+     *                  조회할 게시글의 ID
+     * @return a response DTO containing the retrieved article's details
+     *         조회된 게시글의 세부 정보를 포함하는 응답 DTO
+     */
+    GetArticleResponseDTO getArticleById(Long articleId);
 
-    public CreateArticleResponseDTO saveArticle(Long userId, CreateArticleRequestDTO request) {
-        User writer = userRepository.findById(userId).orElseThrow(
-                () -> new EntityNotFoundException("User Not Found!")
-        );
+    /**
+     * Retrieves articles by page number and criteria.
+     *
+     * 페이지 번호와 기준에 따라 게시글을 페이징하여 조회합니다.
+     *
+     * @param pageNo the page number to retrieve
+     *               조회할 페이지 번호
+     * @param criteria the criteria for sorting and filtering articles
+     *                 게시글을 정렬 및 필터링하기 위한 기준
+     * @return a page response DTO containing the list of articles for the specified page and criteria
+     *         지정된 페이지와 기준에 해당하는 게시글 목록을 포함하는 페이지 응답 DTO
+     */
+    Page<GetArticlePageResponseDTO> getArticlesByPage(int pageNo, String criteria);
 
-        Article article = articleRepository.save(
-                Article.of(
-                        writer,
-                        request.getTitle(),
-                        request.getContent()
-                )
-        );
+    /**
+     * Updates an article based on the provided request DTO.
+     *
+     * 주어진 요청 DTO를 기반으로 게시글을 업데이트합니다.
+     *
+     * @param request the data transfer object containing the information needed to update an article
+     *                게시글을 업데이트하기 위해 필요한 정보가 포함된 데이터 전송 객체
+     * @return a response DTO containing the updated article's details
+     *         업데이트된 게시글의 세부 정보를 포함하는 응답 DTO
+     */
+    UpdateArticleResponseDTO updateArticle(UpdateArticleRequestDTO request);
 
-        return CreateArticleResponseDTO.fromEntity(article);
-    }
+    /**
+     * Deletes an article by its ID.
+     *
+     * 주어진 ID로 게시글을 삭제합니다.
+     *
+     * @param articleId the ID of the article to delete
+     *                  삭제할 게시글의 ID
+     */
+    void deleteArticleById(Long articleId);
 
-    @Transactional(readOnly = true)
-    public GetArticleResponseDTO getArticleById(Long articleId) {
-        Article article = articleRepository.findById(articleId).orElseThrow(
-                () -> new EntityNotFoundException("Article Not Found")
-        );
-
-        GetArticleResponseDTO response = GetArticleResponseDTO.fromEntity(article);
-        setCommentsOnArticle(articleId, response);
-        return response;
-    }
-
-    private void setCommentsOnArticle(Long articleId, GetArticleResponseDTO response) {
-        response.setCommentsOnArticle(
-                commentRepository.findByArticleId(articleId)
-                        .stream().map(GetCommentResponseDTO::fromEntity).collect(Collectors.toList())
-        );
-    }
-
-    @Transactional(readOnly = true)
-    public Page<GetArticlePageResponseDTO> getArticlesByPage(int pageNo, String criteria) {
-        Pageable pageable = PageRequest.of(pageNo, PAGE_SIZE, Sort.by(Sort.Direction.DESC, criteria));
-        return articleRepository.findAll(pageable).map(GetArticlePageResponseDTO::fromEntity);
-    }
-
-    public UpdateArticleResponseDTO updateArticle(UpdateArticleRequestDTO request) {
-        Article article = articleRepository.findById(request.getArticleId()).orElseThrow(
-                () -> new EntityNotFoundException("Article Not Found!")
-        );
-
-        if (request.getTitle() != null) {
-            article.updateTitle(request.getTitle());
-        }
-        if (request.getContent() != null) {
-            article.updateContent(request.getContent());
-        }
-
-        return UpdateArticleResponseDTO.fromEntity(article);
-    }
-
-    public void deleteArticleById(Long articleId) {
-        articleRepository.deleteById(articleId);
-    }
-
+}
 }
