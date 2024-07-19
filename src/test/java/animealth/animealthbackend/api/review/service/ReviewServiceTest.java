@@ -2,16 +2,12 @@ package animealth.animealthbackend.api.review.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
-import animealth.animealthbackend.api.article.service.ArticleService;
 import animealth.animealthbackend.api.review.dto.CreateReviewDTO.CreateReviewRequestDTO;
 import animealth.animealthbackend.api.review.dto.CreateReviewDTO.CreateReviewResponseDTO;
 import animealth.animealthbackend.api.review.dto.GetReviewResponseDTO;
-import animealth.animealthbackend.api.review.dto.UpdateReviewDTO;
 import animealth.animealthbackend.api.review.dto.UpdateReviewDTO.UpdateReviewRequestDTO;
 import animealth.animealthbackend.api.review.dto.UpdateReviewDTO.UpdateReviewResponseDTO;
-import animealth.animealthbackend.domain.comment.CommentRepository;
 import animealth.animealthbackend.domain.user.Role;
 import animealth.animealthbackend.domain.user.User;
 import animealth.animealthbackend.domain.user.UserRepository;
@@ -32,7 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 class ReviewServiceTest {
 
     @Autowired
-    private ReviewService reviewService;
+    private ReviewServiceImpl reviewService;
 
     @Autowired private UserRepository userRepository;
 

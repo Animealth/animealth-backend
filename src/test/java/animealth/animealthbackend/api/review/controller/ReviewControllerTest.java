@@ -1,7 +1,6 @@
 package animealth.animealthbackend.api.review.controller;
 
 import static animealth.animealthbackend.domain.user.Role.USER;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -20,17 +19,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import animealth.animealthbackend.api.common.constant.ResultType;
 import animealth.animealthbackend.api.review.dto.CreateReviewDTO.CreateReviewRequestDTO;
 import animealth.animealthbackend.api.review.dto.CreateReviewDTO.CreateReviewResponseDTO;
 import animealth.animealthbackend.api.review.dto.GetReviewResponseDTO;
 import animealth.animealthbackend.api.review.dto.UpdateReviewDTO.UpdateReviewRequestDTO;
 import animealth.animealthbackend.api.review.dto.UpdateReviewDTO.UpdateReviewResponseDTO;
-import animealth.animealthbackend.api.review.service.ReviewService;
+import animealth.animealthbackend.api.review.service.ReviewServiceImpl;
 import animealth.animealthbackend.domain.user.Role;
 import animealth.animealthbackend.domain.user.User;
 import animealth.animealthbackend.global.config.auth.dto.SessionUser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -62,7 +59,7 @@ class ReviewControllerTest {
     private ObjectMapper objectMapper;
 
     @MockBean
-    private ReviewService reviewService;
+    private ReviewServiceImpl reviewService;
 
     private User writer;
     private Long vetId = 1L;
