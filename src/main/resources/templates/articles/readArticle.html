@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Read Article</title>
+  <script src="/js/articles/readArticle.js" defer></script>
+  <link rel="stylesheet" href="/css/article.css">
+  <style>
+    .comment {
+      margin-bottom: 10px;
+    }
+    .comment .replies {
+      margin-left: 20px;
+    }
+  </style>
+</head>
+<body>
+<h1>Article Details</h1>
+<div id="articleDetails"></div>
+
+<h2>Comments</h2>
+<div id="commentsSection"></div>
+
+<h3>Add a Comment</h3>
+<form id="addCommentForm">
+  <textarea id="commentContent" required></textarea>
+  <button type="submit">Add Comment</button>
+</form>
+</body>
+</html>

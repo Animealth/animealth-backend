@@ -49,7 +49,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     private boolean hasParentComment(Long parentCommentId) {
-        return parentCommentId != 0;
+        return parentCommentId != null;
     }
 
     @Override
