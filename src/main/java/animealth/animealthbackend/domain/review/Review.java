@@ -15,11 +15,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 @Entity
 @Getter
 @DynamicUpdate
+@SQLDelete(sql = "UPDATE review SET IS_DELETED = true WHERE REVIEW_ID=?")
 @Where(clause = "IS_DELETED = false")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Review extends BaseEntity {
