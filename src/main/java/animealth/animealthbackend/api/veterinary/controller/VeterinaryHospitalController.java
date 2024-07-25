@@ -4,6 +4,7 @@ package animealth.animealthbackend.api.veterinary.controller;
 import animealth.animealthbackend.api.veterinary.dto.VeterinaryDTO;
 import animealth.animealthbackend.api.veterinary.dto.VeterinaryDTO.CreateVeterinaryDTO;
 import animealth.animealthbackend.api.veterinary.dto.VeterinaryDTO.CreateVeterinaryRequestDTO;
+import animealth.animealthbackend.api.veterinary.dto.VeterinaryDTO.UpdateVeterinaryRequestDTO;
 import animealth.animealthbackend.api.veterinary.dto.VeterinaryDTO.VeterinaryResponseDTO;
 import animealth.animealthbackend.api.veterinary.service.VeterinaryHospitalService;
 import lombok.Getter;
@@ -41,7 +42,6 @@ public class VeterinaryHospitalController {
         return "veterinary-hospital/create-veterinary-hospital";
     }
 
-
     /**
      * 병원 생성에 사용하는 메서드입니다.
      * 이 메서드는 POST 요청을 처리하여 병원 정보를 생성하고, 생성된 병원 정보를 반환합니다.
@@ -74,20 +74,52 @@ public class VeterinaryHospitalController {
         model.addAttribute("veterinaryList", veterinaryHospitalService.findAll());
         return "/veterinary-hospital/veterinary-hospitals-list";
     }
+
     /**
-     * 병원 정보를 업데이트하는 메서드입니다.
-     * 이 메서드는 PUT 요청을 처리하여 주어진 병원 ID에 해당하는 병원 정보를 업데이트합니다.
+     * 특정 동물 병원의 정보 수정 폼을 표시하기 위한 GET 요청을 처리합니다.
      *
-     * @param veterinaryId 병원 ID로, 업데이트할 병원을 식별하는 데 사용됩니다.
-     * @param requestDTO 업데이트할 병원 정보를 포함하는 {@link UpdateVeterinaryRequestDTO} 객체입니다.
-     * @return 업데이트된 병원 정보를 포함하는 {@link VeterinaryDTO.UpdateVeterinaryDTO} 객체를 {@link ResponseEntity}로 반환합니다.
-     * @throws NotFoundVeterinaryException 주어진 병원 ID에 해당하는 병원을 찾을 수 없는 경우 발생합니다.
-     * @since 1.0
+     * @param veterinaryId 수정할 동물 병원의 ID입니다.
+     * @param model 뷰에서 사용할 모델로, 병원 정보를 포함합니다.
+     * @return 수정 폼을 렌더링할 뷰의 이름입니다.
      */
-    @PutMapping("/{veterinaryId}")
-    public ResponseEntity<VeterinaryDTO.UpdateVeterinaryDTO> updateVeterinary(
+    @GetMapping("/update-form/{veterinaryId}")
+    public String updateForm(
             @PathVariable Long veterinaryId,
-            @Valid @RequestBody UpdateVeterinaryRequestDTO requestDTO) {
+            Model model) {
 
+        model.addAttribute("hospitalInfo",veterinaryHospitalService.findByVeterinaryId(veterinaryId));
 
+        return "veterinary-hospital/update-form";
     }
+
+    @GetMapping("/update/{veterinaryId}")
+    public String updateVeterinary(
+            @PathVariable Long veterinaryId,
+            Model model) {
+
+        model.addAttribute("hospitalInfo",veterinaryHospitalService.findByVeterinaryId(veterinaryId));
+
+        return "veterinary-hospital/update-veterinary-hospital";
+    }
+
+
+    /**
+     * 특정 동물 병원의 정보를 업데이트하기 위한 PUT 요청을 처리합니다.
+     *
+     * @param veterinaryId 업데이트할 동물 병원의 ID입니다.
+     * @param requestDTO 업데이트할 정보를 포함하는 요청 데이터 전송 객체입니다.
+     * @param model 뷰에서 사용할 모델로, 업데이트 결과를 포함합니다.
+     * @return 업데이트 성공 후 렌더링할 뷰의 이름입니다.
+     */
+    @PutMapping("/update/{veterinaryId}")
+    public String updateVeterinary(
+            @PathVariable Long veterinaryId,
+            @RequestBody UpdateVeterinaryRequestDTO requestDTO,
+            Model model) {
+
+        model.addAttribute("updateVeterinaryRequestDTO",veterinaryHospitalService.updateVeterinary(veterinaryId,requestDTO));
+        return "veterinary-hospital/update-success";
+    }
+
+
+}
