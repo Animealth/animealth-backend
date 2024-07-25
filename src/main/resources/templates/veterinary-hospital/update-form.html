@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form id="veterinaryForm" th:action="@{/veterinary-hospitals/update/{veterinaryId}(veterinaryId=${hospitalInfo.veterinaryId})}" method="post">
+    <label for="veterinaryName">Veterinary Name:</label><br>
+    <input type="text" id="veterinaryName" name="veterinaryName"><br><br>
+
+    <label for="location">Location:</label><br>
+    <input type="text" id="location" name="location"><br><br>
+
+    <label for="openTime">Open Time:</label><br>
+    <input type="time" id="openTime" name="openTime"><br><br>
+
+    <label for="closeTime">Close Time:</label><br>
+    <input type="time" id="closeTime" name="closeTime"><br><br>
+
+    <label for="closedDay">Closed Day:</label><br>
+    <input type="text" id="closedDay" name="closedDay"><br><br>
+
+    <label for="avgRating">Average Rating:</label><br>
+    <input type="text" id="avgRating" name="avgRating"><br><br>
+
+    <label for="contact">Contact:</label><br>
+    <input type="text" id="contact" name="contact"><br><br>
+
+    <button type="submit" value="Submit">등록하기</button>
+</form>
+</body>
+</html>
