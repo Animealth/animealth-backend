@@ -72,7 +72,7 @@ public class VeterinaryHospitalController {
      */
     @GetMapping("/veterinary-hospitals-list")
     public String getAllVeterinaryHospitals(Model model) {
-        model.addAttribute(veterinaryHospitalService.findAll());
+        model.addAttribute("veterinaryList", veterinaryHospitalService.findAll());
         return "/veterinary-hospital/veterinary-hospitals-list";
     }
 
