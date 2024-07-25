@@ -4,7 +4,7 @@ import animealth.animealthbackend.domain.pet.Pet;
 import animealth.animealthbackend.domain.user.User;
 import animealth.animealthbackend.domain.vaccine.VaccineType;
 import animealth.animealthbackend.domain.vaccine.VaccineTypeConverter;
-import animealth.animealthbackend.domain.veterinary.Veterinary;
+import animealth.animealthbackend.domain.veterinary.VeterinaryHospital;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -40,6 +40,6 @@ public class MedicalHistory {
 
     @ManyToOne
     @JoinColumn(name = "veterinary_id")
-    private Veterinary veterinary;
+    private VeterinaryHospital veterinary;
 
 }

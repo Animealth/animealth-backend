@@ -6,10 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface VeterinaryRepository extends JpaRepository<Veterinary, Long> {
+public interface VeterinaryRepository extends JpaRepository<VeterinaryHospital, Long> {
 
-    Veterinary save(Veterinary veterinary);
-    Optional<Veterinary> findByVeterinaryId(Long veterinaryId);
-    List<Veterinary> findByVeterinaryName(String veterinaryName);
-    List<Veterinary> findAll();
+    VeterinaryHospital save(VeterinaryHospital veterinary);
+    Optional<VeterinaryHospital> findByVeterinaryId(Long veterinaryId);
+    List<VeterinaryHospital> findByVeterinaryName(String veterinaryName);
+    List<VeterinaryHospital> findAll();
 }

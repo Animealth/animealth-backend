@@ -24,7 +24,7 @@ class VeterinaryRepositoryTest {
     @Autowired
     private VeterinaryRepository veterinaryRepository;
 
-    private Veterinary veterinary;
+    private VeterinaryHospital veterinary;
     private final Long ID = 1L;
     private final String VETERNARY_NAME = "Animal Care Clinic";
 
@@ -41,7 +41,7 @@ class VeterinaryRepositoryTest {
         entityManager.persist(veterinary);
 
         //when
-        Veterinary save = veterinaryRepository.save(veterinary);
+        VeterinaryHospital save = veterinaryRepository.save(veterinary);
 
         //then
         assertThat(save).isEqualTo(veterinary);
@@ -54,7 +54,7 @@ class VeterinaryRepositoryTest {
         entityManager.persist(veterinary);
 
         //when
-        Optional<Veterinary> veterinary1 = veterinaryRepository.findByVeterinaryId(ID);
+        Optional<VeterinaryHospital> veterinary1 = veterinaryRepository.findByVeterinaryId(ID);
 
         //then
         assertThat(veterinary1.isEmpty()).isFalse();
@@ -68,7 +68,7 @@ class VeterinaryRepositoryTest {
         entityManager.persist(veterinary);
 
         //when
-        List<Veterinary> veterinaryList = veterinaryRepository.findByVeterinaryName(VETERNARY_NAME);
+        List<VeterinaryHospital> veterinaryList = veterinaryRepository.findByVeterinaryName(VETERNARY_NAME);
 
         //then
         assertThat(veterinaryList.get(0)).isEqualTo(veterinary);
@@ -82,7 +82,7 @@ class VeterinaryRepositoryTest {
         //given
         entityManager.persist(veterinary);
 
-        List<Veterinary> veterinaryList = veterinaryRepository.findAll();
+        List<VeterinaryHospital> veterinaryList = veterinaryRepository.findAll();
         //then
         assertThat(veterinaryList).hasSize(1);
 

@@ -2,6 +2,7 @@ package animealth.animealthbackend.api.veterinary.service;
 
 import animealth.animealthbackend.api.veterinary.dto.*;
 import animealth.animealthbackend.domain.veterinary.Veterinary;
+import animealth.animealthbackend.domain.veterinary.VeterinaryHospital;
 import animealth.animealthbackend.domain.veterinary.VeterinaryRepository;
 import animealth.animealthbackend.dummy.DummyCreateVeterinaryRequestDTO;
 import animealth.animealthbackend.dummy.DummyUpdateVeterinaryRequestDTO;
@@ -33,7 +34,7 @@ class VeterinaryServiceImplTest {
     @Mock
     private VeterinaryRepository veterinaryRepository;
 
-    private Veterinary veterinary;
+    private VeterinaryHospital veterinary;
     private VeterinaryDTO.UpdateVeterinaryRequestDTO updateVeterinaryRequestDTO;
     private VeterinaryDTO.CreateVeterinaryRequestDTO createVeterinaryRequestDTO;
     private VeterinaryDTO.CreateVeterinaryDTO createVeterinaryDTO;
@@ -55,13 +56,13 @@ class VeterinaryServiceImplTest {
     @Test
     void createVeterinary() {
 
-        Veterinary savedVeterinary = Veterinary.builder().build(); // 임의로 생성한 Mock 객체
+        VeterinaryHospital savedVeterinary = VeterinaryHospital.builder().build(); // 임의로 생성한 Mock 객체
 
         // when 구문에서 반환값 설정
-        when(veterinaryRepository.save(any(Veterinary.class))).thenReturn(savedVeterinary);
+        when(veterinaryRepository.save(any(VeterinaryHospital.class))).thenReturn(savedVeterinary);
 
         // 실제 테스트 코드에서 save 메서드 호출 후 반환값 사용
-        Veterinary result = veterinaryRepository.save(veterinary);
+        VeterinaryHospital result = veterinaryRepository.save(veterinary);
 
         // 검증
         assertEquals(savedVeterinary, result);
@@ -72,7 +73,7 @@ class VeterinaryServiceImplTest {
     void updateVeterinary() {
 
         // Create a mock or concrete instance fromEntity Veterinary
-        Veterinary savedVeterinary = Veterinary.builder().build();
+        VeterinaryHospital savedVeterinary = VeterinaryHospital.builder().build();
 
         // Stub the repository method to return Optional fromEntity savedVeterinary
         when(veterinaryRepository.findByVeterinaryId(anyLong()))
@@ -90,7 +91,7 @@ class VeterinaryServiceImplTest {
     @Test
     void deleteVeterinary() {
         // Create a mock or concrete instance fromEntity Veterinary
-        Veterinary savedVeterinary = Veterinary.builder().build();
+        VeterinaryHospital savedVeterinary = VeterinaryHospital.builder().build();
 
         // Stub the repository method to return Optional fromEntity savedVeterinary
         when(veterinaryRepository.findByVeterinaryId(anyLong()))
@@ -107,7 +108,7 @@ class VeterinaryServiceImplTest {
     @Test
     void findByVeterinaryId() {
         // Create a mock or concrete instance fromEntity Veterinary
-        Veterinary veterinary1 = Veterinary.builder().build();
+        VeterinaryHospital veterinary1 = VeterinaryHospital.builder().build();
 
         // Stub the repository method to return Optional fromEntity savedVeterinary
         when(veterinaryRepository.findByVeterinaryId(anyLong()))
@@ -123,7 +124,7 @@ class VeterinaryServiceImplTest {
     @Test
     void findByVeterinaryName() {
         //given
-        Veterinary veterinary1 = Veterinary.builder().build();
+        VeterinaryHospital veterinary1 = VeterinaryHospital.builder().build();
 
         //when
         when(veterinaryRepository.findByVeterinaryName(anyString()))
@@ -139,7 +140,7 @@ class VeterinaryServiceImplTest {
     @Test
     void findAll() {
         //given
-        Veterinary veterinary1 = Veterinary.builder().build();
+        VeterinaryHospital veterinary1 = VeterinaryHospital.builder().build();
 
         //when
         when(veterinaryRepository.findAll())

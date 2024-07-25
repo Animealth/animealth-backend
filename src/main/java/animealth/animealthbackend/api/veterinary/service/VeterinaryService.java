@@ -1,7 +1,7 @@
 package animealth.animealthbackend.api.veterinary.service;
 
 import animealth.animealthbackend.api.veterinary.dto.*;
-import animealth.animealthbackend.domain.veterinary.Veterinary;
+import animealth.animealthbackend.domain.veterinary.VeterinaryHospital;
 
 import java.util.List;
 
@@ -18,6 +18,6 @@ public interface VeterinaryService {
     List<VeterinaryDTO.VeterinaryResponseDTO> findByVeterinaryName(String veterinaryName);
     List<VeterinaryDTO.VeterinaryResponseDTO> findAll();
 
-    List<Veterinary> loadVeterinariesFromCSV(String csvFilePath);
+    List<VeterinaryHospital> loadVeterinariesFromCSV(String csvFilePath);
 
 }
