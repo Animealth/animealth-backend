@@ -34,8 +34,4 @@ public class VeterinaryHospitalController {
         return veterinaryHospitalService.createVeterinary(requestDTO);
     }
 
-    @GetMapping("/create-success")
-    public String createSuccessForm(){
-        return "veterinary-hospital/create-success";
-    }
 }
