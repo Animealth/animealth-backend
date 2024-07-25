@@ -1,37 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Veterinary Information Form</title>
 </head>
 <body>
-<!--병원 등록을 위한 form-->
-    <h2>Veterinary Information Form</h2>
-    <form action="/veterinary-hospital/create" method="post">
-        <label for="veterinaryName">Veterinary Name:</label><br>
-        <input type="text" id="veterinaryName" name="veterinaryName"><br><br>
+<h2>Veterinary Information Form</h2>
+<form id="veterinaryForm">
+    <label for="veterinaryName">Veterinary Name:</label><br>
+    <input type="text" id="veterinaryName" name="veterinaryName"><br><br>
 
-        <label for="location">Location:</label><br>
-        <input type="text" id="location" name="location"><br><br>
+    <label for="location">Location:</label><br>
+    <input type="text" id="location" name="location"><br><br>
 
-        <label for="openTime">Open Time:</label><br>
-        <input type="time" id="openTime" name="openTime"><br><br>
+    <label for="openTime">Open Time:</label><br>
+    <input type="time" id="openTime" name="openTime"><br><br>
 
-        <label for="closeTime">Close Time:</label><br>
-        <input type="time" id="closeTime" name="closeTime"><br><br>
+    <label for="closeTime">Close Time:</label><br>
+    <input type="time" id="closeTime" name="closeTime"><br><br>
 
-        <label for="closedDay">Closed Day:</label><br>
-        <input type="text" id="closedDay" name="closedDay"><br><br>
+    <label for="closedDay">Closed Day:</label><br>
+    <input type="text" id="closedDay" name="closedDay"><br><br>
 
-        <label for="avgRating">Average Rating:</label><br>
-        <input type="text" id="avgRating" name="avgRating"><br><br>
+    <label for="avgRating">Average Rating:</label><br>
+    <input type="text" id="avgRating" name="avgRating"><br><br>
 
-        <label for="contact">Contact:</label><br>
-        <input type="text" id="contact" name="contact"><br><br>
+    <label for="contact">Contact:</label><br>
+    <input type="text" id="contact" name="contact"><br><br>
 
-        <input type="submit" value="Submit">
-    </form>
+    <input type="submit" value="Submit">
+</form>
+
+<div id="result" class="result"></div>
+
 <script>
     document.getElementById('veterinaryForm').addEventListener('submit', function(event) {
         event.preventDefault(); // 폼의 기본 제출을 막음
@@ -40,7 +42,7 @@
         const formData = new FormData(this);
 
         // Fetch API를 사용하여 데이터 전송
-        fetch('/veterinary-hospital/create', {
+        fetch('/veterinary-hospitals/create', {
             method: 'POST',
             body: JSON.stringify(Object.fromEntries(formData.entries())), // 폼 데이터를 JSON으로 변환
             headers: {
@@ -62,6 +64,12 @@
                         <p><strong>Average Rating:</strong> ${data.avgRating}</p>
                         <p><strong>Contact:</strong> ${data.contact}</p>
                     `;
+
+                    // 폼 입력 필드를 비활성화
+                    Array.from(this.elements).forEach(element => {
+                        element.classList.add('disabled');
+                        element.setAttribute('disabled', 'true');
+                    });
                 } else {
                     // 오류 메시지 표시
                     alert('Registration failed. Please try again.');
