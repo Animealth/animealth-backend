@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veterinary Information Form</title>
+</head>
+<body>
+<!--병원 등록을 위한 form-->
+    <h2>Veterinary Information Form</h2>
+    <form action="/veterinary-hospital/create" method="post">
+        <label for="veterinaryName">Veterinary Name:</label><br>
+        <input type="text" id="veterinaryName" name="veterinaryName"><br><br>
+
+        <label for="location">Location:</label><br>
+        <input type="text" id="location" name="location"><br><br>
+
+        <label for="openTime">Open Time:</label><br>
+        <input type="time" id="openTime" name="openTime"><br><br>
+
+        <label for="closeTime">Close Time:</label><br>
+        <input type="time" id="closeTime" name="closeTime"><br><br>
+
+        <label for="closedDay">Closed Day:</label><br>
+        <input type="text" id="closedDay" name="closedDay"><br><br>
+
+        <label for="avgRating">Average Rating:</label><br>
+        <input type="text" id="avgRating" name="avgRating"><br><br>
+
+        <label for="contact">Contact:</label><br>
+        <input type="text" id="contact" name="contact"><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+<script>
+    document.getElementById('veterinaryForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // 폼의 기본 제출을 막음
+
+        // 폼 데이터를 가져옴
+        const formData = new FormData(this);
+
+        // Fetch API를 사용하여 데이터 전송
+        fetch('/veterinary-hospital/create', {
+            method: 'POST',
+            body: JSON.stringify(Object.fromEntries(formData.entries())), // 폼 데이터를 JSON으로 변환
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json()) // JSON 응답으로 파싱
+            .then(data => {
+                if (data) {
+                    // 등록이 완료되면 서버로부터 받은 데이터로 페이지 업데이트
+                    const resultDiv = document.getElementById('result');
+                    resultDiv.innerHTML = `
+                        <h3>Registration Successful!</h3>
+                        <p><strong>Veterinary Name:</strong> ${data.veterinaryName}</p>
+                        <p><strong>Location:</strong> ${data.location}</p>
+                        <p><strong>Open Time:</strong> ${data.openTime}</p>
+                        <p><strong>Close Time:</strong> ${data.closeTime}</p>
+                        <p><strong>Closed Day:</strong> ${data.closedDay}</p>
+                        <p><strong>Average Rating:</strong> ${data.avgRating}</p>
+                        <p><strong>Contact:</strong> ${data.contact}</p>
+                    `;
+                } else {
+                    // 오류 메시지 표시
+                    alert('Registration failed. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+    });
+</script>
+</body>
+</html>
