@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<h2>Success Create Veterinary Hospital Information</h2>
+
+<form>
+    <label for="veterinaryName">Veterinary Name:</label><br>
+    <input type="text" id="veterinaryName" name="veterinaryName" readonly th:value="${veterinary.veterinaryName}"><br><br>
+
+    <label for="location">Location:</label><br>
+    <input type="text" id="location" name="location" readonly th:value="${veterinary.location}"><br><br>
+
+    <label for="openTime">Open Time:</label><br>
+    <input type="time" id="openTime" name="openTime" readonly th:value="${veterinary.openTime}"><br><br>
+
+    <label for="closeTime">Close Time:</label><br>
+    <input type="time" id="closeTime" name="closeTime" readonly th:value="${veterinary.closeTime}"><br><br>
+
+    <label for="closedDay">Closed Day:</label><br>
+    <input type="text" id="closedDay" name="closedDay" readonly th:value="${veterinary.closedDay}"><br><br>
+
+    <label for="avgRating">Average Rating:</label><br>
+    <input type="text" id="avgRating" name="avgRating" readonly th:value="${veterinary.avgRating}"><br><br>
+
+    <label for="contact">Contact:</label><br>
+    <input type="text" id="contact" name="contact" readonly th:value="${veterinary.contact}"><br><br>
+</form>
+
+</body>
+</html>

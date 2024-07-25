@@ -10,10 +10,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -56,8 +53,10 @@ public class VeterinaryHospitalController {
      * @since 1.0
      */
     @PostMapping("/create")
-    public CreateVeterinaryDTO createVeterinaryHospital(@RequestBody CreateVeterinaryRequestDTO requestDTO) {
-        return veterinaryHospitalService.createVeterinary(requestDTO);
+    public String createVeterinaryHospital(@RequestBody CreateVeterinaryRequestDTO requestDTO, Model model) {
+
+        model.addAttribute("createVeterinaryDTO",veterinaryHospitalService.createVeterinary(requestDTO));
+        return "veterinary-hospital/create-success";
     }
 
     /**
@@ -75,6 +74,20 @@ public class VeterinaryHospitalController {
         model.addAttribute("veterinaryList", veterinaryHospitalService.findAll());
         return "/veterinary-hospital/veterinary-hospitals-list";
     }
+    /**
+     * 병원 정보를 업데이트하는 메서드입니다.
+     * 이 메서드는 PUT 요청을 처리하여 주어진 병원 ID에 해당하는 병원 정보를 업데이트합니다.
+     *
+     * @param veterinaryId 병원 ID로, 업데이트할 병원을 식별하는 데 사용됩니다.
+     * @param requestDTO 업데이트할 병원 정보를 포함하는 {@link UpdateVeterinaryRequestDTO} 객체입니다.
+     * @return 업데이트된 병원 정보를 포함하는 {@link VeterinaryDTO.UpdateVeterinaryDTO} 객체를 {@link ResponseEntity}로 반환합니다.
+     * @throws NotFoundVeterinaryException 주어진 병원 ID에 해당하는 병원을 찾을 수 없는 경우 발생합니다.
+     * @since 1.0
+     */
+    @PutMapping("/{veterinaryId}")
+    public ResponseEntity<VeterinaryDTO.UpdateVeterinaryDTO> updateVeterinary(
+            @PathVariable Long veterinaryId,
+            @Valid @RequestBody UpdateVeterinaryRequestDTO requestDTO) {
 
 
-}
+    }
