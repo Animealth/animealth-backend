@@ -1,0 +1,37 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veterinary Hospitals List</title>
+</head>
+<body>
+<h2>Veterinary Hospitals List</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Open Time</th>
+        <th>Close Time</th>
+        <th>Closed Day</th>
+        <th>Average Rating</th>
+        <th>Contact</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Thymeleaf를 사용하여 데이터 반복 -->
+    <tr th:each="veterinary : ${veterinaryList}">
+        <td th:text="${veterinary.veterinaryId}">ID</td>
+        <td th:text="${veterinary.veterinaryName}">Name</td>
+        <td th:text="${veterinary.location}">Location</td>
+        <td th:text="${veterinary.openTime}">Open Time</td>
+        <td th:text="${veterinary.closeTime}">Close Time</td>
+        <td th:text="${veterinary.closedDay}">Closed Day</td>
+        <td th:text="${veterinary.avgRating}">Average Rating</td>
+        <td th:text="${veterinary.contact}">Contact</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
