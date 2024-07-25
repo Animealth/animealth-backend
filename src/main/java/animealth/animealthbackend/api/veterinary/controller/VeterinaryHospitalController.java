@@ -118,7 +118,7 @@ public class VeterinaryHospitalController {
             Model model) {
 
         model.addAttribute("updateVeterinaryRequestDTO",veterinaryHospitalService.updateVeterinary(veterinaryId,requestDTO));
-        return "veterinary-hospital/update-success";
+        return "redirect:/veterinary-hospitals/"+veterinaryId;
     }
 
 
