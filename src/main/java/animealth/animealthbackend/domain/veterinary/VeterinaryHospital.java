@@ -1,7 +1,6 @@
 package animealth.animealthbackend.domain.veterinary;
 
-import animealth.animealthbackend.api.veterinary.dto.CreateVeterinaryRequestDTO;
-import animealth.animealthbackend.api.veterinary.dto.UpdateVeterinaryRequestDTO;
+import animealth.animealthbackend.api.veterinary.dto.VeterinaryDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,10 +12,10 @@ import lombok.*;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "Veterinaries")
+@Table(name = "veterinary_hospitals")
 @Entity
 @Builder
-public class Veterinary {
+public class VeterinaryHospital {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long veterinaryId;
@@ -28,8 +27,8 @@ public class Veterinary {
     private String avgRating;
     private String contact;
 
-    public static Veterinary createVeterinary(CreateVeterinaryRequestDTO requestDTO){
-        return Veterinary.builder()
+    public static VeterinaryHospital createVeterinary(VeterinaryDTO.CreateVeterinaryRequestDTO requestDTO){
+        return VeterinaryHospital.builder()
                 .veterinaryName(requestDTO.getVeterinaryName())
                 .location(requestDTO.getLocation())
                 .openTime(requestDTO.getOpenTime())
@@ -40,7 +39,7 @@ public class Veterinary {
                 .build();
     }
 
-    public Veterinary updateVeterinary(UpdateVeterinaryRequestDTO requestDTO){
+    public VeterinaryHospital updateVeterinary(VeterinaryDTO.UpdateVeterinaryRequestDTO requestDTO){
         this.veterinaryName = veterinaryName;
         this.location = location;
         this.openTime = openTime;
@@ -52,7 +51,7 @@ public class Veterinary {
         return this;
     }
 
-    public Veterinary deleteVeterinary(){
+    public VeterinaryHospital deleteVeterinary(){
         this.veterinaryName = "deleted veterinary "+this.veterinaryName;
 
         return this;

@@ -17,7 +17,7 @@ import animealth.animealthbackend.api.comment.dto.CreateCommentDTO.CreateComment
 import animealth.animealthbackend.api.comment.dto.CreateCommentDTO.CreateCommentResponseDTO;
 import animealth.animealthbackend.api.comment.dto.GetCommentResponseDTO;
 import animealth.animealthbackend.api.comment.dto.UpdateCommentRequestDTO;
-import animealth.animealthbackend.api.comment.service.CommentService;
+import animealth.animealthbackend.api.comment.service.CommentServiceImpl;
 import animealth.animealthbackend.api.common.constant.ResultType;
 import animealth.animealthbackend.domain.user.User;
 import animealth.animealthbackend.global.config.auth.dto.SessionUser;
@@ -45,7 +45,7 @@ class CommentControllerTest {
     private ObjectMapper objectMapper;
 
     @MockBean
-    private CommentService commentService;
+    private CommentServiceImpl commentService;
 
     private User writer;
 

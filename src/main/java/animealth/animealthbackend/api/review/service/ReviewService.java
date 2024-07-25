@@ -5,89 +5,91 @@ import animealth.animealthbackend.api.review.dto.CreateReviewDTO.CreateReviewRes
 import animealth.animealthbackend.api.review.dto.GetReviewResponseDTO;
 import animealth.animealthbackend.api.review.dto.UpdateReviewDTO.UpdateReviewRequestDTO;
 import animealth.animealthbackend.api.review.dto.UpdateReviewDTO.UpdateReviewResponseDTO;
-import animealth.animealthbackend.domain.review.Review;
-import animealth.animealthbackend.domain.review.ReviewRepository;
-import animealth.animealthbackend.domain.user.User;
-import animealth.animealthbackend.domain.user.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
-@RequiredArgsConstructor
-@Service
-public class ReviewService {
+/**
+ * ReviewService 인터페이스는 리뷰(Review)와 관련된 다양한 기능을 제공합니다.
+ * ReviewService interface provides various functionalities related to reviews.
+ *
+ * @author: BullChallenger
+ */
+public interface ReviewService {
 
-    private static final int PAGE_SIZE = 10;
+    /**
+     * Creates a new review based on the provided request DTO.
+     *
+     * 주어진 요청 DTO를 기반으로 새로운 리뷰를 생성합니다.
+     *
+     * @param request the data transfer object containing the information needed to create a review
+     *                리뷰를 생성하기 위해 필요한 정보가 포함된 데이터 전송 객체
+     * @return a response DTO containing the created review's details
+     *         생성된 리뷰의 세부 정보를 포함하는 응답 DTO
+     */
+    CreateReviewResponseDTO saveReview(CreateReviewRequestDTO request);
 
-    private final ReviewRepository reviewRepository;
-    private final UserRepository userRepository;
+    /**
+     * Retrieves a review by its ID.
+     *
+     * 주어진 ID로 리뷰를 조회합니다.
+     *
+     * @param reviewId the ID of the review to retrieve
+     *                 조회할 리뷰의 ID
+     * @return a response DTO containing the retrieved review's details
+     *         조회된 리뷰의 세부 정보를 포함하는 응답 DTO
+     */
+    GetReviewResponseDTO getReviewByReviewId(Long reviewId);
 
-    public CreateReviewResponseDTO saveReview(CreateReviewRequestDTO request) {
-        User writer = userRepository.findById(request.getWriterId()).orElseThrow(
-                () -> new EntityNotFoundException("User Not Found")
-        );
+    /**
+     * Retrieves reviews by veterinary ID, paginated by page number and criteria.
+     *
+     * 동물병원 ID로 리뷰를 조회하며, 페이지 번호와 기준에 따라 페이징합니다.
+     *
+     * @param pageNo the page number to retrieve
+     *               조회할 페이지 번호
+     * @param criteria the criteria for sorting and filtering reviews
+     *                 리뷰를 정렬 및 필터링하기 위한 기준
+     * @param vetId the ID of the veterinary clinic to retrieve reviews for
+     *              리뷰를 조회할 동물병원의 ID
+     * @return a page response DTO containing the list of reviews for the specified page and criteria
+     *         지정된 페이지와 기준에 해당하는 리뷰 목록을 포함하는 페이지 응답 DTO
+     */
+    Page<GetReviewResponseDTO> getReviewByVetId(int pageNo, String criteria, Long vetId);
 
-        Review result = reviewRepository.save(
-                Review.of(
-                        request.getContent(),
-                        request.getRating(),
-                        writer,
-                        request.getVetId()
-                )
-        );
-        return CreateReviewResponseDTO.fromEntity(result);
-    }
+    /**
+     * Retrieves reviews by writer ID, paginated by page number and criteria.
+     *
+     * 작성자 ID로 리뷰를 조회하며, 페이지 번호와 기준에 따라 페이징합니다.
+     *
+     * @param pageNo the page number to retrieve
+     *               조회할 페이지 번호
+     * @param criteria the criteria for sorting and filtering reviews
+     *                 리뷰를 정렬 및 필터링하기 위한 기준
+     * @param writerId the ID of the writer to retrieve reviews for
+     *                 리뷰를 조회할 작성자의 ID
+     * @return a page response DTO containing the list of reviews for the specified page and criteria
+     *         지정된 페이지와 기준에 해당하는 리뷰 목록을 포함하는 페이지 응답 DTO
+     */
+    Page<GetReviewResponseDTO> getReviewByWriterId(int pageNo, String criteria, Long writerId);
 
-    @Transactional(readOnly = true)
-    public GetReviewResponseDTO getReviewByReviewId(Long reviewId) {
-        Review result = reviewRepository.findById(reviewId).orElseThrow(
-                () -> new EntityNotFoundException("Review Not Found")
-        );
-        return GetReviewResponseDTO.fromEntity(result);
-    }
+    /**
+     * Updates a review based on the provided request DTO.
+     *
+     * 주어진 요청 DTO를 기반으로 리뷰를 업데이트합니다.
+     *
+     * @param request the data transfer object containing the information needed to update a review
+     *                리뷰를 업데이트하기 위해 필요한 정보가 포함된 데이터 전송 객체
+     * @return a response DTO containing the updated review's details
+     *         업데이트된 리뷰의 세부 정보를 포함하는 응답 DTO
+     */
+    UpdateReviewResponseDTO updateReview(UpdateReviewRequestDTO request);
 
-    @Transactional(readOnly = true)
-    public Page<GetReviewResponseDTO> getReviewByVetId(int pageNo, String criteria, Long vetId) {
-        Pageable pageable = PageRequest.of(pageNo, PAGE_SIZE, Sort.by(Sort.Direction.DESC, criteria));
-        return reviewRepository.findAllByVetId(pageable, vetId).map(GetReviewResponseDTO::fromEntity);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<GetReviewResponseDTO> getReviewByWriterId(int pageNo, String criteria, Long writerId) {
-        Pageable pageable = PageRequest.of(pageNo, PAGE_SIZE, Sort.by(Sort.Direction.DESC, criteria));
-        return reviewRepository.findAllByWriter_UserId(pageable, writerId).map(GetReviewResponseDTO::fromEntity);
-    }
-
-    public UpdateReviewResponseDTO updateReview(UpdateReviewRequestDTO request) {
-        Review result = reviewRepository.findById(request.getReviewId()).orElseThrow(
-                () -> new EntityNotFoundException("Review Not Found")
-        );
-
-        if (request.getContent() != null) {
-            result.updateContent(request.getContent());
-        }
-
-        if (request.getRating() != null) {
-            result.updateRating(request.getRating());
-        }
-
-        return UpdateReviewResponseDTO.fromEntity(result);
-    }
-
-    public void deleteReviewById(Long reviewId) {
-        try {
-            reviewRepository.deleteById(reviewId);
-        } catch (IllegalArgumentException e) {
-            throw new EntityNotFoundException("Review Not Found");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
+    /**
+     * Deletes a review by its ID.
+     *
+     * 주어진 ID로 리뷰를 삭제합니다.
+     *
+     * @param reviewId the ID of the review to delete
+     *                 삭제할 리뷰의 ID
+     */
+    void deleteReviewById(Long reviewId);
 }

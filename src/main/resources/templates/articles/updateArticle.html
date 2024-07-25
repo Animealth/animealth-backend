@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Update Article</title>
+  <link rel="stylesheet" href="/css/article.css">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+</head>
+<body>
+<h1>Update Article</h1>
+
+<form id="updateArticleForm">
+  <label for="updateId">Article ID:</label>
+  <input type="number" id="updateId" name="id" required><br>
+  <label for="updateTitle">Title:</label>
+  <input type="text" id="updateTitle" name="title" required><br>
+  <label for="updateContent">Content:</label>
+  <textarea id="updateContent" name="content" required></textarea><br>
+  <button type="submit">Update Article</button>
+</form>
+
+<script src="/js/articles/updateArticle.js"></script>
+</body>
+</html>

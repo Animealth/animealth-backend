@@ -2,8 +2,11 @@ package animealth.animealthbackend.api.veterinary.service;
 
 import animealth.animealthbackend.api.common.exception.NotFoundVeterinaryException;
 import animealth.animealthbackend.api.veterinary.dto.*;
-import animealth.animealthbackend.domain.veterinary.Veterinary;
-import animealth.animealthbackend.domain.veterinary.VeterinaryRepository;
+import animealth.animealthbackend.api.veterinary.dto.VeterinaryDTO.CreateVeterinaryRequestDTO;
+import animealth.animealthbackend.api.veterinary.dto.VeterinaryDTO.UpdateVeterinaryRequestDTO;
+import animealth.animealthbackend.api.veterinary.dto.VeterinaryDTO.VeterinaryResponseDTO;
+import animealth.animealthbackend.domain.veterinary.VeterinaryHospital;
+import animealth.animealthbackend.domain.veterinary.VeterinaryHospitalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,9 +27,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
-public class VeterinaryServiceImpl implements VeterinaryService{
+public class VeterinaryHospitalServiceImpl implements VeterinaryHospitalService {
 
-    private final VeterinaryRepository veterinaryRepository;
+    private final VeterinaryHospitalRepository veterinaryHospitalRepository;
 
     /**
      * Creates a new Veterinary entity based on the provided request DTO.
@@ -39,10 +42,10 @@ public class VeterinaryServiceImpl implements VeterinaryService{
      */
     @Transactional
     @Override
-    public CreateVeterinaryDTO createVeterinary(CreateVeterinaryRequestDTO requestDTO) {
-        Veterinary veterinary = Veterinary.createVeterinary(requestDTO);
-        Veterinary save = veterinaryRepository.save(veterinary);
-        return CreateVeterinaryDTO.fromEntity(save);
+    public VeterinaryDTO.CreateVeterinaryDTO createVeterinary(CreateVeterinaryRequestDTO requestDTO) {
+        VeterinaryHospital veterinary = VeterinaryHospital.createVeterinary(requestDTO);
+        VeterinaryHospital save = veterinaryHospitalRepository.save(veterinary);
+        return VeterinaryDTO.CreateVeterinaryDTO.fromEntity(save);
     }
 
     /**
@@ -56,11 +59,11 @@ public class VeterinaryServiceImpl implements VeterinaryService{
      */
     @Transactional
     @Override
-    public UpdateVeterinaryDTO updateVeterinary(Long veterinaryId, UpdateVeterinaryRequestDTO requestDTO) {
-        Veterinary veterinary = veterinaryRepository.findByVeterinaryId(veterinaryId)
+    public VeterinaryDTO.UpdateVeterinaryDTO updateVeterinary(Long veterinaryId, UpdateVeterinaryRequestDTO requestDTO) {
+        VeterinaryHospital veterinary = veterinaryHospitalRepository.findByVeterinaryId(veterinaryId)
                 .orElseThrow(() -> new NotFoundVeterinaryException("veterinary not found"));
-        Veterinary updateVeterinary = veterinary.updateVeterinary(requestDTO);
-        return UpdateVeterinaryDTO.fromEntity(updateVeterinary);
+        VeterinaryHospital updateVeterinary = veterinary.updateVeterinary(requestDTO);
+        return VeterinaryDTO.UpdateVeterinaryDTO.fromEntity(updateVeterinary);
     }
 
     /**
@@ -73,11 +76,11 @@ public class VeterinaryServiceImpl implements VeterinaryService{
      */
     @Transactional
     @Override
-    public DeleteVeterinaryDTO deleteVeterinary(Long veterinaryId) {
-        Veterinary veterinary = veterinaryRepository.findByVeterinaryId(veterinaryId)
+    public VeterinaryDTO.DeleteVeterinaryDTO deleteVeterinary(Long veterinaryId) {
+        VeterinaryHospital veterinaryHospital = veterinaryHospitalRepository.findByVeterinaryId(veterinaryId)
                 .orElseThrow(() -> new NotFoundVeterinaryException("veterinary not found"));
-        Veterinary deleteVeterinary = veterinary.deleteVeterinary();
-        return DeleteVeterinaryDTO.fromEntity(deleteVeterinary);
+        VeterinaryHospital deleteVeterinary = veterinaryHospital.deleteVeterinary();
+        return VeterinaryDTO.DeleteVeterinaryDTO.fromEntity(deleteVeterinary);
     }
 
     /**
@@ -90,7 +93,7 @@ public class VeterinaryServiceImpl implements VeterinaryService{
      */
     @Override
     public VeterinaryResponseDTO findByVeterinaryId(Long veterinaryId) {
-        Veterinary veterinary = veterinaryRepository.findByVeterinaryId(veterinaryId)
+        VeterinaryHospital veterinary = veterinaryHospitalRepository.findByVeterinaryId(veterinaryId)
                 .orElseThrow(() -> new NotFoundVeterinaryException("veterinary not found"));
         return VeterinaryResponseDTO.fromEntity(veterinary);
     }
@@ -106,27 +109,30 @@ public class VeterinaryServiceImpl implements VeterinaryService{
      */
     @Override
     public List<VeterinaryResponseDTO> findByVeterinaryName(String veterinaryName) {
-        List<Veterinary> veterinaryList = veterinaryRepository.findByVeterinaryName(veterinaryName);
-        return veterinaryList.isEmpty() ? extractList(veterinaryList) : new ArrayList<>();
+        List<VeterinaryHospital> veterinaryList = veterinaryHospitalRepository.findByVeterinaryName(veterinaryName);
+        return veterinaryList.isEmpty() ?new ArrayList<>(): extractList(veterinaryList);
+
     }
 
     /**
      * Retrieves a list fromEntity all Veterinary entities.
-     *
+     * <p>
      * 모든 Veterinary 엔티티 목록을 검색합니다.
      *
-     * @autor yeom hwiju
      * @return a list fromEntity all Veterinary entities 모든 Veterinary 엔티티 목록
+     * @autor yeom hwiju
      */
     @Override
     public List<VeterinaryResponseDTO> findAll() {
-        List<Veterinary> veterinaryList = veterinaryRepository.findAll();
-        return veterinaryList.isEmpty() ? extractList(veterinaryList) : new ArrayList<>();
+        List<VeterinaryHospital> veterinaryList = veterinaryHospitalRepository.findAll();
+        return veterinaryList.isEmpty() ? new ArrayList<>(): extractList(veterinaryList);
     }
 
+
+
     @Override
-    public List<Veterinary> loadVeterinariesFromCSV(String csvFilePath) {
-        List<Veterinary> veterinaries = new ArrayList<>();
+    public List<VeterinaryHospital> loadVeterinariesFromCSV(String csvFilePath) {
+        List<VeterinaryHospital> veterinaries = new ArrayList<>();
         String line;
         String cvsSplitBy = ",";
 
@@ -145,7 +151,7 @@ public class VeterinaryServiceImpl implements VeterinaryService{
                 dto.setClosedDay(columns[12] + " to " + columns[13]); // 휴업시작일자 to 휴업종료일자
                 dto.setContact(columns[16]); // 소재지전화
 
-                Veterinary veterinary = Veterinary.createVeterinary(dto);
+                VeterinaryHospital veterinary = VeterinaryHospital.createVeterinary(dto);
                 veterinaries.add(veterinary);
             }
         } catch (IOException e) {
@@ -162,9 +168,9 @@ public class VeterinaryServiceImpl implements VeterinaryService{
      * @param veterinaryList the list fromEntity Veterinary entities to convert 변환할 Veterinary 엔티티 목록
      * @return a list fromEntity VeterinaryResponseDTOs VeterinaryResponseDTO 목록
      */
-    private static List<VeterinaryResponseDTO> extractList(List<Veterinary> veterinaryList) {
+    private static List<VeterinaryResponseDTO> extractList(List<VeterinaryHospital> veterinaryList) {
         List<VeterinaryResponseDTO> list = new ArrayList<>();
-        for (Veterinary veterinary : veterinaryList) {
+        for (VeterinaryHospital veterinary : veterinaryList) {
             list.add(VeterinaryResponseDTO.fromEntity(veterinary));
         }
         return list;

@@ -93,7 +93,7 @@ public class Pet extends BaseEntity {
                 .build();
     }
 
-    public void updatePetInfo(UpdatePetResponseDTO request) {
+    public Pet updatePetInfo(UpdatePetResponseDTO request) {
         this.name = request.getName();
         this.age = request.getAge();
         this.category = request.getCategory();
@@ -101,5 +101,10 @@ public class Pet extends BaseEntity {
         this.neutered = request.isNeutered();
         this.gender = request.getGender();
         this.imageUrl = request.getImageUrl();
+        return this;
+    }
+
+    public void deletePet() {
+        this.setIsDeleted(true);
     }
 }

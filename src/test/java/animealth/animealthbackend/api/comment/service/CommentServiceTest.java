@@ -9,7 +9,6 @@ import animealth.animealthbackend.api.comment.dto.UpdateCommentRequestDTO;
 import animealth.animealthbackend.domain.article.Article;
 import animealth.animealthbackend.domain.article.ArticleRepository;
 import animealth.animealthbackend.domain.comment.Comment;
-import animealth.animealthbackend.domain.comment.CommentRepository;
 import animealth.animealthbackend.domain.user.Role;
 import animealth.animealthbackend.domain.user.User;
 import animealth.animealthbackend.domain.user.UserRepository;
@@ -29,7 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 class CommentServiceTest {
 
     @Autowired
-    private CommentService commentService;
+    private CommentServiceImpl commentService;
 
     @Autowired private UserRepository userRepository;
     @Autowired private ArticleRepository articleRepository;

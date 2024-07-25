@@ -1,6 +1,6 @@
 package animealth.animealthbackend.dummy;
 
-import animealth.animealthbackend.domain.veterinary.Veterinary;
+import animealth.animealthbackend.domain.veterinary.VeterinaryHospital;
 
 /*
 * 테스트에 사용할 동물 병원 더미 클래스입니다.
@@ -11,8 +11,8 @@ public class DummyVeterinary {
     /*
      * 테스트에 사용할 동물 병원 더미 메서드 입니다.
      * */
-    public static Veterinary dummy(){
-        return Veterinary.builder()
+    public static VeterinaryHospital dummy(){
+        return VeterinaryHospital.builder()
                 .veterinaryId(1L)
                 .veterinaryName("Animal Care Clinic")
                 .location("1234 Elm Street")
