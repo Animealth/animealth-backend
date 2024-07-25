@@ -6,7 +6,7 @@ import animealth.animealthbackend.api.veterinary.dto.VeterinaryDTO.CreateVeterin
 import animealth.animealthbackend.api.veterinary.dto.VeterinaryDTO.UpdateVeterinaryRequestDTO;
 import animealth.animealthbackend.api.veterinary.dto.VeterinaryDTO.VeterinaryResponseDTO;
 import animealth.animealthbackend.domain.veterinary.VeterinaryHospital;
-import animealth.animealthbackend.domain.veterinary.VeterinaryRepository;
+import animealth.animealthbackend.domain.veterinary.VeterinaryHospitalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,9 +27,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
-public class VeterinaryServiceImpl implements VeterinaryService{
+public class VeterinaryHospitalServiceImpl implements VeterinaryHospitalService {
 
-    private final VeterinaryRepository veterinaryRepository;
+    private final VeterinaryHospitalRepository veterinaryHospitalRepository;
 
     /**
      * Creates a new Veterinary entity based on the provided request DTO.
@@ -44,7 +44,7 @@ public class VeterinaryServiceImpl implements VeterinaryService{
     @Override
     public VeterinaryDTO.CreateVeterinaryDTO createVeterinary(CreateVeterinaryRequestDTO requestDTO) {
         VeterinaryHospital veterinary = VeterinaryHospital.createVeterinary(requestDTO);
-        VeterinaryHospital save = veterinaryRepository.save(veterinary);
+        VeterinaryHospital save = veterinaryHospitalRepository.save(veterinary);
         return VeterinaryDTO.CreateVeterinaryDTO.fromEntity(save);
     }
 
@@ -60,7 +60,7 @@ public class VeterinaryServiceImpl implements VeterinaryService{
     @Transactional
     @Override
     public VeterinaryDTO.UpdateVeterinaryDTO updateVeterinary(Long veterinaryId, UpdateVeterinaryRequestDTO requestDTO) {
-        VeterinaryHospital veterinary = veterinaryRepository.findByVeterinaryId(veterinaryId)
+        VeterinaryHospital veterinary = veterinaryHospitalRepository.findByVeterinaryId(veterinaryId)
                 .orElseThrow(() -> new NotFoundVeterinaryException("veterinary not found"));
         VeterinaryHospital updateVeterinary = veterinary.updateVeterinary(requestDTO);
         return VeterinaryDTO.UpdateVeterinaryDTO.fromEntity(updateVeterinary);
@@ -77,7 +77,7 @@ public class VeterinaryServiceImpl implements VeterinaryService{
     @Transactional
     @Override
     public VeterinaryDTO.DeleteVeterinaryDTO deleteVeterinary(Long veterinaryId) {
-        VeterinaryHospital veterinaryHospital = veterinaryRepository.findByVeterinaryId(veterinaryId)
+        VeterinaryHospital veterinaryHospital = veterinaryHospitalRepository.findByVeterinaryId(veterinaryId)
                 .orElseThrow(() -> new NotFoundVeterinaryException("veterinary not found"));
         VeterinaryHospital deleteVeterinary = veterinaryHospital.deleteVeterinary();
         return VeterinaryDTO.DeleteVeterinaryDTO.fromEntity(deleteVeterinary);
@@ -93,7 +93,7 @@ public class VeterinaryServiceImpl implements VeterinaryService{
      */
     @Override
     public VeterinaryResponseDTO findByVeterinaryId(Long veterinaryId) {
-        VeterinaryHospital veterinary = veterinaryRepository.findByVeterinaryId(veterinaryId)
+        VeterinaryHospital veterinary = veterinaryHospitalRepository.findByVeterinaryId(veterinaryId)
                 .orElseThrow(() -> new NotFoundVeterinaryException("veterinary not found"));
         return VeterinaryResponseDTO.fromEntity(veterinary);
     }
@@ -109,7 +109,7 @@ public class VeterinaryServiceImpl implements VeterinaryService{
      */
     @Override
     public List<VeterinaryResponseDTO> findByVeterinaryName(String veterinaryName) {
-        List<VeterinaryHospital> veterinaryList = veterinaryRepository.findByVeterinaryName(veterinaryName);
+        List<VeterinaryHospital> veterinaryList = veterinaryHospitalRepository.findByVeterinaryName(veterinaryName);
         return veterinaryList.isEmpty() ?new ArrayList<>(): extractList(veterinaryList);
 
     }
@@ -124,7 +124,7 @@ public class VeterinaryServiceImpl implements VeterinaryService{
      */
     @Override
     public List<VeterinaryResponseDTO> findAll() {
-        List<VeterinaryHospital> veterinaryList = veterinaryRepository.findAll();
+        List<VeterinaryHospital> veterinaryList = veterinaryHospitalRepository.findAll();
         return veterinaryList.isEmpty() ? new ArrayList<>(): extractList(veterinaryList);
     }
 

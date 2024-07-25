@@ -5,7 +5,7 @@ import animealth.animealthbackend.domain.veterinary.VeterinaryHospital;
 
 import java.util.List;
 
-public interface VeterinaryService {
+public interface VeterinaryHospitalService {
 
     VeterinaryDTO.CreateVeterinaryDTO createVeterinary(VeterinaryDTO.CreateVeterinaryRequestDTO requestDTO);
 

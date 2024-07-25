@@ -3,7 +3,7 @@ package animealth.animealthbackend.api.veterinary.service;
 import animealth.animealthbackend.api.veterinary.dto.*;
 import animealth.animealthbackend.domain.veterinary.Veterinary;
 import animealth.animealthbackend.domain.veterinary.VeterinaryHospital;
-import animealth.animealthbackend.domain.veterinary.VeterinaryRepository;
+import animealth.animealthbackend.domain.veterinary.VeterinaryHospitalRepository;
 import animealth.animealthbackend.dummy.DummyCreateVeterinaryRequestDTO;
 import animealth.animealthbackend.dummy.DummyUpdateVeterinaryRequestDTO;
 import animealth.animealthbackend.dummy.DummyVeterinary;
@@ -25,14 +25,14 @@ import static org.mockito.Mockito.when;
 
 
 @ExtendWith(MockitoExtension.class)
-class VeterinaryServiceImplTest {
+class VeterinaryHospitalServiceImplTest {
 
     @InjectMocks
-    private VeterinaryServiceImpl veterinaryService;
+    private VeterinaryHospitalServiceImpl veterinaryService;
 
 
     @Mock
-    private VeterinaryRepository veterinaryRepository;
+    private VeterinaryHospitalRepository veterinaryHospitalRepository;
 
     private VeterinaryHospital veterinary;
     private VeterinaryDTO.UpdateVeterinaryRequestDTO updateVeterinaryRequestDTO;
@@ -59,10 +59,10 @@ class VeterinaryServiceImplTest {
         VeterinaryHospital savedVeterinary = VeterinaryHospital.builder().build(); // 임의로 생성한 Mock 객체
 
         // when 구문에서 반환값 설정
-        when(veterinaryRepository.save(any(VeterinaryHospital.class))).thenReturn(savedVeterinary);
+        when(veterinaryHospitalRepository.save(any(VeterinaryHospital.class))).thenReturn(savedVeterinary);
 
         // 실제 테스트 코드에서 save 메서드 호출 후 반환값 사용
-        VeterinaryHospital result = veterinaryRepository.save(veterinary);
+        VeterinaryHospital result = veterinaryHospitalRepository.save(veterinary);
 
         // 검증
         assertEquals(savedVeterinary, result);
@@ -76,14 +76,14 @@ class VeterinaryServiceImplTest {
         VeterinaryHospital savedVeterinary = VeterinaryHospital.builder().build();
 
         // Stub the repository method to return Optional fromEntity savedVeterinary
-        when(veterinaryRepository.findByVeterinaryId(anyLong()))
+        when(veterinaryHospitalRepository.findByVeterinaryId(anyLong()))
                 .thenReturn(Optional.of(savedVeterinary));
 
         // Call the service method
         veterinaryService.updateVeterinary(anyLong(), updateVeterinaryRequestDTO);
 
         // Verify that the repository's save method was called with the correct object
-        Mockito.verify(veterinaryRepository).findByVeterinaryId(anyLong());
+        Mockito.verify(veterinaryHospitalRepository).findByVeterinaryId(anyLong());
 
     }
 
@@ -94,14 +94,14 @@ class VeterinaryServiceImplTest {
         VeterinaryHospital savedVeterinary = VeterinaryHospital.builder().build();
 
         // Stub the repository method to return Optional fromEntity savedVeterinary
-        when(veterinaryRepository.findByVeterinaryId(anyLong()))
+        when(veterinaryHospitalRepository.findByVeterinaryId(anyLong()))
                 .thenReturn(Optional.of(savedVeterinary));
 
         // Call the service method
         veterinaryService.deleteVeterinary(anyLong());
 
         // Verify that the repository's save method was called with the correct object
-        Mockito.verify(veterinaryRepository).findByVeterinaryId(anyLong());
+        Mockito.verify(veterinaryHospitalRepository).findByVeterinaryId(anyLong());
     }
 
     @DisplayName("병원 id로 찾는 테스트")
@@ -111,11 +111,11 @@ class VeterinaryServiceImplTest {
         VeterinaryHospital veterinary1 = VeterinaryHospital.builder().build();
 
         // Stub the repository method to return Optional fromEntity savedVeterinary
-        when(veterinaryRepository.findByVeterinaryId(anyLong()))
+        when(veterinaryHospitalRepository.findByVeterinaryId(anyLong()))
                 .thenReturn(Optional.of(veterinary1));
 
         veterinaryService.findByVeterinaryId(anyLong());
-        Mockito.verify(veterinaryRepository).findByVeterinaryId(anyLong());
+        Mockito.verify(veterinaryHospitalRepository).findByVeterinaryId(anyLong());
 
 
     }
@@ -127,13 +127,13 @@ class VeterinaryServiceImplTest {
         VeterinaryHospital veterinary1 = VeterinaryHospital.builder().build();
 
         //when
-        when(veterinaryRepository.findByVeterinaryName(anyString()))
+        when(veterinaryHospitalRepository.findByVeterinaryName(anyString()))
                 .thenReturn(List.of(veterinary1));
 
         veterinaryService.findByVeterinaryName(anyString());
 
         //then
-        Mockito.verify(veterinaryRepository).findByVeterinaryName(anyString());
+        Mockito.verify(veterinaryHospitalRepository).findByVeterinaryName(anyString());
     }
 
     @DisplayName("병원 전부 찾는 테스트")
@@ -143,12 +143,12 @@ class VeterinaryServiceImplTest {
         VeterinaryHospital veterinary1 = VeterinaryHospital.builder().build();
 
         //when
-        when(veterinaryRepository.findAll())
+        when(veterinaryHospitalRepository.findAll())
                 .thenReturn(List.of(veterinary1));
 
         veterinaryService.findAll();
 
         //then
-        Mockito.verify(veterinaryRepository).findAll();
+        Mockito.verify(veterinaryHospitalRepository).findAll();
     }
 }
