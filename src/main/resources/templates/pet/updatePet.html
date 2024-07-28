@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Update Pet</title>
+  <link rel="stylesheet" href="/css/pet.css">
+</head>
+<body>
+<h1>Update Pet</h1>
+
+<form id="updatePetForm">
+  <input type="hidden" id="petId" name="petId" th:value="${pet.petId}">
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name" th:value="${pet.name}" required>
+  <label for="age">Age:</label>
+  <input type="number" id="age" name="age" th:value="${pet.age}" required>
+  <label for="category">Category:</label>
+  <select id="category" name="category" th:value="${pet.category}" required>
+    <option value="DOG">Dog</option>
+    <option value="CAT">Cat</option>
+    <option value="BIRD">Bird</option>
+  </select>
+  <label for="weight">Weight:</label>
+  <input type="number" id="weight" name="weight" th:value="${pet.weight}" required>
+  <label for="neutered">Neutered:</label>
+  <select id="neutered" name="neutered" th:value="${pet.neutered}" required>
+    <option value="true">Yes</option>
+    <option value="false">No</option>
+  </select>
+  <label for="gender">Gender:</label>
+  <select id="gender" name="gender" th:value="${pet.gender}" required>
+    <option value="MALE">Male</option>
+    <option value="FEMALE">Female</option>
+  </select>
+  <label for="imageUrl">Image URL:</label>
+  <input type="text" id="imageUrl" name="imageUrl" th:value="${pet.imageUrl}" required>
+  <button type="submit">Update Pet</button>
+</form>
+
+<script src="/js/pet.js"></script>
+</body>
+</html>

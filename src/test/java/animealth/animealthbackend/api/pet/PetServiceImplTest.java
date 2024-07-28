@@ -3,7 +3,7 @@ package animealth.animealthbackend.api.pet;
 import animealth.animealthbackend.api.pet.dto.PetDto.PetRequestDTO;
 import animealth.animealthbackend.api.pet.dto.PetDto.PetResponseDTO;
 import animealth.animealthbackend.api.pet.dto.UpdatePetResponseDTO;
-import animealth.animealthbackend.api.pet.service.PetService;
+import animealth.animealthbackend.api.pet.service.PetServiceImpl;
 import animealth.animealthbackend.domain.pet.Pet;
 import animealth.animealthbackend.domain.pet.PetCategory;
 import animealth.animealthbackend.domain.pet.PetGender;
@@ -20,17 +20,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Transactional
-public class PetServiceTest {
+public class PetServiceImplTest {
 
     @Autowired
-    private PetService petService;
+    private PetServiceImpl petServiceImpl;
 
     @Autowired
     private PetRepository petRepository;
@@ -77,7 +76,7 @@ public class PetServiceTest {
         );
 
         //when
-        Pet result = petService.registerPet(owner.getUserId(), request);
+        Pet result = petServiceImpl.registerPet(owner.getUserId(), request);
 
         //then
         assertThat(result.getName()).isEqualTo(request.getName());
@@ -89,7 +88,7 @@ public class PetServiceTest {
     @Test
     void findPets() {
         //when
-        List<PetResponseDTO> result = petService.findPets(owner.getUserId());
+        List<PetResponseDTO> result = petServiceImpl.findPets(owner.getUserId());
 
         //then
         assertThat(result).isNotEmpty();
@@ -100,7 +99,7 @@ public class PetServiceTest {
     @Test
     void getPetById() {
         //when
-        PetResponseDTO result = petService.getPetById(pet.getId());
+        PetResponseDTO result = petServiceImpl.getPetById(pet.getId());
 
         //then
         assertThat(result.getName()).isEqualTo(pet.getName());
@@ -122,7 +121,7 @@ public class PetServiceTest {
         );
 
         //when
-        PetResponseDTO result = petService.update(request);
+        PetResponseDTO result = petServiceImpl.update(request);
 
         //then
         assertThat(result.getName()).isEqualTo(request.getName());
@@ -138,11 +137,11 @@ public class PetServiceTest {
     @Test
     void deletePetById() {
         //when
-        petService.deletePetById(pet.getId());
+        petServiceImpl.deletePetById(pet.getId());
 
         //then
         assertThrows(EntityNotFoundException.class, () -> {
-            petService.getPetById(pet.getId());
+            petServiceImpl.getPetById(pet.getId());
         });
     }
 
