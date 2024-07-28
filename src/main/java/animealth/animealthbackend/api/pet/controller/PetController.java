@@ -5,6 +5,7 @@ import animealth.animealthbackend.api.common.dto.ResponseDTO;
 import animealth.animealthbackend.api.pet.dto.PetDto.*;
 import animealth.animealthbackend.api.pet.dto.UpdatePetResponseDTO;
 import animealth.animealthbackend.api.pet.service.PetService;
+import animealth.animealthbackend.api.pet.service.PetServiceImpl;
 import animealth.animealthbackend.global.config.auth.dto.SessionUser;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
