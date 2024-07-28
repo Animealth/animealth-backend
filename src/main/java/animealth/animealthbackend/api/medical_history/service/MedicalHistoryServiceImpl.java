@@ -6,6 +6,7 @@ import animealth.animealthbackend.api.medical_history.dto.MedicalHistoryDTO.Medi
 import animealth.animealthbackend.domain.medical_history.MedicalHistory;
 import animealth.animealthbackend.domain.medical_history.MedicalHistoryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Service
 public class MedicalHistoryServiceImpl implements MedicalHistoryService {
 
     private final MedicalHistoryRepository medicalHistoryRepository;
