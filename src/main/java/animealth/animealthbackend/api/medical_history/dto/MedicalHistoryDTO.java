@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MedicalHistoryDTO {
 
@@ -14,7 +16,7 @@ public class MedicalHistoryDTO {
      * MedicalHistoryResponseDTO는 의료 기록에 대한 응답 데이터를 나타내는 클래스입니다.
      * 이 클래스는 의료 기록의 ID, 내용, 날짜, 영어 설명, 한국어 설명을 포함합니다.
      *
-     * @author 작성자
+     * @author hwiju yeom
      * @version 1.0
      */
     @Getter
@@ -58,6 +60,16 @@ public class MedicalHistoryDTO {
                     .englishDescription(entity.getVaccineType().getEnglishDescription())
                     .koreanDescription(entity.getVaccineType().getKoreanDescription())
                     .build();
+        }
+
+        public static List<MedicalHistoryResponseDTO> makeDtoListFromEntityList(List<MedicalHistory> entities) {
+            List<MedicalHistoryResponseDTO> responseDTOS= new ArrayList<>();
+
+            for (MedicalHistory entity : entities) {
+                responseDTOS.add(MedicalHistoryResponseDTO.from(entity));
+            }
+
+            return responseDTOS;
         }
     }
 
