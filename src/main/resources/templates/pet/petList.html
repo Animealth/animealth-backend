@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Pet List</title>
+  <link rel="stylesheet" href="/css/pet.css">
+</head>
+<body>
+<h1>My Pets</h1>
+
+<ul>
+  <li th:each="pet : ${pets}">
+    <span th:text="${pet.name}">Pet Name</span>
+    <a th:href="@{/api/pet/{petId}(petId=${pet.petId})}">View Details</a>
+    <button class="delete-pet-button" th:data-pet-id="${pet.petId}">Delete</button>
+  </li>
+</ul>
+
+<script src="/js/pet.js"></script>
+</body>
+</html>

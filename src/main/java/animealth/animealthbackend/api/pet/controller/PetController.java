@@ -26,20 +26,20 @@ public class PetController extends BaseController {
     @PostMapping(value = "/register")
     public String registerPet(HttpSession session, @RequestBody PetRequestDTO dto, Model model) {
         SessionUser principal = (SessionUser) session.getAttribute("user");
-        PetResponseDTO petResponseDTO = PetResponseDTO.from(petService.registerPet(principal.getId(), dto));
-        model.addAttribute("pet", petResponseDTO);
-        return "pet/register";
+        PetResponseDTO responseDTO = PetResponseDTO.from(petService.registerPet(principal.getId(), dto));
+        model.addAttribute("pet", responseDTO);
+        return "redirect:/api/pet"; // 애완동물 리스트 페이지로 리다이렉트
     }
 
     /**
      * 내 애완동물 리스트 조회
      */
-    @GetMapping
+    @GetMapping()
     public String findPets(HttpSession session, Model model) {
         SessionUser principal = (SessionUser) session.getAttribute("user");
-        List<PetResponseDTO> petDTOList = petService.findPets(principal.getId());
-        model.addAttribute("petList", petDTOList);
-        return "pet/list";
+        List<PetResponseDTO> petList = petService.findPets(principal.getId());
+        model.addAttribute("pets", petList);
+        return "petListView"; // 애완동물 리스트 뷰
     }
 
     /**
@@ -49,7 +49,7 @@ public class PetController extends BaseController {
     public String getPetById(@PathVariable(value = "petId") Long petId, Model model) {
         PetResponseDTO petResponseDTO = petService.getPetById(petId);
         model.addAttribute("pet", petResponseDTO);
-        return "pet/detail";
+        return "petDetailView"; // 애완동물 상세 뷰
     }
 
     /**
@@ -57,17 +57,17 @@ public class PetController extends BaseController {
      */
     @PatchMapping(value = "/update")
     public String updatePet(@RequestBody UpdatePetResponseDTO dto, Model model) {
-        PetResponseDTO petResponseDTO = petService.update(dto);
-        model.addAttribute("pet", petResponseDTO);
-        return "pet/update";
+        PetResponseDTO updatedPet = petService.update(dto);
+        model.addAttribute("pet", updatedPet);
+        return "redirect:/api/pet/" + updatedPet.getPetId(); // 애완동물 상세 페이지로 리다이렉트
     }
 
     /**
      * 애완동물 삭제
      */
     @DeleteMapping(value = "/delete/{petId}")
-    public String deletePet(@PathVariable(value = "petId") Long petId, Model model) {
+    public String deletePet(@PathVariable(value = "petId") Long petId) {
         petService.deletePetById(petId);
-        return "redirect:/api/pet"; // 삭제 후 애완동물 목록으로 리디렉션
+        return "redirect:/api/pet"; // 애완동물 리스트 페이지로 리다이렉트
     }
 }
