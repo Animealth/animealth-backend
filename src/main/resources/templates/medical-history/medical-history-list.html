@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Medical History</title>
+</head>
+<body>
+<h1>Medical History</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Medical ID</th>
+        <th>Medical Content</th>
+        <th>Medical Date</th>
+        <th>English Description</th>
+        <th>Korean Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- medicalHistories는 컨트롤러에서 전달된 MedicalHistoryResponseDTO 객체의 리스트 -->
+    <tr th:each="medicalHistory : ${medicalHistories}">
+        <td th:text="${medicalHistory.medicalId}">Medical ID</td>
+        <td th:text="${medicalHistory.medicalContent}">Medical Content</td>
+        <td th:text="${#dates.format(medicalHistory.medicalDate, 'yyyy-MM-dd HH:mm')}">Medical Date</td>
+        <td th:text="${medicalHistory.englishDescription}">English Description</td>
+        <td th:text="${medicalHistory.koreanDescription}">Korean Description</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
