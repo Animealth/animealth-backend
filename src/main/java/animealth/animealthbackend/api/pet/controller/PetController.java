@@ -24,7 +24,7 @@ public class PetController extends BaseController {
      * 애완동물 등록
      */
     @PostMapping(value = "/register")
-    public String registerPet(HttpSession session, @RequestBody PetRequestDTO dto, Model model) {
+    public String registerPet(HttpSession session, @ModelAttribute PetRequestDTO dto, Model model) {
         SessionUser principal = (SessionUser) session.getAttribute("user");
         PetResponseDTO responseDTO = PetResponseDTO.from(petService.registerPet(principal.getId(), dto));
         model.addAttribute("pet", responseDTO);
@@ -39,7 +39,7 @@ public class PetController extends BaseController {
         SessionUser principal = (SessionUser) session.getAttribute("user");
         List<PetResponseDTO> petList = petService.findPets(principal.getId());
         model.addAttribute("pets", petList);
-        return "petListView"; // 애완동물 리스트 뷰
+        return "petList"; // 애완동물 리스트 뷰
     }
 
     /**
@@ -49,14 +49,24 @@ public class PetController extends BaseController {
     public String getPetById(@PathVariable(value = "petId") Long petId, Model model) {
         PetResponseDTO petResponseDTO = petService.getPetById(petId);
         model.addAttribute("pet", petResponseDTO);
-        return "petDetailView"; // 애완동물 상세 뷰
+        return "petDetail"; // 애완동물 상세 뷰
+    }
+
+    /**
+     * 애완동물 업데이트 페이지로 이동
+     */
+    @GetMapping(value = "/update/{petId}")
+    public String updatePetForm(@PathVariable(value = "petId") Long petId, Model model) {
+        PetResponseDTO petResponseDTO = petService.getPetById(petId);
+        model.addAttribute("pet", petResponseDTO);
+        return "updatePet"; // 애완동물 업데이트 뷰
     }
 
     /**
      * 애완동물 업데이트
      */
     @PatchMapping(value = "/update")
-    public String updatePet(@RequestBody UpdatePetResponseDTO dto, Model model) {
+    public String updatePet(@ModelAttribute UpdatePetResponseDTO dto, Model model) {
         PetResponseDTO updatedPet = petService.update(dto);
         model.addAttribute("pet", updatedPet);
         return "redirect:/api/pet/" + updatedPet.getPetId(); // 애완동물 상세 페이지로 리다이렉트
