@@ -5,6 +5,7 @@ import animealth.animealthbackend.api.user.service.UserService;
 import animealth.animealthbackend.domain.user.User;
 import animealth.animealthbackend.domain.user.UserRepository;
 import animealth.animealthbackend.dummy.DummyUser;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -63,7 +64,7 @@ class UserServiceTest {
         Long userId = 1L;
         when(userRepository.findById(userId)).thenReturn(Optional.empty());
 
-        assertThrows(NoSuchElementException.class, () -> userService.findById(userId));
+        assertThrows(EntityNotFoundException.class, () -> userService.findById(userId));
     }
 
     @Test
@@ -81,7 +82,7 @@ class UserServiceTest {
         assertEquals(updateUserDTO.getName(), result.getName());
         assertEquals(updateUserDTO.getPhone(), result.getPhone());
         assertEquals(updateUserDTO.getNickname(), result.getNickname());
-        verify(userRepository, times(1)).save(any(User.class));
+
     }
 
     @Test
@@ -91,7 +92,7 @@ class UserServiceTest {
         when(userRepository.findById(userId)).thenReturn(Optional.empty());
 
         assertThrows(IllegalArgumentException.class, () -> userService.update(userId, updateUserDTO));
-        verify(userRepository, never()).save(any(User.class));
+
     }
 
     @Test

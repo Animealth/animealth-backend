@@ -45,7 +45,7 @@ class ReviewServiceTest {
     @Test
     void createReview_Test() {
         // given
-        CreateReviewRequestDTO request = sendRequest("리뷰 테스트", 4, writer.getUserId(), vetId);
+        CreateReviewRequestDTO request = sendRequest("리뷰 테스트", 4, writer.getId(), vetId);
 
         // when
         CreateReviewResponseDTO response = reviewService.saveReview(request);
@@ -59,7 +59,7 @@ class ReviewServiceTest {
     @Test
     void getReview_By_ReviewId() {
         // given
-        CreateReviewRequestDTO saveRequest = sendRequest("리뷰 테스트", 4, writer.getUserId(), vetId);
+        CreateReviewRequestDTO saveRequest = sendRequest("리뷰 테스트", 4, writer.getId(), vetId);
         CreateReviewResponseDTO saveResponse = reviewService.saveReview(saveRequest);
 
         // when
@@ -75,7 +75,7 @@ class ReviewServiceTest {
     @Test
     void getReview_By_VetId_Test() {
         // given
-        CreateReviewRequestDTO saveRequest = sendRequest("리뷰 테스트", 4, writer.getUserId(), vetId);
+        CreateReviewRequestDTO saveRequest = sendRequest("리뷰 테스트", 4, writer.getId(), vetId);
         CreateReviewResponseDTO saveResponse = reviewService.saveReview(saveRequest);
 
         // when
@@ -93,11 +93,11 @@ class ReviewServiceTest {
     @Test
     void getReview_By_WriterId_Test() {
         // given
-        CreateReviewRequestDTO saveRequest = sendRequest("리뷰 테스트", 4, writer.getUserId(), vetId);
+        CreateReviewRequestDTO saveRequest = sendRequest("리뷰 테스트", 4, writer.getId(), vetId);
         CreateReviewResponseDTO saveResponse = reviewService.saveReview(saveRequest);
 
         // when
-        Page<GetReviewResponseDTO> response = reviewService.getReviewByWriterId(0, "createdTime", writer.getUserId());
+        Page<GetReviewResponseDTO> response = reviewService.getReviewByWriterId(0, "createdTime", writer.getId());
 
         // then
         assertThat(response).hasSize(1);
@@ -111,7 +111,7 @@ class ReviewServiceTest {
     @Test
     void updateReview_Test() {
         // given
-        CreateReviewRequestDTO saveRequest = sendRequest("리뷰 테스트", 4, writer.getUserId(), vetId);
+        CreateReviewRequestDTO saveRequest = sendRequest("리뷰 테스트", 4, writer.getId(), vetId);
         CreateReviewResponseDTO saveResponse = reviewService.saveReview(saveRequest);
 
         // when
@@ -128,7 +128,7 @@ class ReviewServiceTest {
     @Test
     void deleteReview_By_ReviewId_Test() {
         // given
-        CreateReviewRequestDTO saveRequest = sendRequest("리뷰 테스트", 4, writer.getUserId(), vetId);
+        CreateReviewRequestDTO saveRequest = sendRequest("리뷰 테스트", 4, writer.getId(), vetId);
         CreateReviewResponseDTO saveResponse = reviewService.saveReview(saveRequest);
 
         // when

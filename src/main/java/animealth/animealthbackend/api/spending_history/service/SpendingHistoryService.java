@@ -28,7 +28,7 @@ public class SpendingHistoryService {
                 () -> new EntityNotFoundException("User not found")
         );
         SpendingHistory spendingHistory = SpendingHistory.builder()
-                .spendingId(spendingHistoryDTO.getSpendingId())
+                .id(spendingHistoryDTO.getSpendingId())
                 .spendingAmount(spendingHistoryDTO.getSpendingAmount())
                 .user(user)
                 .spendingContent(spendingHistoryDTO.getSpendingContent())
@@ -82,7 +82,7 @@ public class SpendingHistoryService {
                 () -> new EntityNotFoundException("User not found")
         );
         Optional<SpendingHistory> optionalSpendingHistory = spendingHistoryRepository.findById(spendingHistoryId);
-        if(optionalSpendingHistory.isPresent() && optionalSpendingHistory.get().getUser().getUserId().equals(id)){
+        if(optionalSpendingHistory.isPresent() && optionalSpendingHistory.get().getUser().getId().equals(id)){
             SpendingHistory sh = optionalSpendingHistory.get();
             spendingHistoryRepository.delete(sh);
             return true;

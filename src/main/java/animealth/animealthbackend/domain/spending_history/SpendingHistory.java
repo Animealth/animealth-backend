@@ -17,18 +17,19 @@ import java.time.LocalDate;
 /**
  * 가계부 엔티티
  */
+@Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Table
-@Builder
 @DynamicUpdate
 @Where(clause = "IS_DELETED = false")
 public class SpendingHistory extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long spendingId;
+    @Column(name = "SPENDINGHISTORT_ID")
+    private Long id;
 
     @Column
     private String spendingContent;

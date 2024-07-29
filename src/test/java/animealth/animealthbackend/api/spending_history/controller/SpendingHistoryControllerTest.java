@@ -54,7 +54,7 @@ class SpendingHistoryControllerTest {
 
     @BeforeEach
     void setUp() {
-        sessionUser = new SessionUser(new User(1L, "user1", "user1@example.com", "01012341234", "뽀미엄마", USER, false));
+        sessionUser = new SessionUser(new User(1L, "user1", "user1@example.com", "01012341234", "뽀미엄마", USER));
     }
 
     @DisplayName("가계부 등록 테스트")

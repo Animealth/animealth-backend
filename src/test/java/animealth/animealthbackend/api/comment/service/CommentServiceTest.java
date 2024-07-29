@@ -56,7 +56,7 @@ class CommentServiceTest {
                 .build();
 
         // when
-        CreateCommentResponseDTO response = commentService.saveComment(writer.getUserId(), request);
+        CreateCommentResponseDTO response = commentService.saveComment(writer.getId(), request);
 
         // then
         assertThat(response).extracting("writer", "articleId", "content", "depth", "parentComment")
@@ -74,7 +74,7 @@ class CommentServiceTest {
                 .articleId(article.getId())
                 .build();
 
-        CreateCommentResponseDTO parentResponse = commentService.saveComment(writer.getUserId(), parentRequest);
+        CreateCommentResponseDTO parentResponse = commentService.saveComment(writer.getId(), parentRequest);
 
         // when
         CreateCommentRequestDTO childRequest = CreateCommentRequestDTO.builder()
@@ -83,7 +83,7 @@ class CommentServiceTest {
                 .articleId(article.getId())
                 .build();
 
-        CreateCommentResponseDTO childResponse = commentService.saveComment(writer.getUserId(), childRequest);
+        CreateCommentResponseDTO childResponse = commentService.saveComment(writer.getId(), childRequest);
         GetCommentResponseDTO getParentResponse = commentService.findCommentById(parentResponse.getCommentId());
 
         // then
@@ -105,7 +105,7 @@ class CommentServiceTest {
                 .articleId(article.getId())
                 .build();
 
-        CreateCommentResponseDTO saveResponse = commentService.saveComment(writer.getUserId(), saveRequest);
+        CreateCommentResponseDTO saveResponse = commentService.saveComment(writer.getId(), saveRequest);
 
         // when
         GetCommentResponseDTO response = commentService.findCommentById(saveResponse.getCommentId());
@@ -125,7 +125,7 @@ class CommentServiceTest {
                 .articleId(article.getId())
                 .build();
 
-        CreateCommentResponseDTO saveResponse = commentService.saveComment(writer.getUserId(), saveRequest);
+        CreateCommentResponseDTO saveResponse = commentService.saveComment(writer.getId(), saveRequest);
 
         // when
         UpdateCommentRequestDTO request = new UpdateCommentRequestDTO(saveResponse.getCommentId(), "수정된 댓글 내용");
@@ -146,7 +146,7 @@ class CommentServiceTest {
                 .articleId(article.getId())
                 .build();
 
-        CreateCommentResponseDTO saveResponse = commentService.saveComment(writer.getUserId(), saveRequest);
+        CreateCommentResponseDTO saveResponse = commentService.saveComment(writer.getId(), saveRequest);
 
         // when
         commentService.deleteCommentById(saveResponse.getCommentId());

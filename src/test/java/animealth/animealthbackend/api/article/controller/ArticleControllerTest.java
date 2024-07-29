@@ -64,7 +64,7 @@ class ArticleControllerTest {
     @BeforeEach
     void setup() {
         writer = new User(1L, "user1", "user1@example.com",
-                "01012341234", "뽀미엄마", USER, false);
+                "01012341234", "뽀미엄마", USER);
     }
 
 
@@ -98,7 +98,7 @@ class ArticleControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$.result.code").value(ResultType.SUCCESS.getCode()))
                 .andExpect(jsonPath("$.result.desc").value(ResultType.SUCCESS.getDesc()))
-                .andExpect(jsonPath("$.data.writer.userId").value(writer.getUserId()))
+                .andExpect(jsonPath("$.data.writer.userId").value(writer.getId()))
                 .andExpect(jsonPath("$.data.writer.nickname").value(writer.getNickname()))
                 .andExpect(jsonPath("$.data.title").value(request.getTitle()))
                 .andExpect(jsonPath("$.data.content").value(request.getContent()))

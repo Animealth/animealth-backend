@@ -76,7 +76,7 @@ public class PetServiceImplTest {
         );
 
         //when
-        Pet result = petServiceImpl.registerPet(owner.getUserId(), request);
+        Pet result = petServiceImpl.registerPet(owner.getId(), request);
 
         //then
         assertThat(result.getName()).isEqualTo(request.getName());
@@ -88,7 +88,7 @@ public class PetServiceImplTest {
     @Test
     void findPets() {
         //when
-        List<PetResponseDTO> result = petServiceImpl.findPets(owner.getUserId());
+        List<PetResponseDTO> result = petServiceImpl.findPets(owner.getId());
 
         //then
         assertThat(result).isNotEmpty();
