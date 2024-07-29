@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spending History List</title>
+</head>
+<body>
+<h1>Spending History List</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Description</th>
+        <th>Amount</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="history : ${spendingHistoryList}">
+        <td th:text="${history.id}"></td>
+        <td th:text="${history.description}"></td>
+        <td th:text="${history.amount}"></td>
+    </tr>
+    </tbody>
+</table>
+<a href="/api/spending_history/save">Add New Entry</a>
+</body>
+</html>

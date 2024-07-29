@@ -20,7 +20,7 @@ public class DummyUser {
 
     public static void setId(User user, Long id) {
         try{
-            Field idField = User.class.getDeclaredField("userId");
+            Field idField = User.class.getDeclaredField("id");
             idField.setAccessible(true);
             idField.set(user, id);
         }catch (NoSuchFieldException | IllegalAccessException e){

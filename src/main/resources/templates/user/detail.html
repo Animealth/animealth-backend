@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Detail</title>
+</head>
+<body>
+<h1>User Detail</h1>
+<div>
+    <p>ID: <span th:text="${user.id}"></span></p>
+    <p>Name: <span th:text="${user.name}"></span></p>
+    <p>Phone: <span th:text="${user.phone}"></span></p>
+    <p>Nickname: <span th:text="${user.nickname}"></span></p>
+</div>
+<a href="/user/find/all">Back to List</a>
+<a href="#" th:href="@{/user/update/{id}(id=${user.id})}">Update</a>
+<a href="#" th:href="@{/user/delete/{id}(id=${user.id})}" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
+</body>
+</html>
