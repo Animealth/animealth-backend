@@ -1,7 +1,6 @@
 package animealth.animealthbackend.api.veterinary.service;
 
 import animealth.animealthbackend.api.veterinary.dto.*;
-import animealth.animealthbackend.domain.veterinary.Veterinary;
 import animealth.animealthbackend.domain.veterinary.VeterinaryHospital;
 import animealth.animealthbackend.domain.veterinary.VeterinaryHospitalRepository;
 import animealth.animealthbackend.dummy.DummyCreateVeterinaryRequestDTO;
