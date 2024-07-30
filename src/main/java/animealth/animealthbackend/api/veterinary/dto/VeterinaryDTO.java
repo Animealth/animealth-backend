@@ -1,6 +1,6 @@
 package animealth.animealthbackend.api.veterinary.dto;
 
-import animealth.animealthbackend.domain.veterinary.Veterinary;
+import animealth.animealthbackend.domain.veterinary.VeterinaryHospital;
 import lombok.*;
 
 public class VeterinaryDTO {
@@ -19,7 +19,7 @@ public class VeterinaryDTO {
         private String avgRating;
         private String contact;
 
-        public static CreateVeterinaryDTO fromEntity(Veterinary veterinary) {
+        public static CreateVeterinaryDTO fromEntity(VeterinaryHospital veterinary) {
             return CreateVeterinaryDTO.builder()
                     .veterinaryId(veterinary.getVeterinaryId())
                     .veterinaryName(veterinary.getVeterinaryName())
@@ -47,7 +47,7 @@ public class VeterinaryDTO {
         private String avgRating;
         private String contact;
 
-        public static CreateVeterinaryRequestDTO fromEntity(Veterinary veterinary) {
+        public static CreateVeterinaryRequestDTO fromEntity(VeterinaryHospital veterinary) {
             return CreateVeterinaryRequestDTO.builder()
                     .veterinaryName(veterinary.getVeterinaryName())
                     .location(veterinary.getLocation())
@@ -74,7 +74,7 @@ public class VeterinaryDTO {
         private String avgRating;
         private String contact;
 
-        public static DeleteVeterinaryDTO fromEntity(Veterinary veterinary) {
+        public static DeleteVeterinaryDTO fromEntity(VeterinaryHospital veterinary) {
             return DeleteVeterinaryDTO.builder()
                     .veterinaryId(veterinary.getVeterinaryId())
                     .veterinaryName(veterinary.getVeterinaryName())
@@ -103,7 +103,7 @@ public class VeterinaryDTO {
         private String avgRating;
         private String contact;
 
-        public static UpdateVeterinaryDTO fromEntity(Veterinary veterinary) {
+        public static UpdateVeterinaryDTO fromEntity(VeterinaryHospital veterinary) {
             return UpdateVeterinaryDTO.builder()
                     .veterinaryId(veterinary.getVeterinaryId())
                     .veterinaryName(veterinary.getVeterinaryName())
@@ -131,7 +131,7 @@ public class VeterinaryDTO {
         private String avgRating;
         private String contact;
 
-        public static VeterinaryResponseDTO fromEntity(Veterinary veterinary) {
+        public static VeterinaryResponseDTO fromEntity(VeterinaryHospital veterinary) {
             return VeterinaryResponseDTO.builder()
                     .veterinaryId(veterinary.getVeterinaryId())
                     .veterinaryName(veterinary.getVeterinaryName())

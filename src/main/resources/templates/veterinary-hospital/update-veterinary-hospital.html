@@ -1,0 +1,26 @@
+<!--
+해당 ID 값을 가진 병원 정보를 보여줍니다.
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veterinary Information</title>
+</head>
+<body>
+
+<h2>Veterinary Hospital Information</h2>
+
+<div>
+    <p><strong>Veterinary Name:</strong> <span th:text="${hospitalInfo.veterinaryName}">Veterinary Name</span></p>
+    <p><strong>Location:</strong> <span th:text="${hospitalInfo.location}">Location</span></p>
+    <p><strong>Open Time:</strong> <span th:text="${hospitalInfo.openTime}">Open Time</span></p>
+    <p><strong>Close Time:</strong> <span th:text="${hospitalInfo.closeTime}">Close Time</span></p>
+    <p><strong>Closed Day:</strong> <span th:text="${hospitalInfo.closedDay}">Closed Day</span></p>
+    <p><strong>Average Rating:</strong> <span th:text="${hospitalInfo.avgRating}">Average Rating</span></p>
+    <p><strong>Contact:</strong> <span th:text="${hospitalInfo.contact}">Contact</span></p>
+</div>
+<a th:href="@{/update/{id}(id=${hospitalInfo.veterinaryId})}">병원 정보 수정하러 가기</a>
+</body>
+</html>

@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class veterinaryTest {
 
-    private Veterinary veterinary;
+    private VeterinaryHospital veterinary;
 
     @BeforeEach
     void setUp() {

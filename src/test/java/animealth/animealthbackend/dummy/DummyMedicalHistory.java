@@ -4,13 +4,13 @@ import animealth.animealthbackend.domain.medical_history.MedicalHistory;
 import animealth.animealthbackend.domain.pet.Pet;
 import animealth.animealthbackend.domain.user.User;
 import animealth.animealthbackend.domain.vaccine.VaccineType;
-import animealth.animealthbackend.domain.veterinary.Veterinary;
+import animealth.animealthbackend.domain.veterinary.VeterinaryHospital;
 
 import java.time.LocalDateTime;
 
 public class DummyMedicalHistory {
 
-    public static MedicalHistory createDummyMedicalHistory(Pet pet, User user, Veterinary veterinary) {
+    public static MedicalHistory createDummyMedicalHistory(Pet pet, User user, VeterinaryHospital veterinary) {
         return MedicalHistory.builder()
                 .medicalContent("Dummy medical content")
                 .medicalDate(LocalDateTime.now())
