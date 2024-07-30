@@ -67,14 +67,14 @@ class ReviewControllerTest {
     @BeforeEach
     void setup() {
         writer = new User(1L, "user1", "user1@example.com",
-                "01012341234", "뽀미엄마", USER, false);
+                "01012341234", "뽀미엄마", USER);
     }
 
     @DisplayName("리뷰 생성 테스트")
     @Test
     void saveReview_Test() throws Exception {
         // given
-        CreateReviewRequestDTO request = new CreateReviewRequestDTO("리뷰 테스트", 4, writer.getUserId(), vetId);
+        CreateReviewRequestDTO request = new CreateReviewRequestDTO("리뷰 테스트", 4, writer.getId(), vetId);
 
         // when
         CreateReviewResponseDTO response = CreateReviewResponseDTO.builder()

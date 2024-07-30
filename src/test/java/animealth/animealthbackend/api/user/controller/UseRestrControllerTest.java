@@ -1,9 +1,8 @@
 package animealth.animealthbackend.api.user.controller;
 
-import animealth.animealthbackend.api.user.controller.UserController;
 import animealth.animealthbackend.api.user.dto.UserDTO;
 import animealth.animealthbackend.api.user.service.CustomOAuth2UserService;
-import animealth.animealthbackend.api.user.service.UserService;
+import animealth.animealthbackend.api.user.service.UserServiceImpl;
 import animealth.animealthbackend.domain.user.Role;
 import animealth.animealthbackend.domain.user.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,21 +33,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 //@SpringBootTest에 비해 웹과 관련된 빈들만 생성해줘서 단위 테스트에 적절하다.
-@WebMvcTest(controllers = {UserController.class})
+@WebMvcTest(controllers = {UseRestrController.class})
 
 //@WebMvcTest는 테스트에 필요한 모든 빈들을 생성해주지 않기 때문에 필요한 빈들을 목업해줘야 한다.
 @MockBeans({
         @MockBean(JpaMetamodelMappingContext.class),
-        @MockBean(UserService.class),
+        @MockBean(UserServiceImpl.class),
         @MockBean(CustomOAuth2UserService.class),
         @MockBean(UserRepository.class)
 })
-class UserControllerTest {
+class UseRestrControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
     @Autowired
     private UserRepository userRepository;
 
@@ -85,7 +84,7 @@ class UserControllerTest {
                         .isDeleted(false)
                         .build();
 
-        when(userService.update(anyLong(), any(UserDTO.class))).thenReturn(user);
+        when(userServiceImpl.update(anyLong(), any(UserDTO.class))).thenReturn(user);
 
         //when, then
         mockMvc.perform(put("/user/update/1")
@@ -112,7 +111,7 @@ class UserControllerTest {
                 .isDeleted(true)
                 .build();
 
-        when(userService.delete(anyLong())).thenReturn(user);
+        when(userServiceImpl.delete(anyLong())).thenReturn(user);
 
         //when, then
         mockMvc.perform(MockMvcRequestBuilders.delete("/user/delete/1")

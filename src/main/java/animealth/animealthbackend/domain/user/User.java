@@ -7,33 +7,35 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Where(clause = "IS_DELETED = false")
 @DynamicUpdate
 public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    @Column(name = "USER_ID")
+    private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "USER_NAME")
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "USER_EMAIL")
     private String email;
 
+    @Column(name = "USER_PHONE")
     private String phone;
 
+    @Column(name = "USER_NICKNAME")
     private String nickname;
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    @Column(columnDefinition = "bit default false NOT NULL COMMENT '이용가능여부'")
-    private Boolean isDeleted;
 
 
     @Builder
@@ -43,7 +45,6 @@ public class User extends BaseEntity {
         this.phone = phone;
         this.nickname = nickname;
         this.role = role;
-        this.isDeleted = false;
     }
 
     public User update(String name, String phone, String nickname) {

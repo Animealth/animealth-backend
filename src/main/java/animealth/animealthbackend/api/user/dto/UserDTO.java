@@ -1,6 +1,7 @@
 package animealth.animealthbackend.api.user.dto;
 
 import animealth.animealthbackend.domain.user.Role;
+import animealth.animealthbackend.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,5 +29,15 @@ public class UserDTO {
         this.nickname = nickname;
         this.role = role;
         this.isDeleted = isDeleted;
+    }
+
+    public static UserDTO from(User user) {
+        return UserDTO.builder()
+                .name(user.getName())
+                .email(user.getEmail())
+                .phone(user.getPhone())
+                .nickname(user.getNickname())
+                .role(user.getRole())
+                .build();
     }
 }

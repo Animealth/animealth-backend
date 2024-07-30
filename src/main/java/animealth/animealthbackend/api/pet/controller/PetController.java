@@ -15,7 +15,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/pet")
+@RequestMapping(value = "/pet")
 public class PetController extends BaseController {
 
     private final PetService petService;
@@ -28,7 +28,7 @@ public class PetController extends BaseController {
         SessionUser principal = (SessionUser) session.getAttribute("user");
         PetResponseDTO responseDTO = PetResponseDTO.from(petService.registerPet(principal.getId(), dto));
         model.addAttribute("pet", responseDTO);
-        return "redirect:/api/pet"; // 애완동물 리스트 페이지로 리다이렉트
+        return "redirect:/pet"; // 애완동물 리스트 페이지로 리다이렉트
     }
 
     /**
@@ -69,7 +69,7 @@ public class PetController extends BaseController {
     public String updatePet(@ModelAttribute UpdatePetResponseDTO dto, Model model) {
         PetResponseDTO updatedPet = petService.update(dto);
         model.addAttribute("pet", updatedPet);
-        return "redirect:/api/pet/" + updatedPet.getPetId(); // 애완동물 상세 페이지로 리다이렉트
+        return "redirect:/pet/" + updatedPet.getPetId(); // 애완동물 상세 페이지로 리다이렉트
     }
 
     /**
@@ -78,6 +78,6 @@ public class PetController extends BaseController {
     @DeleteMapping(value = "/delete/{petId}")
     public String deletePet(@PathVariable(value = "petId") Long petId) {
         petService.deletePetById(petId);
-        return "redirect:/api/pet"; // 애완동물 리스트 페이지로 리다이렉트
+        return "redirect:/pet"; // 애완동물 리스트 페이지로 리다이렉트
     }
 }

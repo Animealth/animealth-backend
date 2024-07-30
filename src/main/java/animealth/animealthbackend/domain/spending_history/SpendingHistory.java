@@ -17,33 +17,34 @@ import java.time.LocalDate;
 /**
  * 가계부 엔티티
  */
+@Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Table
-@Builder
 @DynamicUpdate
 @Where(clause = "IS_DELETED = false")
 public class SpendingHistory extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long spendingId;
+    @Column(name = "SPENDINGHISTORTY_ID")
+    private Long id;
 
-    @Column
+    @Column(name = "SPENDINGHISTORTY_SPENDINGCONTENT")
     private String spendingContent;
 
-    @Column
+    @Column(name = "SPENDINGHISTORTY_SPENDINGDATE")
     private LocalDate spendingDate;
 
-    @Column
+    @Column(name = "SPENDINGHISTORTY_SPENDINGTYPE")
     private String spendingType;
 
-    @Column
+    @Column(name = "SPENDINGHISTORTY_SPENDINGAMOUNT")
     private BigDecimal spendingAmount;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(name = "USER")
     private User user;
 
     public SpendingHistory update(String spendingContent, LocalDate spendingDate, String spendingType, BigDecimal spendingAmount) {

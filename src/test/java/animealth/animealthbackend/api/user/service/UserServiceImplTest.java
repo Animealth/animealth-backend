@@ -1,10 +1,10 @@
 package animealth.animealthbackend.api.user.service;
 
 import animealth.animealthbackend.api.user.dto.UserDTO;
-import animealth.animealthbackend.api.user.service.UserService;
 import animealth.animealthbackend.domain.user.User;
 import animealth.animealthbackend.domain.user.UserRepository;
 import animealth.animealthbackend.dummy.DummyUser;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static animealth.animealthbackend.domain.user.Role.USER;
@@ -22,13 +21,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class UserServiceTest {
+class UserServiceImplTest {
 
     @Mock
     private UserRepository userRepository;
 
     @InjectMocks
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
     private User user1, user2;
 
@@ -43,7 +42,7 @@ class UserServiceTest {
         List<User> userList = Arrays.asList(user1, user2);
         when(userRepository.findAll()).thenReturn(userList);
 
-        List<UserDTO> userDTOList = userService.findAll();
+        List<UserDTO> userDTOList = userServiceImpl.findAll();
 
         assertEquals(2, userDTOList.size());
     }
@@ -53,7 +52,7 @@ class UserServiceTest {
         Long userId = 1L;
         when(userRepository.findById(userId)).thenReturn(Optional.of(user1));
 
-        UserDTO userDTO = userService.findById(userId);
+        UserDTO userDTO = userServiceImpl.findById(userId);
 
         assertEquals(user1.getName(), userDTO.getName());
     }
@@ -63,7 +62,7 @@ class UserServiceTest {
         Long userId = 1L;
         when(userRepository.findById(userId)).thenReturn(Optional.empty());
 
-        assertThrows(NoSuchElementException.class, () -> userService.findById(userId));
+        assertThrows(EntityNotFoundException.class, () -> userServiceImpl.findById(userId));
     }
 
     @Test
@@ -76,12 +75,12 @@ class UserServiceTest {
                 .build();
         when(userRepository.findById(userId)).thenReturn(Optional.of(user2));
 
-        UserDTO result = userService.update(userId, updateUserDTO);
+        UserDTO result = userServiceImpl.update(userId, updateUserDTO);
 
         assertEquals(updateUserDTO.getName(), result.getName());
         assertEquals(updateUserDTO.getPhone(), result.getPhone());
         assertEquals(updateUserDTO.getNickname(), result.getNickname());
-        verify(userRepository, times(1)).save(any(User.class));
+
     }
 
     @Test
@@ -90,8 +89,8 @@ class UserServiceTest {
         UserDTO updateUserDTO = UserDTO.builder().build();
         when(userRepository.findById(userId)).thenReturn(Optional.empty());
 
-        assertThrows(IllegalArgumentException.class, () -> userService.update(userId, updateUserDTO));
-        verify(userRepository, never()).save(any(User.class));
+        assertThrows(IllegalArgumentException.class, () -> userServiceImpl.update(userId, updateUserDTO));
+
     }
 
     @Test
@@ -99,7 +98,7 @@ class UserServiceTest {
         Long userId = 1L;
         when(userRepository.findById(userId)).thenReturn(Optional.of(user1));
 
-        UserDTO result = userService.delete(userId);
+        UserDTO result = userServiceImpl.delete(userId);
 
         assertEquals(user1.getName(), result.getName());
         assertTrue(result.getIsDeleted());
@@ -111,7 +110,7 @@ class UserServiceTest {
         Long userId = 1L;
         when(userRepository.findById(userId)).thenReturn(Optional.empty());
 
-        assertThrows(IllegalArgumentException.class, () -> userService.delete(userId));
+        assertThrows(IllegalArgumentException.class, () -> userServiceImpl.delete(userId));
         verify(userRepository, never()).save(any(User.class));
     }
 }

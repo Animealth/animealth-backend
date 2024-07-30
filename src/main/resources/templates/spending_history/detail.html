@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spending History Detail</title>
+</head>
+<body>
+    <h1>Spending History Detail</h1>
+    <p>ID: <span th:text="${spendingHistory.id}"></span></p>
+    <p>Description: <span th:text="${spendingHistory.description}"></span></p>
+    <p>Amount: <span th:text="${spendingHistory.amount}"></span></p>
+    <a href="/api/spending_history/myhistory">Back to History List</a>
+</body>
+</html>
