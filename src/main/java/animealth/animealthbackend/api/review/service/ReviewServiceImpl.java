@@ -65,7 +65,7 @@ public class ReviewServiceImpl implements ReviewService {
     @Transactional(readOnly = true)
     public Page<GetReviewResponseDTO> getReviewByWriterId(int pageNo, String criteria, Long writerId) {
         Pageable pageable = PageRequest.of(pageNo, PAGE_SIZE, Sort.by(Sort.Direction.DESC, criteria));
-        return reviewRepository.findAllByWriter_UserId(pageable, writerId).map(GetReviewResponseDTO::fromEntity);
+        return reviewRepository.findAllByWriter_Id(pageable, writerId).map(GetReviewResponseDTO::fromEntity);
     }
 
     @Override

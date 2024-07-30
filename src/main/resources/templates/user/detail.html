@@ -2,18 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>User Detail</title>
+    <title>유저 상세정보</title>
 </head>
 <body>
-<h1>User Detail</h1>
+<h1>상세 정보</h1>
 <div>
     <p>ID: <span th:text="${user.id}"></span></p>
     <p>Name: <span th:text="${user.name}"></span></p>
     <p>Phone: <span th:text="${user.phone}"></span></p>
     <p>Nickname: <span th:text="${user.nickname}"></span></p>
 </div>
-<a href="/user/find/all">Back to List</a>
-<a href="#" th:href="@{/user/update/{id}(id=${user.id})}">Update</a>
-<a href="#" th:href="@{/user/delete/{id}(id=${user.id})}" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
+<a href="/user/find/all">되돌아가기</a>
+<a href="#" th:href="@{/user/update/{id}(id=${user.id})}">수정하기</a>
+<a href="#" th:href="@{/user/delete/{id}(id=${user.id})}" onclick="return confirm('정말 삭제하시겠습니까?')">삭제하기</a>
 </body>
 </html>
