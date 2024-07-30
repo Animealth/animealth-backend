@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Pet Detail</title>
+  <link rel="stylesheet" href="/css/pet.css">
+</head>
+<body>
+<h1>Pet Detail</h1>
+
+<div>
+  <p><strong>Name:</strong> <span th:text="${pet.name}">Pet Name</span></p>
+  <p><strong>Age:</strong> <span th:text="${pet.age}">Pet Age</span></p>
+  <p><strong>Category:</strong> <span th:text="${pet.category}">Pet Category</span></p>
+  <p><strong>Weight:</strong> <span th:text="${pet.weight}">Pet Weight</span></p>
+  <p><strong>Neutered:</strong> <span th:text="${pet.neutered ? 'Yes' : 'No'}">Pet Neutered</span></p>
+  <p><strong>Gender:</strong> <span th:text="${pet.gender}">Pet Gender</span></p>
+  <p><strong>Image:</strong> <img th:src="${pet.imageUrl}" alt="Pet Image"></p>
+</div>
+
+<a th:href="@{/api/pet/update/{petId}(petId=${pet.petId})}">Update Pet</a>
+
+<script src="/js/pet.js"></script>
+</body>
+</html>

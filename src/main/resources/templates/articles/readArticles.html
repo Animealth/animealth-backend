@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Read Articles</title>
+  <link rel="stylesheet" href="/css/article.css">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <script src="/js/articles/readArticles.js"></script>
+</head>
+<body>
+  <h1>All Articles</h1>
+  <form id="getArticlesForm">
+    <label for="page">Page:</label>
+    <input type="number" id="page" name="page" value="0" min="0">
+    <label for="criteria">Criteria:</label>
+    <input type="text" id="criteria" name="criteria" value="createdTime">
+    <button type="submit">Get Articles</button>
+  </form>
+  <div id="articleDetails"></div>
+</body>
+</html>

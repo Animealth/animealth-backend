@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+</head>
+<body>
+<h1>Welcome</h1>
+<div th:if="${userName}">
+    <p th:text="'Hello, ' + ${userName} + '!'"></p>
+    <p><a href="/logout">Logout</a></p>
+    <form id="spendingForm">
+        <input type="hidden" id="spendingId" name="spendingId">
+        <label for="spendingAmount">금액 :</label>
+        <input type="number" id="spendingAmount" name="spendingAmount" required>
+        <br>
+        <label for="spendingContent">내용 :</label>
+        <input type="text" id="spendingContent" name="spendingContent" required>
+        <br>
+        <label for="spendingDate">날짜 :</label>
+        <input type="date" id="spendingDate" name="spendingDate" required>
+        <br>
+        <label for="spendingType">유형 :</label>
+        <input type="text" id="spendingType" name="spendingType" required>
+        <br>
+        <button type="submit">생성하기</button>
+        <button type="button" id="updateSpendingHistory">수정하기</button>
+        <button type="button" id="deleteSpendingHistory">삭제하기</button>
+    </form>
+    <button id="viewSpendingHistory">내가 쓴 가계부 보기</button>
+    <div id="spendingHistoryList"></div>
+</div>
+<div th:if="${userName == null}">
+    <p>Please <a href="/login">login</a>.</p>
+</div>
+<script>
+    $(document).ready(function() {
+        $('#spendingForm').submit(function(event) {
+            event.preventDefault(); // 폼의 기본 제출 동작을 방지
+            const spendingData = {
+                spendingAmount: $('#spendingAmount').val(),
+                spendingContent: $('#spendingContent').val(),
+                spendingDate: $('#spendingDate').val(),
+                spendingType: $('#spendingType').val()
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '/api/spending_history/save',
+                data: JSON.stringify(spendingData),
+                contentType: 'application/json',
+                success: function(response) {
+                    alert('Spending history saved successfully!');
+                    // 성공 시 추가 작업
+                },
+                error: function(error) {
+                    alert('Error saving spending history');
+                    console.log(error);
+                }
+            });
+        });
+
+        $('#viewSpendingHistory').click(function() {
+            $.ajax({
+                type: 'GET',
+                url: '/api/spending_history/myhistory',
+                contentType: 'application/json',
+                success: function(response) {
+                    let spendingHistoryList = '<ul>';
+                    response.forEach(function(item) {
+                        spendingHistoryList += '<li data-id="' + item.spendingId + '">' +
+                            '금액 : ' + item.spendingAmount + ', ' +
+                            '내용 : ' + item.spendingContent + ', ' +
+                            '날짜 : ' + item.spendingDate + ', ' +
+                            '유형 : ' + item.spendingType +
+                            '</li>';
+                    });
+                    spendingHistoryList += '</ul>';
+                    $('#spendingHistoryList').html(spendingHistoryList);
+
+                    // Add click event to list items
+                    $('#spendingHistoryList li').click(function() {
+                        const id = $(this).data('id');
+                        const selectedItem = response.find(item => item.spendingId === id);
+
+                        if (selectedItem) {
+                            $('#spendingId').val(selectedItem.spendingId);
+                            $('#spendingAmount').val(selectedItem.spendingAmount);
+                            $('#spendingContent').val(selectedItem.spendingContent);
+                            $('#spendingDate').val(selectedItem.spendingDate);
+                            $('#spendingType').val(selectedItem.spendingType);
+                        } else {
+                            alert('Selected item not found');
+                        }
+                    });
+                },
+                error: function(error) {
+                    alert('Error fetching spending history');
+                    console.log(error);
+                }
+            });
+        });
+
+        $('#updateSpendingHistory').click(function() {
+            const spendingData = {
+                spendingId: $('#spendingId').val(),
+                spendingAmount: $('#spendingAmount').val(),
+                spendingContent: $('#spendingContent').val(),
+                spendingDate: $('#spendingDate').val(),
+                spendingType: $('#spendingType').val()
+            };
+
+            $.ajax({
+                type: 'PUT',
+                url: '/api/spending_history/update',
+                data: JSON.stringify(spendingData),
+                contentType: 'application/json',
+                success: function(response) {
+                    alert('Spending history updated successfully!');
+                    // 성공 시 추가 작업
+                },
+                error: function(error) {
+                    alert('Error updating spending history');
+                    console.log(error);
+                }
+            });
+        });
+        $('#deleteSpendingHistory').click(function (){
+            const spendingId = $('#spendingId').val();
+            $.ajax({
+                type: 'DELETE',
+                url: 'api/spending_history/delete/'+spendingId,
+                contentType: 'application/json',
+                success: function(response) {
+                    alert('Spending history deleted successfully!');
+                    // 성공 시 추가 작업
+                    $('#viewSpendingHistory').click();
+                },
+                error: function(error) {
+                    alert('Error deleting spending history');
+                    console.log(error);
+                }
+            });
+            }
+        )
+    });
+</script>
+</body>
+</html>

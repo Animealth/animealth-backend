@@ -2,6 +2,10 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.3.0'
 	id 'io.spring.dependency-management' version '1.1.5'
+	id 'org.asciidoctor.jvm.convert' version '3.3.2'
+	id 'jacoco'
+	id 'com.github.kt3k.coveralls' version '2.12.2'
+	id 'maven-publish'
 }
 
 group = 'animealth'
@@ -25,16 +29,66 @@ configurations {
 
 repositories {
 	mavenCentral()
+	maven{ url 'https://jitpack.io' }
+}
+ext {
+	set('snippetsDir', file("build/generated-snippets"))
 }
 
+jacoco {
+	toolVersion = "0.8.12"
+	reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
+}
+test {
+	finalizedBy jacocoTestReport // report is always generated after tests run
+	ignoreFailures = true
+}
+jacocoTestReport {
+	reports {
+		dependsOn test
+		reports {
+			html.required = true
+			xml.required = true
+		}
+
+		// QueryDSL QDomain 제외시키기
+		def QDomains = []
+
+		for (qPattern in '**/QA'..'**/QZ') {
+			QDomains.add(qPattern + '*')
+		}
+		afterEvaluate {
+			classDirectories.setFrom(
+					// 그 외의 매칭되는 클래스도 제외 대상
+					files(classDirectories.files.collect {
+						fileTree(dir: it, excludes: [
+								"animealth.animealthbackend.domain.**.**",
+								"package animealth.animealthbackend/common",
+								"**/*Application*",
+								"**/*Config*",
+								"**/*Dto*",
+								"**/*DTO*",
+								"**/*Request*",
+								"**/*Response*",
+								"**/*Interceptor*",
+								"**/*Exception*"
+						] + QDomains)
+					})
+			)
+		}
+	}
+}
+coveralls {
+	jacocoReportPath 'build/customJacocoReportDir/test/jacocoTestReport.xml'
+}
 dependencies {
 
 	//추가적으로 아직 사용하지 않는 시큐리티 관련된 라이브러리 & 프레임워크 주석처리 해뒀어요 풀어 사용하세요 레디스도 있음
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 //	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-//	implementation 'org.springframework.boot:spring-boot-starter-oauth2-authorization-server'
-//	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-//	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-authorization-server'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 //	implementation 'org.springframework.boot:spring-boot-starter-validation'
@@ -47,16 +101,26 @@ dependencies {
 
 	//test 라이브러리
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-//	testImplementation 'org.springframework.security:spring-security-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-	testImplementation 'org.junit.jupiter:junit-jupiter-params:5.7.0'
-	testImplementation 'org.assertj:assertj-core:3.17.2'
-	testImplementation 'org.mockito:mockito-core:3.5.13'
-
-	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+	testImplementation 'org.springframework.security:spring-security-test'
+	// JUnit 5 dependencies
+	testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
+	testImplementation 'org.junit.jupiter:junit-jupiter-params:5.9.0'
+	// AssertJ
+	testImplementation 'org.assertj:assertj-core:3.22.0'
+	// Mockito
+	testImplementation 'org.mockito:mockito-core:4.4.0'
 }
 
 tasks.named('test') {
+	outputs.dir snippetsDir
 	useJUnitPlatform()
+
+	finalizedBy jacocoTestReport
+
+}
+
+tasks.named('asciidoctor') {
+	inputs.dir snippetsDir
+	dependsOn test
 }

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Spending History</title>
+</head>
+<body>
+    <h1>Delete Spending History</h1>
+    <p th:if="${isDeleted}" >삭제 성공</p>
+    <p th:unless="${isDeleted}" >삭제 실패</p>
+    <a href="/api/spending_history/myhistory">리스트로 돌아가기</a>
+</body>
+</html>
