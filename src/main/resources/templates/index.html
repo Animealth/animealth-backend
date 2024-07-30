@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Home</title>
+    <link rel="icon" href="https://animealth.dev-in-wonderland.pro/favicon.ico">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 </head>
@@ -47,7 +48,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: '/api/spending_history/save',
+                url: 'https://animealth.dev-in-wonderland.pro/api/spending_history/save',
                 data: JSON.stringify(spendingData),
                 contentType: 'application/json',
                 success: function(response) {
@@ -64,7 +65,7 @@
         $('#viewSpendingHistory').click(function() {
             $.ajax({
                 type: 'GET',
-                url: '/api/spending_history/myhistory',
+                url: 'https://animealth.dev-in-wonderland.pro/api/spending_history/myhistory',
                 contentType: 'application/json',
                 success: function(response) {
                     let spendingHistoryList = '<ul>';
@@ -113,7 +114,7 @@
 
             $.ajax({
                 type: 'PUT',
-                url: '/api/spending_history/update',
+                url: 'https://animealth.dev-in-wonderland.pro/api/spending_history/update',
                 data: JSON.stringify(spendingData),
                 contentType: 'application/json',
                 success: function(response) {
@@ -130,7 +131,7 @@
             const spendingId = $('#spendingId').val();
             $.ajax({
                 type: 'DELETE',
-                url: 'api/spending_history/delete/'+spendingId,
+                url: 'https://animealth.dev-in-wonderland.proapi/spending_history/delete/'+spendingId,
                 contentType: 'application/json',
                 success: function(response) {
                     alert('Spending history deleted successfully!');
