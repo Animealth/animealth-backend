@@ -35,7 +35,7 @@ class SpendingHistoryServiceTest {
     private UserRepository userRepository;
 
     @InjectMocks
-    private SpendingHistoryService spendingHistoryService;
+    private SpendingHistoryServiceImpl spendingHistoryServiceImpl;
 
     private User user;
     private SpendingHistoryDTO spendingHistoryDTO;
@@ -54,7 +54,7 @@ class SpendingHistoryServiceTest {
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(spendingHistoryRepository.save(any(SpendingHistory.class))).thenReturn(spendingHistory);
 
-        SpendingHistoryDTO result = spendingHistoryService.save(1L, spendingHistoryDTO);
+        SpendingHistoryDTO result = spendingHistoryServiceImpl.save(1L, spendingHistoryDTO);
 
         assertNotNull(result);
         assertEquals(spendingHistoryDTO.getSpendingContent(), result.getSpendingContent());
@@ -68,7 +68,7 @@ class SpendingHistoryServiceTest {
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(spendingHistoryRepository.findByUserId(1L)).thenReturn(Collections.singletonList(spendingHistory));
 
-        List<SpendingHistoryDTO> result = spendingHistoryService.findById(1L);
+        List<SpendingHistoryDTO> result = spendingHistoryServiceImpl.findById(1L);
 
         assertNotNull(result);
         assertFalse(result.isEmpty());
@@ -84,7 +84,7 @@ class SpendingHistoryServiceTest {
         when(spendingHistoryRepository.findById(1L)).thenReturn(Optional.of(spendingHistory));
 
         SpendingHistoryDTO updatedSpendingHistoryDTO = DummySpendingHistory.updateDummySpendingHistoryDTO(user);
-        SpendingHistoryDTO result = spendingHistoryService.update(1L, updatedSpendingHistoryDTO);
+        SpendingHistoryDTO result = spendingHistoryServiceImpl.update(1L, updatedSpendingHistoryDTO);
 
         assertNotNull(result);
         assertEquals(updatedSpendingHistoryDTO.getSpendingContent(), result.getSpendingContent());
@@ -103,7 +103,7 @@ class SpendingHistoryServiceTest {
         when(spendingHistoryRepository.findById(1L)).thenReturn(Optional.of(spendingHistory));
 
 
-        boolean result = spendingHistoryService.delete(1L, 1L);
+        boolean result = spendingHistoryServiceImpl.delete(1L, 1L);
 
         assertTrue(result);
         verify(userRepository, times(1)).findById(1L);
@@ -117,7 +117,7 @@ class SpendingHistoryServiceTest {
         when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
         EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class, () -> {
-            spendingHistoryService.save(1L, spendingHistoryDTO);
+            spendingHistoryServiceImpl.save(1L, spendingHistoryDTO);
         });
 
         assertEquals("User not found", thrown.getMessage());

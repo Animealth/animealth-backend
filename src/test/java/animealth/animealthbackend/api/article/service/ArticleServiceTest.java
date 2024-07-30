@@ -53,7 +53,7 @@ class ArticleServiceTest {
         CreateArticleRequestDTO request = new CreateArticleRequestDTO("테스트 게시글", "게시글 내용");
 
         // when
-        CreateArticleResponseDTO response = articleService.saveArticle(writer.getUserId(), request);
+        CreateArticleResponseDTO response = articleService.saveArticle(writer.getId(), request);
 
         //then
         assertThat(response).extracting("writer", "title", "content")
@@ -65,7 +65,7 @@ class ArticleServiceTest {
     void findArticle_By_ArticleId_WithoutComment_Test() {
         // given
         CreateArticleRequestDTO savedRequest = new CreateArticleRequestDTO("테스트 게시글", "게시글 내용");
-        CreateArticleResponseDTO savedResponse = articleService.saveArticle(writer.getUserId(), savedRequest);
+        CreateArticleResponseDTO savedResponse = articleService.saveArticle(writer.getId(), savedRequest);
 
         // when
         GetArticleResponseDTO response = articleService.getArticleById(savedResponse.getArticleId());
@@ -83,7 +83,7 @@ class ArticleServiceTest {
     void findArticle_By_ArticleId_WithComment_Test() {
         // given
         CreateArticleRequestDTO savedRequest = new CreateArticleRequestDTO("테스트 게시글", "게시글 내용");
-        CreateArticleResponseDTO savedResponse = articleService.saveArticle(writer.getUserId(), savedRequest);
+        CreateArticleResponseDTO savedResponse = articleService.saveArticle(writer.getId(), savedRequest);
 
         List<Comment> commentsOnArticle = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
@@ -109,7 +109,7 @@ class ArticleServiceTest {
     void findArticles_Test() {
         // given
         CreateArticleRequestDTO savedRequest = new CreateArticleRequestDTO("테스트 게시글", "게시글 내용");
-        articleService.saveArticle(writer.getUserId(), savedRequest);
+        articleService.saveArticle(writer.getId(), savedRequest);
 
         // when, then
         assertThat(articleService.getArticlesByPage(0, "createdTime"))
@@ -122,7 +122,7 @@ class ArticleServiceTest {
     void updateArticle_Test() {
         // given
         CreateArticleRequestDTO savedRequest = new CreateArticleRequestDTO("테스트 게시글", "게시글 내용");
-        CreateArticleResponseDTO savedResponse = articleService.saveArticle(writer.getUserId(), savedRequest);
+        CreateArticleResponseDTO savedResponse = articleService.saveArticle(writer.getId(), savedRequest);
 
         // when
         UpdateArticleRequestDTO request = new UpdateArticleRequestDTO(savedResponse.getArticleId(), "수정된 게시글 제목", "수정된 게시글 내용");
@@ -138,7 +138,7 @@ class ArticleServiceTest {
     void deleteArticle_Test() {
         // given
         CreateArticleRequestDTO savedRequest = new CreateArticleRequestDTO("테스트 게시글", "게시글 내용");
-        CreateArticleResponseDTO savedResponse = articleService.saveArticle(writer.getUserId(), savedRequest);
+        CreateArticleResponseDTO savedResponse = articleService.saveArticle(writer.getId(), savedRequest);
 
         // when
         articleService.deleteArticleById(savedResponse.getArticleId());

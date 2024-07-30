@@ -27,7 +27,7 @@ public class SpendingHistoryDTO {
 
     public static SpendingHistoryDTO from(SpendingHistory spendingHistory) {
         return SpendingHistoryDTO.builder()
-                .spendingId(spendingHistory.getSpendingId())
+                .spendingId(spendingHistory.getId())
                 .spendingContent(spendingHistory.getSpendingContent())
                 .spendingDate(spendingHistory.getSpendingDate())
                 .spendingType(spendingHistory.getSpendingType())

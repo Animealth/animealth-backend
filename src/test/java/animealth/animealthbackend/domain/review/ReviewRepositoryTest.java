@@ -107,7 +107,7 @@ class ReviewRepositoryTest {
 
         // when
         Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "createdTime"));
-        Page<Review> reviewPage = reviewRepository.findAllByWriter_UserId(pageable, writer.getUserId());
+        Page<Review> reviewPage = reviewRepository.findAllByWriter_Id(pageable, writer.getId());
 
         //then
         assertThat(reviewPage).hasSize(5);

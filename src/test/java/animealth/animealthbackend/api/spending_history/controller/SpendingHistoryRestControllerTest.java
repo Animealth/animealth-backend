@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import animealth.animealthbackend.api.spending_history.dto.SpendingHistoryDTO;
-import animealth.animealthbackend.api.spending_history.service.SpendingHistoryService;
+import animealth.animealthbackend.api.spending_history.service.SpendingHistoryServiceImpl;
 import animealth.animealthbackend.domain.spending_history.SpendingHistoryRepository;
 import animealth.animealthbackend.domain.user.User;
 import animealth.animealthbackend.global.config.auth.dto.SessionUser;
@@ -36,10 +36,10 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
 
-@WebMvcTest(controllers = SpendingHistoryController.class)
+@WebMvcTest(controllers = SpendingHistoryRestController.class)
 @MockBean(JpaMetamodelMappingContext.class) // JPA 관련 빈을 모킹
 @MockBean(SpendingHistoryRepository.class) // Repository 빈을 모킹
-class SpendingHistoryControllerTest {
+class SpendingHistoryRestControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -48,13 +48,13 @@ class SpendingHistoryControllerTest {
     private ObjectMapper objectMapper;
 
     @MockBean
-    private SpendingHistoryService spendingHistoryService;
+    private SpendingHistoryServiceImpl spendingHistoryServiceImpl;
 
     private SessionUser sessionUser;
 
     @BeforeEach
     void setUp() {
-        sessionUser = new SessionUser(new User(1L, "user1", "user1@example.com", "01012341234", "뽀미엄마", USER, false));
+        sessionUser = new SessionUser(new User(1L, "user1", "user1@example.com", "01012341234", "뽀미엄마", USER));
     }
 
     @DisplayName("가계부 등록 테스트")
@@ -73,7 +73,7 @@ class SpendingHistoryControllerTest {
         session.setAttribute("user", sessionUser);
 
         // when
-        when(spendingHistoryService.save(anyLong(), any())).thenReturn(requestDTO);
+        when(spendingHistoryServiceImpl.save(anyLong(), any())).thenReturn(requestDTO);
 
         // then
         mockMvc.perform(post("/api/spending_history/save")
@@ -109,7 +109,7 @@ class SpendingHistoryControllerTest {
         session.setAttribute("user", sessionUser);
 
         // when
-        when(spendingHistoryService.findById(anyLong())).thenReturn(Collections.singletonList(historyDTO));
+        when(spendingHistoryServiceImpl.findById(anyLong())).thenReturn(Collections.singletonList(historyDTO));
 
         // then
         mockMvc.perform(get("/api/spending_history/myhistory")
@@ -143,7 +143,7 @@ class SpendingHistoryControllerTest {
         session.setAttribute("user", sessionUser);
 
         // when
-        when(spendingHistoryService.update(anyLong(), any())).thenReturn(requestDTO);
+        when(spendingHistoryServiceImpl.update(anyLong(), any())).thenReturn(requestDTO);
 
         // then
         mockMvc.perform(put("/api/spending_history/update")
@@ -171,7 +171,7 @@ class SpendingHistoryControllerTest {
         session.setAttribute("user", sessionUser);
 
         // when
-        when(spendingHistoryService.delete(anyLong(), anyLong())).thenReturn(true);
+        when(spendingHistoryServiceImpl.delete(anyLong(), anyLong())).thenReturn(true);
 
         // then
         mockMvc.perform(delete("/api/spending_history/delete/1")
